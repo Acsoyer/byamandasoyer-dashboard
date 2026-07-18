@@ -247,6 +247,60 @@
   .portal-box{background:#EAF1ED;border:1px solid #CADBD2;border-radius:12px;padding:12px;margin-bottom:12px}.portal-url{font-size:12px;word-break:break-all;color:var(--ink-soft);margin:6px 0}.portal-box button{border:0;border-radius:9px;background:var(--confirmed);color:#fff;padding:9px 11px;font-weight:600;cursor:pointer}.portal-box .muted-btn{background:var(--card);color:var(--ink);border:1px solid var(--line)}
   .lightbox{position:fixed;inset:0;z-index:110;background:rgba(10,14,12,.92);display:none;align-items:center;justify-content:center;padding:55px 18px 25px}.lightbox.show{display:flex}.lightbox img{max-width:100%;max-height:100%;object-fit:contain}.lightbox-actions{position:absolute;top:14px;right:14px;display:flex;gap:8px}.lightbox-actions a,.lightbox-actions button{border:1px solid rgba(255,255,255,.35);background:rgba(255,255,255,.12);color:#fff;border-radius:10px;padding:9px 12px;text-decoration:none;font:600 12px 'Instrument Sans',sans-serif;cursor:pointer}
   @media(max-width:560px){.buckets{grid-template-columns:repeat(4,minmax(74px,1fr));overflow-x:auto}.bpill{font-size:11px}.sh-head{padding-right:48px}.contact-dock{position:fixed;right:15px;bottom:18px;top:auto;z-index:75;box-shadow:0 8px 24px rgba(25,35,31,.24);font-size:13px;padding:12px 14px}.summary-pills{margin-right:0}.message-actions{grid-template-columns:1fr}.danger-actions{grid-template-columns:1fr}}
+
+  /* compact order workspace refinements */
+  .buckets{grid-template-columns:repeat(4,minmax(0,1fr))}
+  .ocard{padding-left:20px}
+  .ocard::before{display:block;content:"";position:absolute;left:0;top:0;bottom:0;width:5px;border-radius:14px 0 0 14px;background:var(--st)}
+  .sh-head{min-height:118px;padding:15px 105px 12px 18px}
+  .sh-name{font-size:23px;line-height:1.18}
+  .sh-sub{font-weight:600;color:var(--ink);margin-top:5px}
+  .sh-flavour{color:var(--ink-soft);font-size:13.5px;margin-top:2px}
+  .sh-ordered{margin-top:6px}
+  .contact-dock{top:53px;right:14px;background:var(--accent);padding:9px 13px}
+  .summary-grid{display:grid;grid-template-columns:1fr 1fr;gap:8px;margin-top:4px}
+  .summary-metric{background:var(--card);border:1px solid var(--line);border-radius:12px;padding:11px 12px;min-width:0}
+  .summary-line{display:flex;align-items:baseline;gap:6px;color:var(--ink-soft);font-size:12px}
+  .summary-line .dots{flex:1;border-bottom:1px dotted #AEB6B2;min-width:12px;transform:translateY(-3px)}
+  .summary-line b{color:var(--ink);font-size:16px;white-space:nowrap}
+  .summary-metric.total{background:linear-gradient(135deg,#7B2C40,#602032);border-color:transparent;color:#fff}
+  .summary-metric.total .summary-line,.summary-metric.total .summary-line b{color:#fff}
+  .summary-metric.total .summary-line b{font-size:23px}.summary-metric.total .dots{border-color:rgba(255,255,255,.45)}
+  .progress{gap:6px;overflow:visible;padding:1px 0;margin:6px 0 0}
+  .progress-step{min-width:0;height:48px;padding:0 4px;border:1px solid var(--line);border-radius:10px;background:var(--card);font-size:10.5px;display:flex;align-items:center;justify-content:center;line-height:1.15}
+  .progress-step::before,.progress-step::after{display:none}
+  .progress-step.complete,.progress-step.current{background:var(--confirmed);border-color:var(--confirmed);color:#fff;box-shadow:0 4px 10px rgba(52,116,90,.14)}
+  .detail-accordion{margin-top:12px;background:var(--card);border:1px solid var(--line);border-radius:14px;overflow:hidden}
+  .detail-accordion summary{list-style:none;display:flex;align-items:center;justify-content:space-between;padding:14px 15px;font-size:13px;font-weight:700;cursor:pointer;user-select:none}
+  .detail-accordion summary::-webkit-details-marker{display:none}.detail-accordion summary::after{content:"+";font-size:19px;font-weight:400;color:var(--ink-faint);transition:transform .14s ease}.detail-accordion[open] summary::after{transform:rotate(45deg)}
+  .accordion-body{padding:0 14px 14px;border-top:1px solid var(--line);animation:detailIn .13s ease-out}@keyframes detailIn{from{opacity:.65;transform:translateY(-3px)}to{opacity:1;transform:none}}
+  .accordion-body .sec{margin-top:14px}.accordion-body .sec:first-child{margin-top:12px}
+  .final-quote-row{display:grid;grid-template-columns:minmax(0,1fr) auto;gap:8px;align-items:stretch}.final-quote-row input{min-width:0;border:1.5px solid var(--line);border-radius:11px;background:var(--card);padding:10px 12px;font:700 17px 'Instrument Sans',sans-serif}.final-quote-row input:disabled{background:#EEF0EE;color:var(--ink-soft)}
+  .final-price-btn{border:0;border-radius:11px;background:var(--accent);color:#fff;padding:0 14px;font-weight:700;cursor:pointer;min-width:92px}.final-price-btn.edit{min-width:44px;background:#E4E7E5;color:var(--ink-soft);font-size:17px}
+  .bottom-actions{margin-top:16px}.action-row{display:grid;grid-template-columns:1fr 1fr 42px;gap:7px}.action-row button{margin:0;min-width:0}.archivebtn{border:1px solid var(--line);background:var(--card);border-radius:12px;color:var(--ink-soft);font:600 12.5px 'Instrument Sans',sans-serif;padding:10px;cursor:pointer}.trashbtn{border:1px solid #E7CACA;background:#FFF7F7;color:var(--cancel);border-radius:12px;font-size:17px;cursor:pointer}.trashbtn.armed{background:var(--cancel);color:#fff}
+  .owner-wa{margin-top:8px;background:#25D366;color:#fff;text-decoration:none}
+  .compact-pay{background:var(--card);border:1px solid var(--line);border-radius:14px;padding:13px;margin-bottom:12px}.compact-pay-top{display:flex;justify-content:space-between;align-items:flex-start;gap:10px}.compact-pay-total{font-size:21px;font-weight:750;letter-spacing:-.03em}.compact-pay-total small{font-size:12px;font-weight:500;color:var(--ink-faint)}.compact-pay .payquick{margin:0;min-width:205px}.compact-pay-entry{display:grid;grid-template-columns:minmax(0,1fr) auto auto;gap:7px;margin-top:10px}.compact-pay-entry input{min-width:0;border:1.5px solid var(--line);border-radius:10px;padding:9px 10px;font:500 14px 'Instrument Sans',sans-serif}.compact-pay-entry button{border:1px solid var(--line);border-radius:10px;padding:8px 11px;background:#EEF0EE;color:var(--ink);font-weight:650;cursor:pointer}.compact-pay-entry .add{background:var(--accent);border-color:var(--accent);color:#fff}
+  .message-card.quote{border-top:4px solid var(--quoted)}.message-card.confirmed{border-top:4px solid var(--confirmed)}.message-card.feedback{border-top:4px solid var(--accent2)}
+  .message-card.quote h3{color:#85530F}.message-card.confirmed h3{color:var(--confirmed)}.message-card.feedback h3{color:var(--accent)}
+  .message-card.quote .primary{background:var(--quoted);border-color:var(--quoted)}.message-card.confirmed .primary{background:var(--confirmed);border-color:var(--confirmed)}.message-card.feedback .primary{background:var(--accent2);border-color:var(--accent2)}
+  @media(max-width:560px){.buckets{grid-template-columns:repeat(4,minmax(78px,1fr));overflow-x:auto}.sh-head{min-height:124px;padding-right:96px}.contact-dock{position:absolute;top:57px;right:12px;bottom:auto;box-shadow:none;padding:9px 11px}.summary-grid{grid-template-columns:1fr 1fr}.progress{gap:4px}.progress-step{font-size:9px;height:44px}.compact-pay-top{display:block}.compact-pay .payquick{margin-top:10px;min-width:0}.action-row{grid-template-columns:minmax(0,1fr) minmax(0,1fr) 40px}.archivebtn,.blbtn{font-size:11px;padding:9px 5px}}
+
+  /* hierarchy corrections */
+  .buckets{display:grid;grid-template-columns:repeat(12,minmax(0,1fr));gap:7px 5px;padding:13px 0 2px;border:0;overflow:visible}
+  .bpill{background:#E2E5E3;border:1px solid #D3D8D5;border-bottom-color:#C8CECA;border-radius:10px 10px 5px 5px;padding:9px 4px;color:#77807C;box-shadow:inset 0 -1px 0 rgba(31,40,36,.04);transition:transform .12s ease,background .12s ease,box-shadow .12s ease;z-index:1}
+  .bpill:nth-child(1){grid-column:1/4}.bpill:nth-child(2){grid-column:4/7}.bpill:nth-child(3){grid-column:7/10}.bpill:nth-child(4){grid-column:10/13}.bpill:nth-child(5){grid-column:1/5}.bpill:nth-child(6){grid-column:5/9}.bpill:nth-child(7){grid-column:9/13}
+  .bpill.active{background:var(--card);color:var(--ink);border-color:#C8CFCA;border-top:3px solid var(--accent);padding-top:7px;transform:translateY(2px);box-shadow:0 -5px 14px rgba(28,37,33,.09);z-index:3}
+  .bpill.active::after{display:none}.bpill .n{background:rgba(255,255,255,.55)}.bpill.active .n{background:var(--accent-soft);color:var(--accent)}
+  .sh-head{min-height:0;padding:8px 16px 15px;background:var(--card)}
+  .sh-grab{display:block!important;width:42px;height:4px;margin:0 auto 11px;background:#C9CFCC}
+  .sh-layout{display:flex;align-items:flex-start;justify-content:space-between;gap:14px}.sh-copy{min-width:0;flex:1;padding-top:1px}.sh-actions{display:flex;flex-direction:column;align-items:stretch;gap:8px;flex:0 0 auto}
+  .sh-close{position:static;width:32px;height:32px;align-self:flex-end;font-size:20px;line-height:1}.contact-dock{position:static;box-shadow:none;min-width:82px;padding:9px 12px}
+  .sh-name{font-size:22px;line-height:1.2;margin:0}.sh-sub{margin-top:5px;font-size:13.5px}.sh-ordered{margin-top:7px;display:block;font-size:11.5px}.sh-flavour{display:none}
+  .finance-table{display:grid;grid-template-columns:1fr 1fr;background:var(--card);border:1px solid var(--line);border-radius:13px;overflow:hidden;margin-top:3px}
+  .finance-cell{display:flex;align-items:center;justify-content:space-between;gap:8px;min-height:48px;padding:10px 12px;font-size:12px;color:var(--ink-soft)}
+  .finance-cell:nth-child(odd){border-right:1px solid var(--line)}.finance-cell:nth-child(-n+2){border-bottom:1px solid var(--line)}.finance-cell b{font-size:15px;color:var(--ink);white-space:nowrap}.finance-cell.total b{font-size:19px;color:var(--accent)}.finance-cell.total span{font-weight:700;color:var(--accent)}
+  .compact-pay-top{display:grid;grid-template-columns:minmax(110px,1fr) auto;align-items:center;gap:8px}.compact-pay .payquick{display:flex;min-width:0;margin:0;gap:6px}.compact-pay .pqbtn{white-space:nowrap;padding:8px 9px;font-size:11px}.compact-pay-total{font-size:19px;white-space:nowrap}
+  @media(max-width:560px){.buckets{grid-template-columns:repeat(12,minmax(0,1fr));overflow:visible;gap:6px 4px}.bpill{font-size:10.5px;padding-left:2px;padding-right:2px}.bpill .n{min-width:18px;height:18px;padding:0 5px}.sh-head{min-height:0;padding:8px 12px 13px}.contact-dock{position:static;padding:8px 10px}.sh-name{font-size:20px}.finance-cell{padding:9px 10px}.compact-pay-top{display:grid;grid-template-columns:minmax(100px,1fr) auto}.compact-pay .payquick{margin:0}.compact-pay .pqbtn{padding:8px 7px;font-size:10px}.compact-pay-total{font-size:17px}}
 </style>
 </head>
 <body>
@@ -287,18 +341,24 @@
 <div id="sheet">
   <div class="sh-head">
     <div class="sh-grab"></div>
-    <button class="sh-close" onclick="closeSheet()">✕</button>
-    <button class="contact-dock" onclick="openContactPanel()">Payment / Contact</button>
-    <div class="sh-name" id="shName"></div>
-    <div class="sh-sub" id="shSub"></div>
-    <div class="sh-ordered" id="shOrdered"></div>
+    <div class="sh-layout">
+      <div class="sh-copy">
+        <div class="sh-name" id="shName"></div>
+        <div class="sh-sub" id="shSub"></div>
+        <div class="sh-ordered" id="shOrdered"></div>
+      </div>
+      <div class="sh-actions">
+        <button class="sh-close" onclick="closeSheet()">&times;</button>
+        <button class="contact-dock" onclick="openContactPanel()">Contact</button>
+      </div>
+    </div>
   </div>
   <div class="sh-body" id="shBody"></div>
 </div>
 
 <div class="panel-overlay" id="panelOverlay" onclick="closeContactPanel()"></div>
-<aside class="contact-panel" id="contactPanel" aria-label="Payment and contact">
-  <div class="panel-head"><h2>Payment / Contact</h2><button class="panel-close" onclick="closeContactPanel()">&times;</button></div>
+<aside class="contact-panel" id="contactPanel" aria-label="Contact">
+  <div class="panel-head"><h2>Contact</h2><button class="panel-close" onclick="closeContactPanel()">&times;</button></div>
   <div class="panel-body" id="contactBody"></div>
 </aside>
 
@@ -321,7 +381,7 @@ const STATUSES=[
   {id:"confirmed",label:"Confirmed",color:"var(--confirmed)"},
   {id:"done",label:"Done",color:"var(--done)"},
   {id:"cancelled",label:"Cancelled",color:"var(--cancel)"},
-  {id:"deleted",label:"Deleted",color:"var(--deleted)"},
+  {id:"deleted",label:"Archived",color:"var(--deleted)"},
 ];
 const stColor=id=>(STATUSES.find(s=>s.id===id)||STATUSES[0]).color;
 const stLabel=id=>(STATUSES.find(s=>s.id===id)||STATUSES[0]).label;
@@ -410,8 +470,8 @@ async function refreshOrders(){
 /* ---------- helpers ---------- */
 function bucketOf(o){return o.status||'new';}
 const BUCKETS=[
-  {id:"new",label:"Orders"},{id:"quoted",label:"Quoted"},{id:"awaiting_payment",label:"Awaiting Payment"},
-  {id:"confirmed",label:"Confirmed"},{id:"done",label:"Done"},{id:"cancelled",label:"Cancelled"},{id:"deleted",label:"Deleted"}
+  {id:"new",label:"Orders"},{id:"quoted",label:"Quoted"},{id:"awaiting_payment",label:"Waiting"},
+  {id:"confirmed",label:"Confirmed"},{id:"done",label:"Done"},{id:"cancelled",label:"Cancelled"},{id:"deleted",label:"Archived"}
 ];
 let activeBucket="new", statusSet=new Set(), view="orders", calMonth=new Date(today.getFullYear(),today.getMonth(),1), calSel=null, statsMonth=new Date(today.getFullYear(),today.getMonth(),1);
 
@@ -466,7 +526,7 @@ function renderList(){
     const unread=sortCreated(items.filter(o=>!o.read));
     const opened=sortCreated(items.filter(o=>o.read));
     if(unread.length){html+=`<div class="ghead"><span>New & unopened</span><span class="ln"></span><span>${unread.length}</span></div>`;unread.forEach(o=>html+=cardHTML(o));}
-    if(opened.length){html+=`<div class="ghead"><span>Opened — awaiting action</span><span class="ln"></span><span>${opened.length}</span></div>`;opened.forEach(o=>html+=cardHTML(o));}
+    if(opened.length){html+=`<div class="ghead"><span>Incoming Orders</span><span class="ln"></span><span>${opened.length}</span></div>`;opened.forEach(o=>html+=cardHTML(o));}
   }else sortCreated(items).forEach(o=>html+=cardHTML(o));
   el.innerHTML=html;
 }
@@ -773,7 +833,7 @@ function openSheet(id){
     <div class="sec"><div class="lbl">Reference photos</div>${photoGrid(o)}${o.photoNote?`<div class="notebox" style="margin-top:9px">${escHtml(o.photoNote)}</div>`:''}</div>
     <div class="sec"><div class="lbl">Customer</div><div class="kv">${row('Name',escHtml(o.name))}${row('WhatsApp',escHtml(o.wcode+' '+o.wnum))}${row('Instagram',o.instagram?'@'+escHtml(o.instagram):'—')}${row('Email',escHtml(o.email||'—'))}${row('Language',escHtml(o.lang||'—'))}${row('Heard via',escHtml(o.heard+(o.referredBy?' · '+o.referredBy:'')))}</div></div>
     ${o.feedback?`<div class="sec"><div class="lbl">Ordering experience</div><div class="fbbox ${escAttr(o.feedback.toLowerCase())}"><span class="fbem">${FB_EMOJI[o.feedback.toLowerCase()]||'Feedback'}</span><span><b>${escHtml(o.feedback)}</b><span class="fbcap">Customer rated the ordering process</span></span></div></div>`:''}
-    <div class="sec danger-actions"><button class="blbtn ${isBlacklisted(o)?'on':''}" onclick="toggleBlacklist(${o.id})">${isBlacklisted(o)?'Remove from blacklist':'Mark as bad customer'}</button><button class="delbtn" onclick="deleteOrder(${o.id})">${o.status==='deleted'?'Restore to Orders':'Move to Deleted'}</button></div>`;
+    <div class="sec danger-actions"><button class="blbtn ${isBlacklisted(o)?'on':''}" onclick="toggleBlacklist(${o.id})">${isBlacklisted(o)?'Remove from blacklist':'Mark as bad customer'}</button><button class="delbtn" onclick="deleteOrder(${o.id})">${o.status==='deleted'?'Restore to Orders':'Move to Archived'}</button></div>`;
   document.getElementById('overlay').classList.add('show');document.getElementById('sheet').classList.add('show');
 }
 
@@ -801,6 +861,49 @@ async function generatePortal(id){const o=ORDERS.find(x=>x.id===id);if(!o||o.sta
 function closeSheet(){delArmed=null;closeContactPanel();document.getElementById('overlay').classList.remove('show');document.getElementById('sheet').classList.remove('show');openId=null;}
 async function addPayment(id){const o=ORDERS.find(x=>x.id===id);const input=document.getElementById('payAmt');const v=Number(input&&input.value);if(!Number.isFinite(v)||v<=0)return;o.paid=Math.max(0,o.paid+v);const {error}=await sb.from('orders').update({paid:o.paid}).eq('id',id);if(error){alert('Could not save payment: '+error.message);return;}refreshView();openContactPanel();}
 async function setPayment(id,amt){const o=ORDERS.find(x=>x.id===id);o.paid=Math.max(0,Number(amt)||0);const {error}=await sb.from('orders').update({paid:o.paid}).eq('id',id);if(error){alert('Could not save payment: '+error.message);return;}refreshView();openContactPanel();}
+
+/* ---------- compact workspace v2 ---------- */
+const LIST_TITLES={quoted:'Quote Sent',awaiting_payment:'Awaiting Payments',confirmed:'Payment Confirmed',done:'Done',cancelled:'Cancelled',deleted:'Archived'};
+function renderList(){
+  const q=document.getElementById('search').value.trim();let items=ORDERS.filter(o=>matchSearch(o,q)&&bucketOf(o)===activeBucket);const el=document.getElementById('main');
+  if(!items.length){el.innerHTML=`<div class="empty">No orders here.</div>`;return;}
+  let html='';
+  if(activeBucket==='new'){
+    const fresh=sortCreated(items.filter(o=>!o.read)),opened=sortCreated(items.filter(o=>o.read));
+    if(fresh.length){html+=`<div class="ghead"><span>Incoming Orders - New</span><span class="ln"></span><span>${fresh.length}</span></div>`;fresh.forEach(o=>html+=cardHTML(o));}
+    if(opened.length){html+=`<div class="ghead"><span>Incoming Orders</span><span class="ln"></span><span>${opened.length}</span></div>`;opened.forEach(o=>html+=cardHTML(o));}
+  }else{html+=`<div class="ghead"><span>${LIST_TITLES[activeBucket]||stLabel(activeBucket)}</span><span class="ln"></span><span>${items.length}</span></div>`;sortCreated(items).forEach(o=>html+=cardHTML(o));}
+  el.innerHTML=html;
+}
+function cardHTML(o){const overdue=relDate(o.pdate).includes('ago'),ps=payStatus(o),price=['cancelled','deleted'].includes(o.status)?'—':((o.range?'~':'')+money(o.price));return `<div class="ocard ${o.read?'':'unread'}" style="--st:${stColor(o.status)}" onclick="openSheet(${o.id})"><div class="oc-top"><div><div class="oc-name">${escHtml(o.name)}${isBlacklisted(o)?'<span class="blchip">Blacklisted</span>':''}</div><div class="oc-meta">${escHtml([o.type,shortSize(o.size),o.shape,o.flavor].filter(Boolean).join(' · '))}</div></div><div class="oc-price">${price}</div></div><div class="oc-timegrid"><span>Received <b>${escHtml(o.created)}</b></span><span class="${overdue?'oc-date over':''}">Pick-up <b>${escHtml(fmtDate(o.pdate))} · ${escHtml(o.ptime)}</b> (${escHtml(relDate(o.pdate))})</span></div><div class="oc-bottom"><span></span><div class="chips">${o.feedback?`<span class="fbchip" title="Ordering experience: ${escAttr(o.feedback)}">${FB_EMOJI[o.feedback.toLowerCase()]||'Feedback'}</span>`:''}${ps?`<span class="paychip" style="color:${payColor[ps]};border-color:${payColor[ps]}">${payLabel[ps]}</span>`:''}</div></div></div>`;}
+function shortSize(v){return String(v||'').replace(/\s*\([^)]*\)/g,'').trim();}
+function progressHTML(o){const idx=FLOW.indexOf(o.status);return `<div class="progress">${FLOW.map((s,i)=>`<button class="progress-step ${idx>=i?(idx===i?'current':'complete'):''}" onclick="setOrderStatus(${o.id},'${s}')">${s==='awaiting_payment'?'Waiting':stLabel(s)}</button>`).join('')}</div>`;}
+function financeCell(label,value,key){return `<div class="finance-cell ${key||''}"><span>${label}</span><b>${value}</b></div>`;}
+function infoRow(k,v){return `<div class="r"><span class="k">${escHtml(k)}</span><span class="v">${v||'—'}</span></div>`;}
+function finalQuoteHTML(o){const locked=o.status!=='new'&&o.price>0;return `<div class="final-quote-row" id="finalQuoteRow"><input id="quotePrice" type="number" min="0" step="0.5" value="${Number(o.price||0)}" ${locked?'disabled':''} aria-label="Final price in euros"><button class="final-price-btn ${locked?'edit':''}" onclick="${locked?`unlockFinalPrice(${o.id})`:`finalizePrice(${o.id})`}">${locked?'✎':'Final Price'}</button></div><p class="infonote">Set the final amount after reviewing colours and add-ons.</p>`;}
+function renderOrderDetail(o){
+  const decor=(o.decor||[]).filter(d=>d!=='No decoration'),note=cleanNotes(o),remaining=Math.max(0,o.price-o.paid);const cols=o.colors&&o.colors.length?o.colors.map(c=>`<span><i style="background:${escAttr(c[1])}"></i>${escHtml(c[0])}</span>`).join(''):'—';
+  const allergy=o.allergies&&!['none','nenhuma'].includes(o.allergies.toLowerCase())?`<span style="color:var(--cancel);font-weight:700">⚠ ${escHtml(o.allergies)}</span>`:'None';
+  return `<div class="finance-table">${financeCell('Paid',money(o.paid),'paid')}${financeCell('Total',money(o.price),'total')}${financeCell('Remaining',money(remaining),'remaining')}${financeCell('Pick-up',escHtml(relDate(o.pdate)),'pickup')}</div>
+    <div class="sec"><div class="lbl">Order Progress</div>${progressHTML(o)}</div>
+    <details class="detail-accordion" open><summary>The Cake</summary><div class="accordion-body"><div class="sec"><div class="kv">${infoRow('Type & size',escHtml(o.type+' · '+shortSize(o.size)))}${infoRow('Shape',escHtml(o.shape))}${infoRow('Flavour',escHtml(o.flavor))}${infoRow('Colours',`<span class="cols">${cols}</span>`)}${infoRow('Writing',o.writing?`“${escHtml(o.writing)}” · ${escHtml(o.writingColor)}`:'—')}${infoRow('Cupcakes',escHtml(o.cupcakes||'—'))}${infoRow('Decorations',escHtml(decor.join(', ')||'—'))}${infoRow('High-pigment',escHtml((o.pigment||[]).join(', ')||'—'))}${infoRow('Candles',escHtml(o.candles||'—'))}${infoRow('Allergies',allergy)}</div></div>${note?`<div class="sec"><div class="lbl">Customer notes</div><div class="notebox">${escHtml(note)}</div></div>`:''}<div class="sec"><div class="lbl">Reference photos</div>${photoGrid(o)}${o.photoNote?`<div class="notebox" style="margin-top:9px">${escHtml(o.photoNote)}</div>`:''}</div><div class="sec"><div class="lbl">Final Quote</div>${finalQuoteHTML(o)}</div></div></details>
+    <details class="detail-accordion"><summary>Pick-up</summary><div class="accordion-body"><div class="sec"><div class="kv">${infoRow('Date',escHtml(fmtDate(o.pdate))+' · '+escHtml(relDate(o.pdate)))}${infoRow('Time',escHtml(o.ptime))}${infoRow('Collection',o.courier?'Customer will send their own Uber/Bolt courier':'Customer collection')}</div>${o.courier?`<div class="courier-note">The customer is responsible for booking and tracking their courier. The cake remains a collection order at the agreed date and time.</div>`:''}</div></div></details>
+    <details class="detail-accordion"><summary>Customer</summary><div class="accordion-body"><div class="sec"><div class="kv">${infoRow('Name',escHtml(o.name))}${infoRow('WhatsApp',escHtml(o.wcode+' '+o.wnum))}${infoRow('Instagram',o.instagram?'@'+escHtml(o.instagram):'—')}${infoRow('Email',escHtml(o.email||'—'))}${infoRow('Form language',escHtml(o.lang||'—'))}${infoRow('Found us via',escHtml(o.heard+(o.referredBy?' · '+o.referredBy:'')))}${infoRow('Ordering experience',escHtml(o.feedback||'Not submitted'))}</div></div></div></details>
+    <div class="bottom-actions"><div class="action-row"><button class="blbtn ${isBlacklisted(o)?'on':''}" onclick="toggleBlacklist(${o.id})">${isBlacklisted(o)?'Remove Bad Customer':'Mark as Bad Customer'}</button><button class="archivebtn" onclick="archiveOrder(${o.id})">${o.status==='deleted'?'Restore to Orders':'Move to Archived'}</button><button class="trashbtn" id="trashBtn" title="Double-click or double-tap to permanently delete" onclick="permanentDeleteTap(${o.id},this)">🗑</button></div><a class="actionbtn owner-wa" href="${whatsappUrl(o)}" target="_blank">Open WhatsApp Chat</a></div>`;
+}
+function openSheet(id){const o=ORDERS.find(x=>x.id===id);if(!o)return;openId=id;if(!o.read){o.read=true;if(sb)sb.from('orders').update({is_read:true}).eq('id',id).then(()=>{});}if(view==='orders'){renderTop();renderList();}else if(view==='calendar')renderCalendar();document.getElementById('shName').textContent=`${o.name} ${o.ptime}`;document.getElementById('shSub').textContent=[o.type,shortSize(o.size),o.shape].filter(Boolean).join(' · ');document.getElementById('shOrdered').innerHTML=o.createdAt?`Ordered: <b>${escHtml(fmtOrderedAt(o.createdAt))}</b> · ${escHtml(o.created)}`:'';document.getElementById('shBody').innerHTML=(isBlacklisted(o)?`<div class="warnbox" style="margin-bottom:9px"><b>Blacklisted customer.</b> Review before accepting this order.</div>`:'')+renderOrderDetail(o);document.getElementById('overlay').classList.add('show');document.getElementById('sheet').classList.add('show');}
+function unlockFinalPrice(id){const row=document.getElementById('finalQuoteRow');if(!row)return;const input=row.querySelector('input'),btn=row.querySelector('button');input.disabled=false;input.focus();btn.classList.remove('edit');btn.textContent='Final Price';btn.onclick=()=>finalizePrice(id);}
+async function finalizePrice(id){const o=ORDERS.find(x=>x.id===id),input=document.getElementById('quotePrice'),v=Number(input&&input.value);if(!Number.isFinite(v)||v<=0){alert('Enter the final price first.');return;}const nextStatus=o.status==='new'?'quoted':o.status;const {error}=await sb.from('orders').update({price:v,price_range:false,status:nextStatus}).eq('id',id);if(error){alert('Could not save final price: '+error.message);return;}o.price=v;o.range=false;o.status=nextStatus;activeBucket=nextStatus;refreshView();openSheet(id);}
+async function archiveOrder(id){const o=ORDERS.find(x=>x.id===id),next=o.status==='deleted'?'new':'deleted';const {error}=await sb.from('orders').update({status:next}).eq('id',id);if(error){alert('Could not update archive: '+error.message);return;}o.status=next;activeBucket=next;closeSheet();refreshView();}
+let deleteTap={id:null,at:0};
+async function permanentDeleteTap(id,btn){const now=Date.now();if(deleteTap.id!==id||now-deleteTap.at>1500){deleteTap={id,at:now};btn.classList.add('armed');btn.textContent='×';btn.title='Tap once more to permanently delete';setTimeout(()=>{if(deleteTap.id===id&&Date.now()-deleteTap.at>=1450){deleteTap={id:null,at:0};if(btn){btn.classList.remove('armed');btn.textContent='🗑';btn.title='Double-click or double-tap to permanently delete';}}},1550);return;}deleteTap={id:null,at:0};btn.disabled=true;const {error}=await sb.from('orders').delete().eq('id',id);if(error){btn.disabled=false;btn.classList.remove('armed');btn.textContent='🗑';alert('Could not permanently delete this order: '+error.message);return;}ORDERS=ORDERS.filter(x=>x.id!==id);closeSheet();refreshView();}
+
+/* ---------- compact Contact panel v2 ---------- */
+function confirmedMessage(o){const pt=orderLanguage(o)==='pt',address=BIZ.address||'Rua Francisco Lyon de Castro nº 14\nEntrecampos, Lisbon 1600-311',remaining=Math.max(0,o.price-o.paid);let payment='';if(o.paid>=o.price&&o.price>0)payment=pt?`Recebemos o pagamento total de ${money(o.price)}.`:`We have received the full payment of ${money(o.price)}.`;else if(o.paid>0)payment=pt?`O valor total da sua encomenda é ${money(o.price)}. Recebemos o sinal de ${money(o.paid)}, ficando ${money(remaining)} por pagar.`:`The full price of your order is ${money(o.price)}. We have received your ${money(o.paid)} deposit, leaving ${money(remaining)} remaining.`;return pt?`A sua encomenda está confirmada ✔️${payment?'\n\n'+payment:''}\n\n📅 Data de levantamento: ${fmtDate(o.pdate)}\n🕒 Hora: ${o.ptime}\n📍 Local de levantamento:\n${address}\n\nQuando chegar, envie-me uma mensagem. Abrirei a porta e encontrá-la-ei no átrio com a sua encomenda.\n\nPor favor, chegue à hora marcada. Atrasos podem afetar o levantamento.\n\nObrigada!${courierReminder(o,'pt')}`:`Your order is confirmed ✔️${payment?'\n\n'+payment:''}\n\n📅 Pick-up date: ${fmtDate(o.pdate)}\n🕒 Time: ${o.ptime}\n📍 Pick-up location:\n${address}\n\nUpon arrival, send me a message. I’ll buzz you in and meet you in the lobby with your order.\n\nPlease arrive at your scheduled time. Late arrivals may affect your collection.\n\nThank you!${courierReminder(o,'en')}`;}
+function msgCard(o,key,title,textValue,doneAt){const actions=doneAt?`<button onclick="markMessage(${o.id},'${key}',false)">Marked Complete — Reopen</button>`:`<button class="primary" onclick="copyMessage('${key}')">Copy for WhatsApp</button><a href="${whatsappUrl(o)}" target="_blank" onclick="completeMessageAndOpen(event,${o.id},'${key}','${whatsappUrl(o)}')">Open WhatsApp chat</a><button onclick="markMessage(${o.id},'${key}',true)">Mark Complete</button>`;return `<section class="message-card ${key} ${doneAt?'done':''}"><h3>${doneAt?'✓ ':''}${title}</h3><div class="message-preview">${escHtml(textValue)}</div><div class="message-actions">${actions}</div></section>`;}
+function openContactPanel(){const o=ORDERS.find(x=>x.id===openId);if(!o)return;const deposit=o.price/2;const portal=isActivePortal(o)?`<div class="portal-box"><b>Customer quote page</b><div class="portal-url">${escHtml(o.portalUrl)}</div><div>Expires ${escHtml(new Date(o.portalExpires).toLocaleString())}</div><p><button onclick="copyText('${escAttr(o.portalUrl)}')">Copy link</button> <button class="muted-btn" onclick="generatePortal(${o.id})">Create new 48h link</button></p></div>`:`<div class="portal-box"><b>No active customer link</b><p class="infonote">Create the link after setting the Final Price.</p><button onclick="generatePortal(${o.id})">Create 48h quote link</button></div>`;window.__messages={quote:quoteMessage(o),confirmed:confirmedMessage(o),feedback:feedbackMessage(o)};document.getElementById('contactBody').innerHTML=`<div class="compact-pay"><div class="compact-pay-top"><div class="compact-pay-total">${money(o.paid)} <small>of ${money(o.price)}</small></div><div class="payquick"><button class="pqbtn" onclick="setPayment(${o.id},${deposit})">Deposit ${money(deposit)}</button><button class="pqbtn" onclick="setPayment(${o.id},${o.price})">Paid in Full</button></div></div><div class="compact-pay-entry"><input id="payAmt" type="number" min="0" step="0.5" placeholder="Amount received (€)"><button class="add" onclick="addPayment(${o.id})">Add</button><button onclick="setPayment(${o.id},0)">Reset</button></div></div>${portal}${msgCard(o,'quote','1. Quote Ready',window.__messages.quote,o.quoteSentAt)}${msgCard(o,'confirmed','2. Order Confirmed',window.__messages.confirmed,o.confirmedSentAt)}${msgCard(o,'feedback','3. Post-order Feedback',window.__messages.feedback,o.feedbackSentAt)}`;document.getElementById('panelOverlay').classList.add('show');document.getElementById('contactPanel').classList.add('show');}
+async function markMessage(id,key,complete){const o=ORDERS.find(x=>x.id===id);if(!o)return;if(complete&&key==='quote'&&!isActivePortal(o)){alert('Create an active 48-hour customer link first.');return;}if(complete&&key==='confirmed'&&o.paid<o.price/2){alert('Record the 50% deposit before completing the confirmation step.');return;}const field={quote:'message_quote_sent_at',confirmed:'message_confirmed_sent_at',feedback:'message_feedback_sent_at'}[key],value=complete?new Date().toISOString():null,patch={[field]:value};let next=o.status;if(complete&&key==='quote'&&!['confirmed','done'].includes(o.status))next='awaiting_payment';if(complete&&key==='confirmed'&&o.status!=='done')next='confirmed';if(next!==o.status)patch.status=next;const {error}=await sb.from('orders').update(patch).eq('id',id);if(error){alert('Could not save this step: '+error.message);return;}o[key+'SentAt']=value;o.status=next;if(next!==activeBucket&&complete)activeBucket=next;refreshView();openSheet(id);openContactPanel();}
+function completeMessageAndOpen(event,id,key,url){event.preventDefault();window.open(url,'_blank');markMessage(id,key,true);return false;}
 
 /* ---------- auth ---------- */
 /* keep the board fresh: new orders and survey feedback arrive without a reload.

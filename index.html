@@ -199,6 +199,54 @@
     @keyframes pop{from{transform:translate(-50%,-46%);opacity:.6}to{transform:translate(-50%,-50%);opacity:1}}
     .sh-grab{display:none}
   }
+
+  /* 2026 operations redesign */
+  :root{
+    --bg:#F3F4F2;--card:#FFFFFF;--ink:#1E2523;--ink-soft:#65706C;--ink-faint:#98A09D;
+    --line:#DDE2DF;--accent:#6D2435;--accent2:#8B3348;--accent-soft:#F4E8EB;
+    --new:#B4233A;--quoted:#A46B16;--awaiting:#315E74;--confirmed:#34745A;--done:#64706C;
+    --cancel:#A74646;--deleted:#7C8380;--paid:#34745A;--deposit:#A46B16;--unpaid:#7C8380;
+    --shadow:0 1px 3px rgba(25,35,31,.06),0 8px 24px rgba(25,35,31,.04);
+    --shadow-lg:0 24px 60px rgba(25,35,31,.22)
+  }
+  body{background:var(--bg)}
+  #login{background:linear-gradient(160deg,#F4F5F3,#E7EAE7)}
+  header{background:rgba(243,244,242,.94)}
+  .tabs{background:#E6E9E6;border:1px solid var(--line)}
+  .ordersUI{padding-bottom:7px}
+  .buckets{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:0;padding:11px 0 0;overflow:visible;border-bottom:1px solid var(--line)}
+  .bpill{min-width:0;justify-content:center;border:0;border-radius:0;background:transparent;padding:9px 4px 10px;position:relative;color:var(--ink-soft);gap:5px;white-space:nowrap}
+  .bpill.active{background:transparent;color:var(--ink);box-shadow:none}
+  .bpill.active::after{content:"";position:absolute;left:10px;right:10px;bottom:-1px;height:2px;background:var(--accent);border-radius:2px}
+  .bpill .n{display:inline-flex;align-items:center;justify-content:center;min-width:20px;height:20px;padding:0 6px;border-radius:99px;background:#E2E6E3;color:var(--ink);font-size:10px;opacity:1}
+  .bpill .badge{position:absolute;top:2px;right:3px;box-shadow:0 0 0 2px var(--bg)}
+  .statusrow{display:none}
+  .ocard{border-radius:14px;padding:15px 16px;margin-bottom:9px;overflow:visible}
+  .ocard::before{display:none}
+  .ocard.unread{background:#FFF9FA;border-color:#D9A7B3;box-shadow:0 0 0 1px rgba(180,35,58,.06),var(--shadow)}
+  .ocard.unread::after{content:"NEW";position:absolute;right:14px;top:-7px;background:var(--new);color:#fff;border-radius:99px;padding:3px 7px;font-size:9px;font-weight:800;letter-spacing:.08em}
+  .oc-name{font-size:16px}.oc-name .dot{display:none!important}
+  .oc-price{font-family:'Instrument Sans',system-ui,sans-serif;font-size:21px;font-weight:700;letter-spacing:-.02em}
+  .oc-date{font-size:12.5px}.oc-timegrid{display:flex;gap:10px;flex-wrap:wrap;margin-top:10px;color:var(--ink-soft);font-size:12px}
+  .oc-timegrid span{display:inline-flex;align-items:center;gap:5px}.oc-timegrid b{color:var(--ink);font-weight:600}
+  .chip{display:none}.ghead{font-family:'Instrument Sans',system-ui,sans-serif;text-transform:uppercase;letter-spacing:.08em;font-size:11px;font-weight:700}
+  #sheet{max-width:720px;background:var(--bg)}
+  .sh-head{background:var(--card);padding-right:155px}
+  .sh-name{font-family:'Instrument Sans',system-ui,sans-serif;font-size:23px;font-weight:700;letter-spacing:-.02em}
+  .contact-dock{position:absolute;right:52px;top:16px;border:0;border-radius:11px;background:var(--ink);color:#fff;padding:9px 12px;font:600 12px 'Instrument Sans',sans-serif;cursor:pointer}
+  .summary-pills{display:flex;gap:7px;flex-wrap:wrap;margin-top:10px}.summary-pill{background:#EEF0EE;border:1px solid var(--line);border-radius:9px;padding:7px 9px;font-size:12px;color:var(--ink-soft)}.summary-pill b{color:var(--ink)}
+  .progress{display:flex;align-items:flex-start;margin:6px 0 2px;overflow-x:auto;padding:3px 1px 7px}.progress-step{position:relative;flex:1;min-width:82px;text-align:center;border:0;background:none;color:var(--ink-faint);font:600 10.5px 'Instrument Sans',sans-serif;cursor:pointer;padding:25px 3px 0}.progress-step::before{content:"";position:absolute;width:14px;height:14px;border-radius:50%;background:var(--card);border:2px solid var(--line);top:2px;left:50%;transform:translateX(-50%);z-index:2}.progress-step::after{content:"";position:absolute;height:2px;background:var(--line);top:9px;left:-50%;right:50%}.progress-step:first-child::after{display:none}.progress-step.complete,.progress-step.current{color:var(--ink)}.progress-step.complete::before,.progress-step.current::before{background:var(--confirmed);border-color:var(--confirmed)}.progress-step.complete::after,.progress-step.current::after{background:var(--confirmed)}.progress-step.current::before{box-shadow:0 0 0 4px rgba(52,116,90,.13)}
+  .quote-edit{display:grid;grid-template-columns:1fr auto;gap:8px}.quote-edit input{width:100%;border:1.5px solid var(--line);background:var(--card);border-radius:11px;padding:11px 12px;font:600 16px 'Instrument Sans',sans-serif}.quote-edit button{border:0;border-radius:11px;background:var(--ink);color:#fff;padding:0 15px;font-weight:600;cursor:pointer}
+  .pgal,.pgal.one{grid-template-columns:repeat(3,1fr)}.pgal.one .pgi{border-radius:12px}.pgi,.photo-slot{aspect-ratio:1}.pgal.one .pgi img,.pgi img{width:100%;height:100%;aspect-ratio:1;object-fit:cover}.photo-slot{border:1px dashed var(--line);border-radius:12px;background:#ECEFEC;display:flex;align-items:center;justify-content:center;color:var(--ink-faint);font-size:11px}
+  .pgi{cursor:zoom-in}.courier-note{background:#EAF1F4;border:1px solid #CBDDE5;border-radius:12px;padding:11px 13px;font-size:12.5px;line-height:1.45;color:#294B5B;margin-top:9px}
+  .danger-actions{display:grid;grid-template-columns:1fr 1fr;gap:8px}.danger-actions button{margin-top:0}
+  .panel-overlay{position:fixed;inset:0;background:rgba(20,28,25,.5);backdrop-filter:blur(3px);z-index:80;display:none}.panel-overlay.show{display:block}
+  .contact-panel{position:fixed;z-index:90;right:0;top:0;bottom:0;width:min(520px,100%);background:var(--bg);box-shadow:var(--shadow-lg);transform:translateX(105%);transition:transform .24s ease;display:flex;flex-direction:column}.contact-panel.show{transform:translateX(0)}
+  .panel-head{background:var(--card);border-bottom:1px solid var(--line);padding:17px 18px;display:flex;align-items:center;justify-content:space-between}.panel-head h2{font-size:18px;margin:0}.panel-close{border:1px solid var(--line);background:var(--card);width:32px;height:32px;border-radius:50%;cursor:pointer}.panel-body{overflow:auto;padding:16px 18px 30px}
+  .message-card{background:var(--card);border:1px solid var(--line);border-radius:14px;padding:13px;margin-bottom:10px}.message-card.done{opacity:.58}.message-card h3{font-size:14px;margin:0 0 8px}.message-preview{white-space:pre-wrap;background:#F0F2F0;border-radius:10px;padding:10px;font-size:11.5px;line-height:1.45;color:var(--ink-soft);max-height:160px;overflow:auto}.message-actions{display:grid;grid-template-columns:1fr 1fr;gap:7px;margin-top:9px}.message-actions button,.message-actions a{border:1px solid var(--line);border-radius:10px;background:var(--card);color:var(--ink);padding:9px;text-align:center;text-decoration:none;font:600 12px 'Instrument Sans',sans-serif;cursor:pointer}.message-actions .primary{background:var(--ink);color:#fff;border-color:var(--ink)}
+  .portal-box{background:#EAF1ED;border:1px solid #CADBD2;border-radius:12px;padding:12px;margin-bottom:12px}.portal-url{font-size:12px;word-break:break-all;color:var(--ink-soft);margin:6px 0}.portal-box button{border:0;border-radius:9px;background:var(--confirmed);color:#fff;padding:9px 11px;font-weight:600;cursor:pointer}.portal-box .muted-btn{background:var(--card);color:var(--ink);border:1px solid var(--line)}
+  .lightbox{position:fixed;inset:0;z-index:110;background:rgba(10,14,12,.92);display:none;align-items:center;justify-content:center;padding:55px 18px 25px}.lightbox.show{display:flex}.lightbox img{max-width:100%;max-height:100%;object-fit:contain}.lightbox-actions{position:absolute;top:14px;right:14px;display:flex;gap:8px}.lightbox-actions a,.lightbox-actions button{border:1px solid rgba(255,255,255,.35);background:rgba(255,255,255,.12);color:#fff;border-radius:10px;padding:9px 12px;text-decoration:none;font:600 12px 'Instrument Sans',sans-serif;cursor:pointer}
+  @media(max-width:560px){.buckets{grid-template-columns:repeat(4,minmax(74px,1fr));overflow-x:auto}.bpill{font-size:11px}.sh-head{padding-right:48px}.contact-dock{position:fixed;right:15px;bottom:18px;top:auto;z-index:75;box-shadow:0 8px 24px rgba(25,35,31,.24);font-size:13px;padding:12px 14px}.summary-pills{margin-right:0}.message-actions{grid-template-columns:1fr}.danger-actions{grid-template-columns:1fr}}
 </style>
 </head>
 <body>
@@ -240,11 +288,23 @@
   <div class="sh-head">
     <div class="sh-grab"></div>
     <button class="sh-close" onclick="closeSheet()">✕</button>
+    <button class="contact-dock" onclick="openContactPanel()">Payment / Contact</button>
     <div class="sh-name" id="shName"></div>
     <div class="sh-sub" id="shSub"></div>
     <div class="sh-ordered" id="shOrdered"></div>
   </div>
   <div class="sh-body" id="shBody"></div>
+</div>
+
+<div class="panel-overlay" id="panelOverlay" onclick="closeContactPanel()"></div>
+<aside class="contact-panel" id="contactPanel" aria-label="Payment and contact">
+  <div class="panel-head"><h2>Payment / Contact</h2><button class="panel-close" onclick="closeContactPanel()">&times;</button></div>
+  <div class="panel-body" id="contactBody"></div>
+</aside>
+
+<div class="lightbox" id="photoLightbox" onclick="if(event.target===this)closePhoto()">
+  <div class="lightbox-actions"><a id="photoDownload" href="#" download target="_blank">Download / Open</a><button onclick="closePhoto()">Close</button></div>
+  <img id="photoLarge" alt="Order reference photo">
 </div>
 
 <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
@@ -257,9 +317,11 @@ let sb=null; try{ sb=window.supabase.createClient(SB_URL,SB_KEY); }catch(e){ con
 const STATUSES=[
   {id:"new",label:"New",color:"var(--new)"},
   {id:"quoted",label:"Quoted",color:"var(--quoted)"},
+  {id:"awaiting_payment",label:"Awaiting Payment",color:"var(--awaiting)"},
   {id:"confirmed",label:"Confirmed",color:"var(--confirmed)"},
   {id:"done",label:"Done",color:"var(--done)"},
   {id:"cancelled",label:"Cancelled",color:"var(--cancel)"},
+  {id:"deleted",label:"Deleted",color:"var(--deleted)"},
 ];
 const stColor=id=>(STATUSES.find(s=>s.id===id)||STATUSES[0]).color;
 const stLabel=id=>(STATUSES.find(s=>s.id===id)||STATUSES[0]).label;
@@ -270,7 +332,7 @@ let BIZ={
   mbway:"+351 9XX XXX XXX",
   mbwayName:"Amanda Soyer",
   iban:"PT50 0000 0000 0000 0000 0000 0",
-  address:"Lisbon (exact pick-up address sent with your quote)",
+  address:"Rua Francisco Lyon de Castro nº 14\nEntrecampos, Lisbon 1600-311",
   hours:"Wed–Fri 11:00–20:00 · Sat–Sun 11:00–19:00",
 };
 let BLACKLIST=[]; // {name, phone, digits, note}
@@ -328,7 +390,11 @@ function fromRow(r){
     noAllergy:!!r.no_allergy,allergies:r.allergies||(r.no_allergy?'None':''),notes:r.notes||'',
     name:r.name||'',wcode,wnum,instagram:r.instagram||'',email:r.email||'',emailOptIn:!!r.email_opt_in,
     heard:r.heard||'',referredBy:r.referred_by||'',pdate:r.pickup_date||'',ptime:r.pickup_time||'',
-    price:r.price||0,range:!!r.price_range,paid:Number(r.paid)||0};
+    price:Number(r.price)||0,range:!!r.price_range,paid:Number(r.paid)||0,
+    courier:/COURIER:/i.test(r.notes||''),portalExpires:r.portal_expires_at||'',portalToken:r.portal_token||'',
+    portalUrl:r.portal_token?`https://byamandasoyer.pt/order/${r.portal_token}`:'',
+    customerDecision:r.customer_decision||'',cancelledBy:r.cancelled_by||'',
+    quoteSentAt:r.message_quote_sent_at||'',confirmedSentAt:r.message_confirmed_sent_at||'',feedbackSentAt:r.message_feedback_sent_at||''};
 }
 async function loadAll(){
   const {data:od,error:oe}=await sb.from('orders').select('*').order('pickup_date',{ascending:true});
@@ -342,16 +408,12 @@ async function refreshOrders(){
 }
 
 /* ---------- helpers ---------- */
-function bucketOf(o){
-  const d=new Date(o.pdate+"T00:00:00"); d.setHours(0,0,0,0);
-  const diff=Math.round((d-today)/86400000);
-  if(o.status==='done'||o.status==='cancelled')return 'archive';
-  if(diff<0)return 'overdue';
-  if(diff<=6)return 'week';
-  return 'upcoming';
-}
-const BUCKETS=[{id:"overdue",label:"Overdue"},{id:"week",label:"This week"},{id:"upcoming",label:"Upcoming"},{id:"archive",label:"Done"}];
-let activeBucket="all", statusSet=new Set(), view="orders", calMonth=new Date(today.getFullYear(),today.getMonth(),1), calSel=null, statsMonth=new Date(today.getFullYear(),today.getMonth(),1);
+function bucketOf(o){return o.status||'new';}
+const BUCKETS=[
+  {id:"new",label:"Orders"},{id:"quoted",label:"Quoted"},{id:"awaiting_payment",label:"Awaiting Payment"},
+  {id:"confirmed",label:"Confirmed"},{id:"done",label:"Done"},{id:"cancelled",label:"Cancelled"},{id:"deleted",label:"Deleted"}
+];
+let activeBucket="new", statusSet=new Set(), view="orders", calMonth=new Date(today.getFullYear(),today.getMonth(),1), calSel=null, statsMonth=new Date(today.getFullYear(),today.getMonth(),1);
 
 const MO=["January","February","March","April","May","June","July","August","September","October","November","December"];
 const MOS=["Jan","Feb","Mar","Apr","May","Jun","Jul","Aug","Sep","Oct","Nov","Dec"];
@@ -361,7 +423,7 @@ function relDate(iso){const d=new Date(iso+"T00:00:00");d.setHours(0,0,0,0);cons
   if(n===0)return "today";if(n===1)return "tomorrow";if(n===-1)return "yesterday";if(n<0)return `${-n}d ago`;return `in ${n}d`;}
 
 /* payment */
-function payStatus(o){if(o.status==='cancelled')return null;if(o.paid>=o.price&&o.price>0)return 'paid';if(o.paid>0)return 'deposit';return 'unpaid';}
+function payStatus(o){if(o.status==='cancelled'||o.status==='deleted')return null;if(o.paid>=o.price&&o.price>0)return 'paid';if(o.paid>0)return 'deposit';return 'unpaid';}
 const payColor={paid:"var(--paid)",deposit:"var(--deposit)",unpaid:"var(--unpaid)"};
 const payLabel={paid:"Paid",deposit:"Deposit",unpaid:"Unpaid"};
 
@@ -380,47 +442,32 @@ function setView(v){
 function renderTop(){
   const now=new Date();
   document.getElementById('todayLbl').textContent=`${WD[now.getDay()]} ${now.getDate()} ${MOS[now.getMonth()]}`;
-  const counts={},unread={};BUCKETS.forEach(b=>{counts[b.id]=0;unread[b.id]=0;});let allUnread=0;
-  ORDERS.forEach(o=>{const b=bucketOf(o);counts[b]=(counts[b]||0)+1;if(!o.read){unread[b]=(unread[b]||0)+1;allUnread++;}});
-  let html=`<div class="bpill ${activeBucket==='all'?'active':''}" onclick="setBucket('all')">All <span class="n">${ORDERS.length}</span>${allUnread?`<span class="badge">${allUnread}</span>`:''}</div>`;
-  BUCKETS.forEach(b=>{if(!counts[b.id]&&b.id==='archive')return;
-    html+=`<div class="bpill ${activeBucket===b.id?'active':''}" onclick="setBucket('${b.id}')">${b.label} <span class="n">${counts[b.id]||0}</span>${unread[b.id]?`<span class="badge">${unread[b.id]}</span>`:''}</div>`;});
+  const counts={};BUCKETS.forEach(b=>counts[b.id]=0);
+  ORDERS.forEach(o=>counts[bucketOf(o)]=(counts[bucketOf(o)]||0)+1);
+  let html='';
+  BUCKETS.forEach(b=>{const newBadge=b.id==='new'?ORDERS.filter(o=>o.status==='new'&&!o.read).length:0;
+    html+=`<div class="bpill ${activeBucket===b.id?'active':''}" onclick="setBucket('${b.id}')">${b.label} <span class="n">${counts[b.id]||0}</span>${newBadge?`<span class="badge">${newBadge}</span>`:''}</div>`;});
   document.getElementById('buckets').innerHTML=html;
-  let sh='';
-  STATUSES.forEach(s=>{sh+=`<div class="schip ${statusSet.has(s.id)?'active':''}" onclick="setStatus('${s.id}')">${s.label}</div>`;});
-  document.getElementById('statusrow').innerHTML=sh;
+  document.getElementById('statusrow').innerHTML='';
 }
 function setBucket(b){activeBucket=b;renderTop();renderList();}
 function setStatus(s){if(statusSet.has(s))statusSet.delete(s);else statusSet.add(s);renderTop();renderList();}
 function matchSearch(o,q){if(!q)return true;q=q.toLowerCase();return [o.name,o.flavor,o.wnum,o.instagram,o.type,o.size].join(' ').toLowerCase().includes(q);}
-/* chronological: by pick-up date, then time of day.
-   Completed/cancelled orders read better newest-first. */
-function chronKey(o){return (o.pdate||'9999-12-31')+'T'+(o.ptime||'00:00');}
-function sortChron(list,newestFirst){
-  return list.sort((a,b)=>{
-    const ka=chronKey(a),kb=chronKey(b);
-    if(ka===kb)return 0;
-    return (ka<kb?-1:1)*(newestFirst?-1:1);
-  });
-}
+/* Orders are operational records: newest submission first. */
+function sortCreated(list){return list.sort((a,b)=>new Date(b.createdAt||0)-new Date(a.createdAt||0));}
 function renderList(){
   const q=document.getElementById('search').value.trim();
   let items=ORDERS.filter(o=>matchSearch(o,q));
-  if(activeBucket!=='all')items=items.filter(o=>bucketOf(o)===activeBucket);
-  if(statusSet.size)items=items.filter(o=>statusSet.has(o.status));
+  items=items.filter(o=>bucketOf(o)===activeBucket);
   const el=document.getElementById('main');
   if(!items.length){el.innerHTML=`<div class="empty">No orders here.</div>`;return;}
   let html='';
-  if(activeBucket==='all'){
-    BUCKETS.forEach(b=>{
-      const g=sortChron(items.filter(o=>bucketOf(o)===b.id),b.id==='archive');
-      if(!g.length)return;
-      html+=`<div class="ghead"><span>${b.label}</span><span class="ln"></span></div>`;
-      g.forEach(o=>html+=cardHTML(o));
-    });
-  }else{
-    sortChron(items,activeBucket==='archive').forEach(o=>html+=cardHTML(o));
-  }
+  if(activeBucket==='new'){
+    const unread=sortCreated(items.filter(o=>!o.read));
+    const opened=sortCreated(items.filter(o=>o.read));
+    if(unread.length){html+=`<div class="ghead"><span>New & unopened</span><span class="ln"></span><span>${unread.length}</span></div>`;unread.forEach(o=>html+=cardHTML(o));}
+    if(opened.length){html+=`<div class="ghead"><span>Opened — awaiting action</span><span class="ln"></span><span>${opened.length}</span></div>`;opened.forEach(o=>html+=cardHTML(o));}
+  }else sortCreated(items).forEach(o=>html+=cardHTML(o));
   el.innerHTML=html;
 }
 function cardHTML(o){
@@ -446,7 +493,7 @@ function cardHTML(o){
 function renderCalendar(){
   const y=calMonth.getFullYear(),m=calMonth.getMonth();
   const first=new Date(y,m,1),startDow=first.getDay(),days=new Date(y,m+1,0).getDate();
-  const byDate={};ORDERS.forEach(o=>{(byDate[o.pdate]=byDate[o.pdate]||[]).push(o);});
+  const byDate={};ORDERS.filter(o=>o.status!=='deleted').forEach(o=>{(byDate[o.pdate]=byDate[o.pdate]||[]).push(o);});
   let cells='';
   for(let i=0;i<startDow;i++)cells+=`<div class="calcell empty"></div>`;
   for(let d=1;d<=days;d++){
@@ -477,7 +524,7 @@ function calPick(iso){calSel=(calSel===iso?null:iso);renderCalendar();}
 function renderStats(){
   const my=statsMonth.getFullYear(),mm=statsMonth.getMonth();
   const inMonth=o=>{const d=new Date(o.pdate+"T00:00:00");return d.getMonth()===mm&&d.getFullYear()===my;};
-  const active=ORDERS.filter(o=>o.status!=='cancelled'&&inMonth(o));
+  const active=ORDERS.filter(o=>!['cancelled','deleted'].includes(o.status)&&inMonth(o));
   const revenue=active.reduce((s,o)=>s+(o.price||0),0);
   const collected=active.reduce((s,o)=>s+(o.paid||0),0);
   const outstanding=active.filter(o=>o.status!=='done').reduce((s,o)=>s+Math.max(0,(o.price||0)-(o.paid||0)),0);
@@ -525,7 +572,7 @@ function renderInfo(){
     ${row('hours','Pick-up hours',BIZ.hours,true)}
     <div class="ghead" style="margin-top:24px"><span>🚫 Blacklist</span><span class="ln"></span></div>
     ${bl}
-    <p class="infonote">Edits are kept for this session only in the preview. When wired, they'll save permanently.</p>`;
+    <p class="infonote">Changes save to Supabase and are used automatically on new customer quote pages.</p>`;
   document.querySelectorAll('#main [data-k]').forEach(el=>el.oninput=e=>{BIZ[e.target.dataset.k]=e.target.value;saveBiz();});
 }
 function copyField(btn,key){copyText(BIZ[key]);btn.textContent="Copied ✓";btn.classList.add('ok');setTimeout(()=>{btn.textContent="Copy";btn.classList.remove('ok');},1400);}
@@ -628,7 +675,7 @@ function deleteOrder(id){
   const backup=i>=0?ORDERS[i]:null;
   if(i>=0)ORDERS.splice(i,1);
   closeSheet();refreshView();
-  if(sb)sb.from('orders').delete().eq('id',id).then(({error})=>{
+  if(sb)sb.from('orders').update({status:'deleted'}).eq('id',id).then(({error})=>{
     if(error){ if(backup)ORDERS.splice(i,0,backup); refreshView();
       alert('Could not delete this order: '+(error.message||error)); }
   });
@@ -678,6 +725,83 @@ function copyText(txt){
 }
 function fallbackCopy(txt){const ta=document.createElement('textarea');ta.value=txt;ta.style.position='fixed';ta.style.opacity='0';document.body.appendChild(ta);ta.select();try{document.execCommand('copy');}catch(e){}document.body.removeChild(ta);}
 
+/* ---------- redesigned order detail and communication flow ---------- */
+function escHtml(v){return String(v==null?'':v).replace(/[&<>"']/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));}
+function escAttr(v){return escHtml(v);}
+function money(v){return `€${Number(v||0).toFixed(2)}`;}
+function cleanNotes(o){return (o.notes||'').replace(/(?:\n\n)?COURIER:[^\n]*/gi,'').trim();}
+function orderLanguage(o){return String(o.lang||'EN').toUpperCase()==='PT'?'pt':'en';}
+function isActivePortal(o){return o.portalUrl&&o.portalExpires&&new Date(o.portalExpires)>new Date();}
+
+function cardHTML(o){
+  const overdue=relDate(o.pdate).includes('ago');const ps=payStatus(o);
+  const price=(o.status==='cancelled'||o.status==='deleted')?'—':((o.range?'~':'')+money(o.price));
+  return `<div class="ocard ${o.read?'':'unread'}" onclick="openSheet(${o.id})">
+    <div class="oc-top"><div><div class="oc-name">${escHtml(o.name)}${isBlacklisted(o)?'<span class="blchip">Blacklisted</span>':''}</div>
+      <div class="oc-meta">${escHtml([o.type,o.size,o.shape,o.flavor].filter(Boolean).join(' · '))}</div></div><div class="oc-price">${price}</div></div>
+    <div class="oc-timegrid"><span>Received <b>${escHtml(o.created)}</b></span><span class="${overdue?'oc-date over':''}">Pick-up <b>${escHtml(fmtDate(o.pdate))} · ${escHtml(o.ptime)}</b> (${escHtml(relDate(o.pdate))})</span></div>
+    <div class="oc-bottom"><span></span><div class="chips">${o.feedback?`<span class="fbchip" title="Ordering experience: ${escAttr(o.feedback)}">${FB_EMOJI[o.feedback.toLowerCase()]||'Feedback'}</span>`:''}${ps?`<span class="paychip" style="color:${payColor[ps]};border-color:${payColor[ps]}">${payLabel[ps]}</span>`:''}</div></div>
+  </div>`;
+}
+
+const FLOW=['new','quoted','awaiting_payment','confirmed','done'];
+function progressHTML(o){const idx=FLOW.indexOf(o.status);return `<div class="progress">${FLOW.map((s,i)=>`<button class="progress-step ${idx>=i?(idx===i?'current':'complete'):''}" onclick="setOrderStatus(${o.id},'${s}')">${stLabel(s)}</button>`).join('')}</div>`;}
+function photoGrid(o){const cells=[];for(let i=0;i<3;i++){const u=o.photos[i];cells.push(u?`<button class="pgi" onclick="openPhoto('${escAttr(u)}')"><img src="${escAttr(u)}" loading="lazy" alt="Reference ${i+1}"><span class="pgn">${i+1}</span></button>`:`<div class="photo-slot">Empty</div>`);}return `<div class="pgal">${cells.join('')}</div>`;}
+
+function openSheet(id){
+  const o=ORDERS.find(x=>x.id===id);if(!o)return;openId=id;
+  if(!o.read){o.read=true;if(sb)sb.from('orders').update({is_read:true}).eq('id',id).then(()=>{});}
+  if(view==='orders'){renderTop();renderList();}else if(view==='calendar')renderCalendar();
+  document.getElementById('shName').textContent=o.name;
+  document.getElementById('shSub').textContent=[o.type,o.size,o.shape,o.flavor].filter(Boolean).join(' · ');
+  document.getElementById('shOrdered').innerHTML=o.createdAt?`Ordered <b>${escHtml(fmtOrderedAt(o.createdAt))}</b> · ${escHtml(o.created)}`:'';
+  const row=(k,v)=>`<div class="r"><span class="k">${escHtml(k)}</span><span class="v">${v||'—'}</span></div>`;
+  const cols=o.colors&&o.colors.length?o.colors.map(c=>`<span><i style="background:${escAttr(c[1])}"></i>${escHtml(c[0])}</span>`).join(''):'—';
+  const decor=(o.decor||[]).filter(d=>d!=='No decoration');const note=cleanNotes(o);const remaining=Math.max(0,o.price-o.paid);
+  const dietary=o.allergies&&!['none','nenhuma'].includes(o.allergies.toLowerCase())?`<div class="warnbox">⚠ ${escHtml(o.allergies)}</div>`:`<div class="kv">${row('Allergies','None')}</div>`;
+  document.getElementById('shBody').innerHTML=`
+    ${isBlacklisted(o)?`<div class="warnbox"><b>Blacklisted customer.</b> Review before accepting this order.</div>`:''}
+    <div class="summary-pills"><span class="summary-pill">Total <b>${money(o.price)}</b></span><span class="summary-pill">Paid <b>${money(o.paid)}</b></span><span class="summary-pill">Remaining <b>${money(remaining)}</b></span><span class="summary-pill">Pick-up <b>${escHtml(relDate(o.pdate))}</b></span></div>
+    <div class="sec"><div class="lbl">Order progress</div>${progressHTML(o)}</div>
+    <div class="sec"><div class="lbl">Final quote</div><div class="quote-edit"><input id="quotePrice" type="number" min="0" step="0.01" value="${Number(o.price||0)}" aria-label="Final quote in euros"><button onclick="saveQuote(${o.id})">Save price</button></div><p class="infonote">Resolve custom colours and add-ons here before moving the order to Quoted.</p></div>
+    <div class="sec"><div class="lbl">Pick-up</div><div class="kv">${row('Date',escHtml(fmtDate(o.pdate))+' · '+escHtml(relDate(o.pdate)))}${row('Time',escHtml(o.ptime))}${row('Courier',o.courier?'Customer will arrange their own Uber/Bolt courier':'Customer collection')}</div>${o.courier?`<div class="courier-note">The customer is responsible for booking and tracking their courier. The cake remains a collection order at the agreed date and time.</div>`:''}</div>
+    <div class="sec"><div class="lbl">The cake</div><div class="kv">
+      ${row('Type & size',escHtml(o.type+' · '+o.size))}${row('Shape',escHtml(o.shape))}${row('Flavour',escHtml(o.flavor))}${row('Colours',`<span class="cols">${cols}</span>`)}
+      ${row('Writing',o.writing?`“${escHtml(o.writing)}” · ${escHtml(o.writingColor)}`:'—')}${row('Cupcakes',escHtml(o.cupcakes||'—'))}${row('Decorations',escHtml(decor.join(', ')||'—'))}${row('High-pigment',escHtml((o.pigment||[]).join(', ')||'—'))}${row('Candles',escHtml(o.candles||'—'))}
+    </div><div style="margin-top:9px">${dietary}</div></div>
+    ${note?`<div class="sec"><div class="lbl">Customer notes</div><div class="notebox">${escHtml(note)}</div></div>`:''}
+    <div class="sec"><div class="lbl">Reference photos</div>${photoGrid(o)}${o.photoNote?`<div class="notebox" style="margin-top:9px">${escHtml(o.photoNote)}</div>`:''}</div>
+    <div class="sec"><div class="lbl">Customer</div><div class="kv">${row('Name',escHtml(o.name))}${row('WhatsApp',escHtml(o.wcode+' '+o.wnum))}${row('Instagram',o.instagram?'@'+escHtml(o.instagram):'—')}${row('Email',escHtml(o.email||'—'))}${row('Language',escHtml(o.lang||'—'))}${row('Heard via',escHtml(o.heard+(o.referredBy?' · '+o.referredBy:'')))}</div></div>
+    ${o.feedback?`<div class="sec"><div class="lbl">Ordering experience</div><div class="fbbox ${escAttr(o.feedback.toLowerCase())}"><span class="fbem">${FB_EMOJI[o.feedback.toLowerCase()]||'Feedback'}</span><span><b>${escHtml(o.feedback)}</b><span class="fbcap">Customer rated the ordering process</span></span></div></div>`:''}
+    <div class="sec danger-actions"><button class="blbtn ${isBlacklisted(o)?'on':''}" onclick="toggleBlacklist(${o.id})">${isBlacklisted(o)?'Remove from blacklist':'Mark as bad customer'}</button><button class="delbtn" onclick="deleteOrder(${o.id})">${o.status==='deleted'?'Restore to Orders':'Move to Deleted'}</button></div>`;
+  document.getElementById('overlay').classList.add('show');document.getElementById('sheet').classList.add('show');
+}
+
+async function saveQuote(id){const o=ORDERS.find(x=>x.id===id);const v=Number(document.getElementById('quotePrice').value);if(!Number.isFinite(v)||v<=0){alert('Enter the final quote before saving.');return;}o.price=v;o.range=false;const {error}=await sb.from('orders').update({price:v,price_range:false}).eq('id',id);if(error){alert('Could not save the quote: '+error.message);return;}refreshView();openSheet(id);}
+async function setOrderStatus(id,st){const o=ORDERS.find(x=>x.id===id);if(!o)return;if(st==='quoted'&&!(o.price>0)){alert('Enter and save the final quote before moving this order to Quoted.');return;}if(st==='confirmed'&&o.paid<o.price/2){alert('Record the 50% deposit before confirming this order.');return;}const patch={status:st};if(st==='cancelled'&&!o.cancelledBy)patch.cancelled_by='owner';const {error}=await sb.from('orders').update(patch).eq('id',id);if(error){alert('Could not update status: '+error.message);return;}o.status=st;if(patch.cancelled_by)o.cancelledBy=patch.cancelled_by;activeBucket=st;refreshView();openSheet(id);}
+async function deleteOrder(id){const o=ORDERS.find(x=>x.id===id);if(!o)return;const next=o.status==='deleted'?'new':'deleted';const {error}=await sb.from('orders').update({status:next}).eq('id',id);if(error){alert('Could not move this order: '+error.message);return;}o.status=next;activeBucket=next;closeSheet();refreshView();}
+function openPhoto(url){document.getElementById('photoLarge').src=url;document.getElementById('photoDownload').href=url;document.getElementById('photoLightbox').classList.add('show');}
+function closePhoto(){document.getElementById('photoLightbox').classList.remove('show');document.getElementById('photoLarge').src='';}
+
+function courierReminder(o,lang){if(!o.courier)return '';return lang==='pt'?`\n\nComo selecionou a opção de estafeta, recordamos que o Uber/Bolt deve ser reservado e acompanhado por si. A encomenda estará disponível para levantamento na data e hora combinadas.`:`\n\nAs you selected the courier option, please remember that the Uber/Bolt courier must be booked and tracked by you. Your order will be ready for collection at the agreed date and time.`;}
+function quoteMessage(o){const pt=orderLanguage(o)==='pt';const url=o.portalUrl||'[link will appear after generation]';return pt?`Olá ${o.name},\n\nO seu orçamento está pronto.\n\nConsulte o seu orçamento e os dados de pagamento através do link abaixo.\n${url}\n\nEste orçamento é válido durante 48 horas. Para reservar a sua data, o sinal de 50% deverá ser pago dentro deste prazo. Após 48 horas, a sua data poderá deixar de estar disponível.\n\nSe tiver alguma questão, basta responder a esta mensagem.${courierReminder(o,'pt')}`:`Hello ${o.name},\n\nYour quote is ready.\n\nView your quote and payment details using the link below.\n${url}\n\nThis quote is valid for 48 hours. To reserve your date, the 50% deposit must be paid within this time. After 48 hours, your date may no longer be available.\n\nIf you have any questions, simply reply to this message.${courierReminder(o,'en')}`;}
+function confirmedMessage(o){const pt=orderLanguage(o)==='pt';const address=BIZ.address||'Rua Francisco Lyon de Castro nº 14\nEntrecampos, Lisbon 1600-311';return pt?`A sua encomenda está confirmada ✔️\n\n📅 Data de levantamento: ${fmtDate(o.pdate)}\n🕒 Hora: ${o.ptime}\n📍 Local de levantamento:\n${address}\n\nQuando chegar, envie-me uma mensagem. Abrirei a porta e encontrá-la-ei no átrio com a sua encomenda.\n\nPor favor, chegue à hora marcada. Atrasos podem afetar o levantamento.\n\nObrigada!${courierReminder(o,'pt')}`:`Your order is confirmed ✔️\n\n📅 Pick-up date: ${fmtDate(o.pdate)}\n🕒 Time: ${o.ptime}\n📍 Pick-up location:\n${address}\n\nUpon arrival, send me a message. I’ll buzz you in and meet you in the lobby with your order.\n\nPlease arrive at your scheduled time. Late arrivals may affect your collection.\n\nThank you!${courierReminder(o,'en')}`;}
+function feedbackMessage(o){const pt=orderLanguage(o)==='pt';return pt?`Olá ${o.name}! ✨ Espero que tenha gostado do seu bolo. Adoraria saber a sua opinião sobre o bolo, se o sabor e o design corresponderam às suas expectativas e como foi o processo de encomenda.\n\nSe tirou fotografias da celebração ou do corte do bolo, adoraria que partilhasse uma comigo para poder apresentá-la no meu Instagram.\n\nSe preferir mantê-las privadas, não há qualquer problema. Basta responder: “Prefiro não partilhar”.\n\nMuito obrigada pela sua encomenda.`:`Hi ${o.name}! ✨ I hope you enjoyed your cake. I’d love to hear what you thought about the cake, whether the taste and design met your expectations, and how the ordering process was.\n\nIf you took any photos of your celebration or cake-cutting, I’d love it if you could share one with me for a feature on my Instagram.\n\nIf you’d rather keep them private, that’s absolutely okay. Simply reply, “I’d rather not share”.\n\nThank you again for your order.`;}
+function whatsappUrl(o){return `https://wa.me/${(o.wcode+o.wnum).replace(/[^0-9]/g,'')}`;}
+function msgCard(o,key,title,textValue,doneAt){const actions=doneAt?`<button onclick="markMessage(${o.id},'${key}',false)">Reopen this step</button>`:`<button class="primary" onclick="copyMessage('${key}')">Copy for WhatsApp</button><a href="${whatsappUrl(o)}" target="_blank">Open WhatsApp chat</a><button onclick="markMessage(${o.id},'${key}',true)">Mark complete</button>`;return `<section class="message-card ${doneAt?'done':''}"><h3>${doneAt?'✓ ':''}${title}</h3><div class="message-preview">${escHtml(textValue)}</div><div class="message-actions">${actions}</div></section>`;}
+
+function openContactPanel(){const o=ORDERS.find(x=>x.id===openId);if(!o)return;const deposit=o.price/2,remaining=Math.max(0,o.price-o.paid);const portal=isActivePortal(o)?`<div class="portal-box"><b>Customer quote page</b><div class="portal-url">${escHtml(o.portalUrl)}</div><div>Expires ${escHtml(new Date(o.portalExpires).toLocaleString())}</div><p><button onclick="copyText('${escAttr(o.portalUrl)}')">Copy link</button> <button class="muted-btn" onclick="generatePortal(${o.id})">Create new 48h link</button></p></div>`:`<div class="portal-box"><b>No active customer link</b><p class="infonote">A link can be created after the final price is saved and the order is Quoted.</p><button onclick="generatePortal(${o.id})">Create 48h quote link</button></div>`;
+  window.__messages={quote:quoteMessage(o),confirmed:confirmedMessage(o),feedback:feedbackMessage(o)};
+  document.getElementById('contactBody').innerHTML=`<div class="paywrap" style="margin-bottom:12px"><div class="paytop"><span class="big">${money(o.paid)} <small>of ${money(o.price)}</small></span><span class="left ${remaining===0?'done':''}">${remaining===0?'Fully paid ✓':money(remaining)+' left'}</span></div><div class="paytrack"><div class="payfill" style="width:${o.price?Math.min(100,o.paid/o.price*100):0}%"></div></div><div class="payinput"><input id="payAmt" type="number" min="0" step="0.01" placeholder="Amount received (€)"><button class="cpbtn" onclick="addPayment(${o.id})">Add</button></div><div class="payquick"><button class="pqbtn" onclick="setPayment(${o.id},${deposit})">Deposit ${money(deposit)}</button><button class="pqbtn" onclick="setPayment(${o.id},${o.price})">Paid in full</button><button class="pqbtn" onclick="setPayment(${o.id},0)">Reset</button></div></div>${portal}${msgCard(o,'quote','1. Quote ready',window.__messages.quote,o.quoteSentAt)}${msgCard(o,'confirmed','2. Order confirmed',window.__messages.confirmed,o.confirmedSentAt)}${msgCard(o,'feedback','3. Post-order feedback',window.__messages.feedback,o.feedbackSentAt)}`;
+  document.getElementById('panelOverlay').classList.add('show');document.getElementById('contactPanel').classList.add('show');}
+function closeContactPanel(){document.getElementById('panelOverlay').classList.remove('show');document.getElementById('contactPanel').classList.remove('show');}
+function copyMessage(key){const o=ORDERS.find(x=>x.id===openId);if(key==='quote'&&(!o||!isActivePortal(o))){alert('Create an active 48-hour customer link before copying this message.');return;}copyText((window.__messages||{})[key]||'');}
+async function markMessage(id,key,complete){const map={quote:'message_quote_sent_at',confirmed:'message_confirmed_sent_at',feedback:'message_feedback_sent_at'};const field=map[key];const value=complete?new Date().toISOString():null;const {error}=await sb.from('orders').update({[field]:value}).eq('id',id);if(error){alert('Could not save this step: '+error.message);return;}const o=ORDERS.find(x=>x.id===id);o[key+'SentAt']=value;openContactPanel();}
+async function generatePortal(id){const o=ORDERS.find(x=>x.id===id);if(!o||o.status!=='quoted'||!(o.price>0)){alert('Save the final price and move the order to Quoted first.');return;}const {data,error}=await sb.rpc('create_order_portal',{p_order_id:id});if(error){alert('Customer links are not installed in Supabase yet. Apply the supplied SQL migration first.\n\n'+error.message);return;}const result=typeof data==='string'?JSON.parse(data):data;o.portalToken=result.token;o.portalExpires=result.expires_at;o.portalUrl=result.url||`https://byamandasoyer.pt/order/${result.token}`;openContactPanel();}
+function closeSheet(){delArmed=null;closeContactPanel();document.getElementById('overlay').classList.remove('show');document.getElementById('sheet').classList.remove('show');openId=null;}
+async function addPayment(id){const o=ORDERS.find(x=>x.id===id);const input=document.getElementById('payAmt');const v=Number(input&&input.value);if(!Number.isFinite(v)||v<=0)return;o.paid=Math.max(0,o.paid+v);const {error}=await sb.from('orders').update({paid:o.paid}).eq('id',id);if(error){alert('Could not save payment: '+error.message);return;}refreshView();openContactPanel();}
+async function setPayment(id,amt){const o=ORDERS.find(x=>x.id===id);o.paid=Math.max(0,Number(amt)||0);const {error}=await sb.from('orders').update({paid:o.paid}).eq('id',id);if(error){alert('Could not save payment: '+error.message);return;}refreshView();openContactPanel();}
+
 /* ---------- auth ---------- */
 /* keep the board fresh: new orders and survey feedback arrive without a reload.
    The survey lands moments after the order, so a short poll picks it up. */
@@ -710,6 +834,9 @@ document.getElementById('pw').addEventListener('keydown',e=>{if(e.key==='Enter')
 
 /* stay signed in across reloads */
 (async function(){if(!sb)return;try{const {data}=await sb.auth.getSession();if(data&&data.session){await loadAll();document.getElementById('login').style.display='none';document.getElementById('app').style.display='block';setView('orders');startAutoRefresh();}}catch(e){}})();
+
+/* Local-only visual QA. It can never activate on Vercel or byamandasoyer.pt. */
+(function localPreview(){if(location.protocol!=='file:'||new URLSearchParams(location.search).get('preview')!=='1')return;const base={read:true,status:'new',type:'Custom',size:'L (16–20)',shape:'Round',lang:'EN',flavor:'Vanilla Berry',colors:[['Ivory','#eee7d9'],['Burgundy','#6d2435']],pigment:[],writeMethods:['Piping'],writing:'Happy Birthday Amanda',writingColor:'Burgundy',cupcakes:'No cupcakes',decor:['Pearls'],candles:'Yes',photos:[],photoNote:'',feedback:'',noAllergy:true,allergies:'None',notes:'',wcode:'+351',wnum:'912 345 678',instagram:'customer',email:'customer@example.com',emailOptIn:false,heard:'Instagram',referredBy:'',pdate:'2026-07-26',ptime:'14:15',price:100,range:false,paid:0,courier:false,portalExpires:'',portalToken:'',portalUrl:'',customerDecision:'',cancelledBy:'',quoteSentAt:'',confirmedSentAt:'',feedbackSentAt:''};ORDERS=[Object.assign({},base,{id:9001,name:'Sofia Martins',read:false,created:'8m ago',createdAt:new Date(Date.now()-480000).toISOString()}),Object.assign({},base,{id:9002,name:'Inês Almeida',created:'2h ago',createdAt:new Date(Date.now()-7200000).toISOString(),courier:true,notes:'COURIER: Customer would like to arrange a Bolt/Uber courier.'}),Object.assign({},base,{id:9003,name:'Marta Costa',status:'quoted',created:'Yesterday',createdAt:new Date(Date.now()-86400000).toISOString(),portalToken:'r8e7t98rdemo',portalUrl:'https://byamandasoyer.pt/order/r8e7t98rdemo',portalExpires:new Date(Date.now()+36*3600000).toISOString()})];document.getElementById('login').style.display='none';document.getElementById('app').style.display='block';setView('orders');})();
 </script>
 </body>
 </html>

@@ -21,7 +21,7 @@
   :root{
     --bg:#F7F1EA; --card:#FFFFFF; --ink:#43212E; --ink-soft:#8A6B76; --ink-faint:#B39CA5;
     --line:#ECE0D7; --accent:#8C1D3A; --accent2:#D14D72; --accent-soft:#FBE7EC;
-    --new:#D14D72; --quoted:#C98A2E; --confirmed:#6E9B5B; --done:#9A8C93; --cancel:#B26B6B;
+    --new:#D14D72; --quoted:#C98A2E; --confirmed:#6E9B5B; --delivered:#46765F; --done:#9A8C93; --cancel:#B26B6B;
     --paid:#6E9B5B; --deposit:#C98A2E; --unpaid:#B39CA5;
     --shadow:0 2px 12px rgba(67,33,46,.08); --shadow-lg:0 12px 40px rgba(67,33,46,.16);
   }
@@ -449,6 +449,21 @@
   .insight-grid{display:grid;grid-template-columns:1fr 1fr;gap:9px}.insight-card{display:flex;min-height:116px;flex-direction:column;align-items:flex-start;text-align:left;padding:14px;border:1px solid var(--line);border-radius:15px;background:var(--card);color:var(--ink);cursor:pointer;transition:transform .12s ease,border-color .12s ease,box-shadow .12s ease}.insight-card:active{transform:scale(.98)}.insight-card.active{border-color:var(--accent2);box-shadow:0 0 0 2px rgba(209,77,114,.12)}.insight-label{color:var(--ink-faint);font-size:10px;font-weight:800;letter-spacing:.07em;text-transform:uppercase}.insight-card strong{margin:9px 0 5px;font:700 20px/1.12 'Fraunces',serif}.insight-card>span:last-child{margin-top:auto;color:var(--ink-soft);font-size:11px}
   .stats-breakdown{margin-top:12px;padding:15px;border:1px solid var(--line);border-radius:16px;background:var(--card)}.stats-breakdown-head{display:flex;align-items:flex-end;justify-content:space-between;gap:12px;padding-bottom:12px;border-bottom:1px solid var(--line)}.stats-breakdown-head span{color:var(--ink-faint);font-size:10px;font-weight:800;letter-spacing:.08em;text-transform:uppercase}.stats-breakdown-head h3{margin:3px 0 0;font-size:17px}.stats-breakdown-head>b{color:var(--ink-soft);font-size:11px}.stats-table-row{display:grid;grid-template-columns:minmax(90px,1.25fr) minmax(70px,2fr) 28px 36px;align-items:center;gap:9px;min-height:43px;border-bottom:1px solid var(--line);font-size:12px}.stats-table-row:last-child{border-bottom:0}.stats-mini-track{height:8px;overflow:hidden;border-radius:99px;background:#F0E8E4}.stats-mini-track i{display:block;height:100%;border-radius:99px;background:linear-gradient(90deg,var(--accent2),var(--accent))}.stats-table-row strong{text-align:right}.stats-table-row small{text-align:right;color:var(--ink-faint)}
   @media(max-width:560px){.do-next{grid-template-columns:minmax(0,3.8fr) minmax(68px,1fr)!important}.do-next-action{min-height:82px!important}.stats-toolbar{align-items:stretch;flex-direction:column}.stats-period{justify-content:space-between}.stats-scope button{flex:1}.stats-scope{display:flex}.stats-metrics{grid-template-columns:1fr 1fr}.stats-recap h2{font-size:25px}.stats-table-row{grid-template-columns:minmax(82px,1.25fr) minmax(55px,1.5fr) 24px 32px;gap:7px}.action-row{grid-template-columns:1fr 1fr!important}}
+  /* v26 six-step operational workflow */
+  #buckets.buckets{grid-auto-rows:52px!important;row-gap:12px!important}
+  #buckets .bpill:nth-child(-n+4),#buckets .bpill:nth-child(-n+4).active{height:52px!important;border-radius:12px!important;padding:0 7px!important;line-height:1.08!important}
+  #buckets .bpill:nth-child(-n+4) .btxt{display:block;overflow:visible!important;text-overflow:clip!important;white-space:normal!important;text-align:center;font-size:11px;font-weight:750}
+  #buckets .bpill:nth-child(-n+4).active{border-color:var(--accent)!important;background:var(--accent)!important;color:#fff!important;box-shadow:0 5px 13px rgba(109,36,53,.18)!important}
+  .workflow-heading{display:flex;align-items:baseline;gap:9px;margin-bottom:9px;line-height:1.3}.workflow-heading b{flex:0 0 auto;color:var(--ink-faint);font-size:10.5px;font-weight:850;letter-spacing:.08em}.workflow-heading span{color:var(--ink);font-size:13px;font-weight:750}
+  .progress-step{white-space:normal!important;text-align:center!important;line-height:1.08!important}
+  .progress-step .step-line{display:block}
+  .progress-step.workflow-active{background:var(--confirmed)!important;color:#fff!important}
+  .progress-step.customer-accepted{border:0!important;outline:0!important;background:var(--card)!important;color:var(--confirmed)!important;box-shadow:none!important}
+  .payment-accordion{margin-top:11px;border:1px solid var(--line);border-radius:13px;background:var(--card);overflow:hidden}
+  .payment-accordion>summary{display:flex;align-items:center;justify-content:space-between;min-height:48px;padding:0 13px;list-style:none;color:var(--ink);font-size:12px;font-weight:800;letter-spacing:.06em;text-transform:uppercase;cursor:pointer}.payment-accordion>summary::-webkit-details-marker{display:none}.payment-accordion>summary::after{content:'+';color:var(--ink-faint);font-size:20px;font-weight:500;transition:transform .15s ease}.payment-accordion[open]>summary::after{transform:rotate(45deg)}
+  .payment-accordion .payment-workspace{margin:0;border:0;border-top:1px solid var(--line);border-radius:0}
+  .payment-accordion.payment-attention{animation:paymentAttention 1s ease 2}@keyframes paymentAttention{50%{border-color:var(--confirmed);box-shadow:0 0 0 5px rgba(110,155,91,.16)}}
+  @media(max-width:560px){#buckets .bpill:nth-child(-n+4) .btxt{font-size:10.5px}.workflow-heading{align-items:flex-start;flex-direction:column;gap:2px}.progress-step{font-size:9.5px!important}}
 </style>
 </head>
 <body>
@@ -535,6 +550,7 @@ const STATUSES=[
   {id:"quoted",label:"Quoted",color:"var(--quoted)"},
   {id:"awaiting_payment",label:"Awaiting Payment",color:"var(--awaiting)"},
   {id:"confirmed",label:"Paid",color:"var(--confirmed)"},
+  {id:"delivered",label:"Cake Delivered",color:"var(--delivered)"},
   {id:"done",label:"Done",color:"var(--done)"},
   {id:"cancelled",label:"Cancelled",color:"var(--cancel)"},
   {id:"deleted",label:"Archived",color:"var(--deleted)"},
@@ -649,6 +665,7 @@ async function loadAll(){
   const {data:od,error:oe}=await sb.from('orders').select('*').order('pickup_date',{ascending:true});
   if(oe)throw oe;
   ORDERS=(od||[]).map(fromRow);
+  await syncAutoDelivered();
   try{const {data:st}=await sb.from('settings').select('data').eq('id',1).single();if(st&&st.data)BIZ=Object.assign({},BIZ,st.data);}catch(e){}
   try{const {data:bl}=await sb.from('blacklist').select('*');BLACKLIST=(bl||[]).map(b=>({id:b.id,name:b.name,phone:b.phone,digits:b.digits,note:b.note}));}catch(e){}
   await refreshActivity();
@@ -656,26 +673,60 @@ async function loadAll(){
 async function refreshOrders(){
   try{
     const feedbackBefore=new Map(ORDERS.map(o=>[o.id,o.feedback||'']));
+    const workflowBefore=new Map(ORDERS.map(o=>[o.id,`${o.status}|${o.customerDecision}|${o.confirmedSentAt}|${o.paid}`]));
     const selectedId=openId;
     const {data:od,error}=await sb.from('orders').select('*').order('pickup_date',{ascending:true});
     if(error)throw error;
     ORDERS=(od||[]).map(fromRow);
+    await syncAutoDelivered();
     refreshView();
     if(selectedId!==null){
       const selected=ORDERS.find(o=>o.id===selectedId);
-      if(selected&&(feedbackBefore.get(selectedId)||'')!==(selected.feedback||''))openSheet(selectedId);
+      if(selected&&((feedbackBefore.get(selectedId)||'')!==(selected.feedback||'')||(workflowBefore.get(selectedId)||'')!==`${selected.status}|${selected.customerDecision}|${selected.confirmedSentAt}|${selected.paid}`))openSheet(selectedId);
     }
     await refreshActivity();
   }catch(e){console.error('Order refresh failed',e);}
 }
 
 /* ---------- helpers ---------- */
-function bucketOf(o){return o.status||'new';}
+function workflowStage(o){
+  if(o.status==='new')return 1;
+  if(o.status==='quoted')return 2;
+  if(o.status==='awaiting_payment')return 3;
+  if(o.status==='confirmed')return o.confirmedSentAt?5:4;
+  if(o.status==='delivered')return 6;
+  return 0;
+}
+let autoDeliveryEnabled=true;
+function pickupMoment(o){
+  if(!o.pdate)return null;
+  const match=String(o.ptime||'').match(/(\d{1,2}):(\d{2})/);
+  if(!match)return null;
+  const date=new Date(`${o.pdate}T${String(match[1]).padStart(2,'0')}:${match[2]}:00`);
+  return Number.isNaN(date.getTime())?null:date;
+}
+async function syncAutoDelivered(){
+  if(!sb||!autoDeliveryEnabled)return;
+  const now=Date.now(),due=ORDERS.filter(o=>o.status==='confirmed'&&pickupMoment(o)&&pickupMoment(o).getTime()<=now);
+  if(!due.length)return;
+  const ids=due.map(o=>o.id),{error}=await sb.from('orders').update({status:'delivered'}).in('id',ids);
+  if(error){console.error('Automatic delivery update failed',error);if(String(error.message||'').toLowerCase().includes('delivered'))autoDeliveryEnabled=false;return;}
+  due.forEach(o=>o.status='delivered');
+}
+function bucketOf(o){
+  if(o.status==='done'||o.status==='cancelled'||o.status==='deleted')return o.status;
+  const stage=workflowStage(o);
+  if(stage===1||stage===2)return 'new_orders';
+  if(stage===3)return 'waiting_customer';
+  if(stage===4||stage===5)return 'deposit_paid';
+  if(stage===6)return 'cake_delivered';
+  return 'new_orders';
+}
 const BUCKETS=[
-  {id:"new",label:"Orders"},{id:"quoted",label:"Quoted"},{id:"awaiting_payment",label:"Waiting"},
-  {id:"confirmed",label:"Paid"},{id:"done",label:"Done"},{id:"cancelled",label:"Cancelled"},{id:"deleted",label:"Archived"}
+  {id:"new_orders",label:"New<br>Orders"},{id:"waiting_customer",label:"Waiting<br>Customer"},{id:"deposit_paid",label:"Deposit<br>Paid"},{id:"cake_delivered",label:"Cake<br>Delivered"},
+  {id:"done",label:"Done"},{id:"cancelled",label:"Cancelled"},{id:"deleted",label:"Archived"}
 ];
-let activeBucket="new", statusSet=new Set(), view="orders", calMonth=new Date(today.getFullYear(),today.getMonth(),1), calSel=null, statsMonth=new Date(today.getFullYear(),today.getMonth(),1), statsScope='month', statsBreakdown='size';
+let activeBucket="new_orders", statusSet=new Set(), view="orders", calMonth=new Date(today.getFullYear(),today.getMonth(),1), calSel=null, statsMonth=new Date(today.getFullYear(),today.getMonth(),1), statsScope='month', statsBreakdown='size';
 
 const MO=["January","February","March","April","May","June","July","August","September","October","November","December"];
 const MOS=["Jan","Feb","Mar","Apr","May","Jun","Jul","Aug","Sep","Oct","Nov","Dec"];
@@ -707,7 +758,7 @@ function renderTop(){
   const counts={};BUCKETS.forEach(b=>counts[b.id]=0);
   ORDERS.forEach(o=>counts[bucketOf(o)]=(counts[bucketOf(o)]||0)+1);
   let html='';
-  BUCKETS.forEach(b=>{const newBadge=b.id==='new'?ORDERS.filter(o=>o.status==='new'&&!o.read).length:0;const count=b.id==='deleted'?'':`<span class="n">${counts[b.id]||0}</span>`;
+  BUCKETS.forEach(b=>{const newBadge=b.id==='new_orders'?ORDERS.filter(o=>bucketOf(o)==='new_orders'&&!o.read).length:0;const count=b.id==='deleted'?'':`<span class="n">${counts[b.id]||0}</span>`;
     html+=`<div class="bpill ${activeBucket===b.id?'active':''}" onclick="setBucket('${b.id}')"><span class="btxt">${b.label}</span>${count}${newBadge?`<span class="badge" aria-label="New orders"></span>`:''}</div>`;});
   document.getElementById('buckets').innerHTML=html;
   document.getElementById('statusrow').innerHTML='';
@@ -724,7 +775,7 @@ function renderList(){
   const el=document.getElementById('main');
   if(!items.length){el.innerHTML=`<div class="empty">No orders here.</div>`;return;}
   let html='';
-  if(activeBucket==='new'){
+  if(activeBucket==='new_orders'){
     const unread=sortCreated(items.filter(o=>!o.read));
     const opened=sortCreated(items.filter(o=>o.read));
     if(unread.length){html+=`<div class="ghead"><span>New & unopened</span><span class="ln"></span><span>${unread.length}</span></div>`;unread.forEach(o=>html+=cardHTML(o));}
@@ -1047,8 +1098,8 @@ function openSheet(id){
 }
 
 async function saveQuote(id){const o=ORDERS.find(x=>x.id===id);const v=Number(document.getElementById('quotePrice').value);if(!Number.isFinite(v)||v<=0){alert('Enter the final quote before saving.');return;}o.price=v;o.range=false;const {error}=await sb.from('orders').update({price:v,price_range:false}).eq('id',id);if(error){alert('Could not save the quote: '+error.message);return;}refreshView();openSheet(id);}
-async function setOrderStatus(id,st){const o=ORDERS.find(x=>x.id===id);if(!o)return;if(st==='quoted'&&!(o.price>0)){alert('Enter and save the final quote before moving this order to Quoted.');return;}if(st==='confirmed'&&o.paid<o.price/2){alert('Record the 50% deposit before confirming this order.');return;}const patch={status:st};if(st==='cancelled'&&!o.cancelledBy)patch.cancelled_by='owner';const {error}=await sb.from('orders').update(patch).eq('id',id);if(error){alert('Could not update status: '+error.message);return;}o.status=st;if(patch.cancelled_by)o.cancelledBy=patch.cancelled_by;activeBucket=st;refreshView();openSheet(id);}
-async function deleteOrder(id){const o=ORDERS.find(x=>x.id===id);if(!o)return;const next=o.status==='deleted'?'new':'deleted';const {error}=await sb.from('orders').update({status:next}).eq('id',id);if(error){alert('Could not move this order: '+error.message);return;}o.status=next;activeBucket=next;closeSheet();refreshView();}
+async function setOrderStatus(id,st){const o=ORDERS.find(x=>x.id===id);if(!o)return;if(st==='quoted'&&!(o.price>0)){alert('Enter and save the final quote before moving this order to Quoted.');return;}if(st==='confirmed'&&o.paid<=0){alert('Record the received payment before moving this order forward.');return;}const patch={status:st};if(st==='cancelled'&&!o.cancelledBy)patch.cancelled_by='owner';const {error}=await sb.from('orders').update(patch).eq('id',id);if(error){alert('Could not update status: '+error.message);return;}o.status=st;if(patch.cancelled_by)o.cancelledBy=patch.cancelled_by;activeBucket=bucketOf(o);refreshView();openSheet(id);}
+async function deleteOrder(id){const o=ORDERS.find(x=>x.id===id);if(!o)return;const next=o.status==='deleted'?'new':'deleted';const {error}=await sb.from('orders').update({status:next}).eq('id',id);if(error){alert('Could not move this order: '+error.message);return;}o.status=next;activeBucket=bucketOf(o);closeSheet();refreshView();}
 function openPhoto(url){document.getElementById('photoLarge').src=url;document.getElementById('photoDownload').href=url;document.getElementById('photoLightbox').classList.add('show');}
 function closePhoto(){document.getElementById('photoLightbox').classList.remove('show');document.getElementById('photoLarge').src='';}
 
@@ -1068,17 +1119,17 @@ function copyMessage(key){const o=ORDERS.find(x=>x.id===openId);if(key==='quote'
 async function markMessage(id,key,complete){const map={quote:'message_quote_sent_at',confirmed:'message_confirmed_sent_at',feedback:'message_feedback_sent_at'};const field=map[key];const value=complete?new Date().toISOString():null;const {error}=await sb.from('orders').update({[field]:value}).eq('id',id);if(error){alert('Could not save this step: '+error.message);return;}const o=ORDERS.find(x=>x.id===id);o[key+'SentAt']=value;openContactPanel();}
 async function generatePortal(id){const o=ORDERS.find(x=>x.id===id);if(!o||o.status!=='quoted'||!(o.price>0)){alert('Save the final price and move the order to Quoted first.');return;}const {data,error}=await sb.rpc('create_order_portal',{p_order_id:id});if(error){alert('Customer links are not installed in Supabase yet. Apply the supplied SQL migration first.\n\n'+error.message);return;}const result=typeof data==='string'?JSON.parse(data):data;o.portalToken=result.token;o.portalExpires=result.expires_at;o.portalUrl=result.url||`https://byamandasoyer.pt/order/${result.token}`;openMessagePanel('quote');}
 function closeSheet(){delArmed=null;closeContactPanel();document.getElementById('overlay').classList.remove('show');document.getElementById('sheet').classList.remove('show');openId=null;}
-async function savePaymentAmount(id,nextPaid){const o=ORDERS.find(x=>x.id===id);if(!o)return;const paid=Math.max(0,Number(nextPaid)||0),patch={paid};let nextStatus=o.status;if(o.status==='awaiting_payment'&&o.price>0&&paid>=o.price/2){nextStatus='confirmed';patch.status='confirmed';}const {error}=await sb.from('orders').update(patch).eq('id',id);if(error){alert('Could not save payment: '+error.message);return;}o.paid=paid;o.status=nextStatus;if(nextStatus!==activeBucket)activeBucket=nextStatus;refreshView();openSheet(id);}
+async function savePaymentAmount(id,nextPaid){const o=ORDERS.find(x=>x.id===id);if(!o)return;const stageBefore=workflowStage(o),paid=Math.max(0,Number(nextPaid)||0),patch={paid};let nextStatus=o.status;if(stageBefore===3&&paid>0){nextStatus='confirmed';patch.status='confirmed';}else if(stageBefore===5&&o.price>0&&paid>=o.price){nextStatus='delivered';patch.status='delivered';}const {error}=await sb.from('orders').update(patch).eq('id',id);if(error){alert('Could not save payment: '+error.message);return;}o.paid=paid;o.status=nextStatus;activeBucket=bucketOf(o);refreshView();openSheet(id);}
 async function addPayment(id){const o=ORDERS.find(x=>x.id===id),input=document.getElementById('payAmt'),v=Number(input&&input.value);if(!o||!Number.isFinite(v)||v<=0)return;await savePaymentAmount(id,o.paid+v);}
 async function setPayment(id,amt){await savePaymentAmount(id,amt);}
 
 /* ---------- compact workspace v2 ---------- */
-const LIST_TITLES={quoted:'Quote Sent',awaiting_payment:'Awaiting Payments',confirmed:'Payment Completed',done:'Done',cancelled:'Cancelled',deleted:'Archived'};
+const LIST_TITLES={new_orders:'New Orders',waiting_customer:'Waiting Customer',deposit_paid:'Deposit Paid',cake_delivered:'Cake Delivered',done:'Done',cancelled:'Cancelled',deleted:'Archived'};
 function renderList(){
   const q=document.getElementById('search').value.trim();let items=ORDERS.filter(o=>matchSearch(o,q)&&bucketOf(o)===activeBucket);const el=document.getElementById('main');
   if(!items.length){el.innerHTML=`<div class="empty">No orders here.</div>`;return;}
   let html='';
-  if(activeBucket==='new'){
+  if(activeBucket==='new_orders'){
     const fresh=sortCreated(items.filter(o=>!o.read)),opened=sortCreated(items.filter(o=>o.read));
     if(fresh.length){html+=`<div class="ghead"><span>Incoming Orders - New</span><span class="ln"></span><span>${fresh.length}</span></div>`;fresh.forEach(o=>html+=cardHTML(o));}
     if(opened.length){html+=`<div class="ghead"><span>Incoming Orders</span><span class="ln"></span><span>${opened.length}</span></div>`;opened.forEach(o=>html+=cardHTML(o));}
@@ -1089,30 +1140,37 @@ function cardPickupDate(o){if(!o.pdate)return 'Date not set';const d=new Date(o.
 function pickupDistance(iso){if(!iso)return '';const d=new Date(iso+'T00:00:00');d.setHours(0,0,0,0);const n=Math.round((d-today)/86400000);if(n===0)return 'today';if(n===1)return 'in 1 day';if(n>1)return `in ${n} days`;if(n===-1)return '1 day ago';return `${-n} days ago`;}
 function cardHTML(o){const ps=o.paid>=o.price&&o.price>0?'paid':(o.paid>0?'deposit':null),price=['cancelled','deleted'].includes(o.status)?'—':((o.range?'~':'')+money(o.price)),cakeLine=[o.type,shortSize(o.size)].filter(Boolean).join(' ')+' - '+(o.shape||'—');return `<div class="ocard ${o.read?'':'unread'}" style="--st:${stColor(o.status)}" onclick="openSheet(${o.id})"><div class="oc-top"><div class="oc-copy"><div class="oc-name">${escHtml(o.name)}${isBlacklisted(o)?'<span class="blchip">Blacklisted</span>':''}</div><div class="oc-cake">${escHtml(cakeLine)}</div><div class="oc-flavour">${escHtml(o.flavor||'—')}</div><div class="oc-ordered">Ordered: ${escHtml(o.created)}</div><div class="oc-pickup">Pick-up: <b>${escHtml(cardPickupDate(o))}</b> <span>(${escHtml(pickupDistance(o.pdate))})</span></div></div><div class="oc-side"><div class="oc-price">${price}</div>${ps?`<span class="paychip" style="color:${payColor[ps]};border-color:${payColor[ps]}">${ps==='paid'?'Paid in full':'Deposit'}</span>`:''}</div></div></div>`;}
 function shortSize(v){return String(v||'').replace(/\s*\([^)]*\)/g,'').trim();}
-function progressHTML(o){if(o.status==='cancelled'&&o.cancelledBy==='customer')return '<div class="customer-cancelled-progress">Cancelled by the Customer at the order confirmation process</div>';const idx=FLOW.indexOf(o.status),accepted=o.status==='awaiting_payment'&&o.customerDecision==='accepted';return `<div class="progress-wrap"><div class="progress">${FLOW.map((s,i)=>`<button type="button" class="progress-step ${idx>=i?(idx===i?'current':'complete'):''} ${accepted&&s==='confirmed'?'customer-accepted':''}" onclick="setOrderStatus(${o.id},'${s}')">${s==='awaiting_payment'?'Waiting':stLabel(s)}</button>`).join('')}</div></div>`;}
+const WORKFLOW_STEPS=[['Send the','Quote'],['Wait','Customer'],['Deposit','Paid'],['Before','Delivery'],['Cake is','Delivered']];
+const WORKFLOW_HEADINGS={1:'New Order! Set the quote',2:'Send the quote',3:'Waiting for the Deposit Payment',4:'Deposit Paid - Send Message',5:'Prepare the cake',6:'Send a Feedback Request'};
+function progressHTML(o){
+  if(o.status==='cancelled'&&o.cancelledBy==='customer')return '<div class="customer-cancelled-progress">Cancelled by the Customer at the order confirmation process</div>';
+  const stage=workflowStage(o),activeIndex=stage>=2?stage-2:-1,accepted=stage===3&&o.customerDecision==='accepted';
+  return `<div class="workflow-heading"><b>ORDER PROGRESS:</b><span>${escHtml(WORKFLOW_HEADINGS[stage]||'Review this order')}</span></div><div class="progress-wrap"><div class="progress">${WORKFLOW_STEPS.map((lines,i)=>`<div class="progress-step ${i===activeIndex?'workflow-active':''} ${accepted&&i===2?'customer-accepted':''}"><span class="step-line">${lines[0]}</span><span class="step-line">${lines[1]}</span></div>`).join('')}</div></div>`;
+}
 function financeCell(label,value,key){return `<div class="finance-cell ${key||''}"><span>${label}</span><b>${value}</b></div>`;}
 function infoRow(k,v){return `<div class="r"><span class="k">${escHtml(k)}</span><span class="v">${v||'—'}</span></div>`;}
 function finalQuoteHTML(o){const locked=o.status!=='new'&&o.price>0;if(locked)return `<div class="final-quote-saved" id="finalQuoteRow"><span class="final-quote-amount">${money(o.price)}</span><button type="button" class="final-quote-edit-btn" onclick="unlockFinalPrice(${o.id})" aria-label="Edit final price" title="Edit final price">✎</button></div>`;return `<div class="final-quote-controls" id="finalQuoteRow"><input id="quotePrice" type="number" min="0" step="0.5" value="${Number(o.price||0)}" aria-label="Final price in euros"><button class="final-price-btn" onclick="finalizePrice(${o.id})">Final Price</button></div>`;}
 function doNextConfig(o){
-  if(o.status==='new')return {text:'Set the Final Quote',action:'quote'};
-  if(o.status==='quoted')return {text:'Press "Generate WhatsApp Message #1" button and create the Quote link then send the WhatsApp Message',html:'Press "<strong>Generate WhatsApp Message #1</strong>" button and create the Quote link then send the WhatsApp Message',action:'message1'};
-  if(o.status==='awaiting_payment')return {text:o.customerDecision==='accepted'?'Customer accepted the payment in the order form! When customer submit the payment proof, add the received amount':'When customer submit the payment proof, add the received amount',action:'payment'};
-  if(o.status==='confirmed'&&!o.confirmedSentAt)return {text:'Press "Generate WhatsApp Message #2" button and send the WhatsApp Message',action:'message2'};
-  if(o.status==='confirmed'||o.status==='done')return {text:'Set the "Paid in full" button, then press "Generate WhatsApp Message #3" button and send the WhatsApp Message',action:o.paid>=o.price&&o.price>0?'message3':'payment'};
+  const stage=workflowStage(o);
+  if(stage===1)return {text:'Set the final quote',action:'quote'};
+  if(stage===2)return {text:'Press "Go" and create the link. Then Send the message',action:'message1'};
+  if(stage===3)return {text:o.customerDecision==='accepted'?'Customer accepted the the payment on the Order Fom. 🎉 When Customer submit the proof of payment, press "Go" button':'When Customer submit the proof of payment, enter the amount',action:'payment'};
+  if(stage===4)return {text:'Press Go button and send the customer necessary information',action:'message2'};
+  if(stage===5)return {text:'Once you Deliver the Cake Press Go button and Set the payment as Fully Paid',action:'payment'};
+  if(stage===6)return {text:'Press Go and send the customer a feedback request',action:'message3'};
   return {text:'Review this order before taking the next action.',action:'none'};
 }
 function doNextHTML(o){const n=doNextConfig(o);return `<div class="do-next"><div class="do-next-copy"><span class="do-next-label">Do Next:</span><span class="do-next-text">${n.html||escHtml(n.text)}</span></div><button type="button" class="do-next-action" onclick="runDoNext(${o.id},'${n.action}')" aria-label="Go to the next action" title="Go to the next action">GO</button></div>`;}
-function paymentWorkspaceHTML(o){const deposit=o.price/2,remaining=Math.max(0,o.price-o.paid);return `<div class="payment-workspace" id="paymentWorkspace"><div class="payment-title">Payments</div><div class="payment-top"><div class="payment-total">${money(o.paid)} <small>of ${money(o.price)}</small></div><div class="payment-left">${remaining===0?'Fully paid ✓':money(remaining)+' left'}</div></div><div class="payment-entry"><input id="payAmt" type="number" min="0" step="0.5" placeholder="Amount received (€)"><button class="add" onclick="addPayment(${o.id})">Add</button><button class="reset" onclick="setPayment(${o.id},0)">Reset</button></div><div class="payment-quick"><button onclick="setPayment(${o.id},${deposit})">Deposit ${money(deposit)}</button><button onclick="setPayment(${o.id},${o.price})">Paid in full</button></div></div>`;}
-function messageStepFor(o){if(o.status==='quoted')return 'quote';if(o.status==='confirmed')return o.confirmedSentAt?'feedback':'confirmed';if(o.status==='done')return 'feedback';return '';}
-function messageLaunchHTML(o){const key=messageStepFor(o);if(!key)return '';const no={quote:1,confirmed:2,feedback:3}[key];return `<button class="message-launch" onclick="openMessagePanel('${key}')">Generate WhatsApp Message #${no}</button>`;}
+function paymentWorkspaceHTML(o){const deposit=o.price/2,remaining=Math.max(0,o.price-o.paid);return `<details class="payment-accordion" id="paymentDetails"><summary>Payment <span>${money(o.paid)} / ${money(o.price)}</span></summary><div class="payment-workspace" id="paymentWorkspace"><div class="payment-top"><div class="payment-total">${money(o.paid)} <small>of ${money(o.price)}</small></div><div class="payment-left">${remaining===0?'Fully paid ✓':money(remaining)+' left'}</div></div><div class="payment-entry"><input id="payAmt" type="number" min="0" step="0.5" placeholder="Amount received (€)"><button class="add" onclick="addPayment(${o.id})">Add</button><button class="reset" onclick="setPayment(${o.id},0)">Reset</button></div><div class="payment-quick"><button onclick="setPayment(${o.id},${deposit})">Deposit ${money(deposit)}</button><button onclick="setPayment(${o.id},${o.price})">Paid in full</button></div></div></details>`;}
+function messageStepFor(o){const stage=workflowStage(o);if(stage===2)return 'quote';if(stage===4)return 'confirmed';if(stage===6)return 'feedback';return '';}
 function runDoNext(id,action){if(action==='quote')focusFinalQuote();else if(action==='payment')focusPayment();else if(action==='message1')openMessagePanel('quote');else if(action==='message2')openMessagePanel('confirmed');else if(action==='message3')openMessagePanel('feedback');}
 function focusFinalQuote(){const el=document.getElementById('finalQuoteSection');if(!el)return;el.scrollIntoView({behavior:'smooth',block:'center'});el.classList.remove('attention');void el.offsetWidth;el.classList.add('attention');setTimeout(()=>{const input=document.getElementById('quotePrice');if(input&&!input.disabled)input.focus();},450);}
-function focusPayment(){const el=document.getElementById('paymentWorkspace');if(!el)return;el.scrollIntoView({behavior:'smooth',block:'center'});setTimeout(()=>{const input=document.getElementById('payAmt');if(input)input.focus();},450);}
+function focusPayment(){const details=document.getElementById('paymentDetails');if(!details)return;details.open=true;details.scrollIntoView({behavior:'smooth',block:'center'});details.classList.remove('payment-attention');void details.offsetWidth;details.classList.add('payment-attention');setTimeout(()=>{const input=document.getElementById('payAmt');if(input)input.focus();},450);}
 function renderOrderDetail(o){
   const decor=(o.decor||[]).filter(d=>d!=='No decoration'),note=cleanNotes(o),remaining=Math.max(0,o.price-o.paid);const cols=o.colors&&o.colors.length?o.colors.map(c=>`<span><i style="background:${escAttr(c[1])}"></i>${escHtml(c[0])}</span>`).join(''):'—';
   const allergy=o.allergies&&!['none','nenhuma'].includes(o.allergies.toLowerCase())?`<span style="color:var(--cancel);font-weight:700">⚠ ${escHtml(o.allergies)}</span>`:'None';
   return `<div class="finance-table">${financeCell('Paid',money(o.paid),'paid')}${financeCell('Total',money(o.price),'total')}${financeCell('Remaining',money(remaining),'remaining')}${financeCell('Pick-up',escHtml(relDate(o.pdate)),'pickup')}</div>
-    <div class="sec"><div class="lbl">Order Progress</div>${progressHTML(o)}${doNextHTML(o)}${paymentWorkspaceHTML(o)}${messageLaunchHTML(o)}</div>
+    <div class="sec">${progressHTML(o)}${doNextHTML(o)}${paymentWorkspaceHTML(o)}</div>
     <details class="detail-accordion" open><summary>The Cake</summary><div class="accordion-body"><div class="sec"><div class="kv">${infoRow('Type & size',escHtml(o.type+' · '+shortSize(o.size)))}${infoRow('Shape',escHtml(o.shape))}${infoRow('Flavour',escHtml(o.flavor))}${infoRow('Colours',`<span class="cols">${cols}</span>`)}${infoRow('Writing',o.writing?`“${escHtml(o.writing)}” · ${escHtml(o.writingColor)}`:'—')}${infoRow('Cupcakes',escHtml(o.cupcakes||'—'))}${infoRow('Decorations',escHtml(decor.join(', ')||'—'))}${infoRow('High-pigment',escHtml((o.pigment||[]).join(', ')||'—'))}${infoRow('Candles',escHtml(o.candles||'—'))}${infoRow('Allergies',allergy)}</div></div>${note?`<div class="sec"><div class="lbl">Customer notes</div><div class="notebox">${escHtml(note)}</div></div>`:''}<div class="sec"><div class="lbl">Reference photos</div>${photoGrid(o)}${o.photoNote?`<div class="notebox" style="margin-top:9px">${escHtml(o.photoNote)}</div>`:''}</div><div class="sec final-quote-section" id="finalQuoteSection"><div class="final-quote-line"><div class="lbl">Final Quote</div>${finalQuoteHTML(o)}</div></div></div></details>
     <details class="detail-accordion"><summary>Pick-up</summary><div class="accordion-body"><div class="sec"><div class="kv">${infoRow('Date',escHtml(fmtDate(o.pdate))+' · '+escHtml(relDate(o.pdate)))}${infoRow('Time',escHtml(o.ptime))}${infoRow('Collection',o.courier?'Uber/Bolt courier collection':'Customer collection')}</div></div></div></details>
     <details class="detail-accordion"><summary>Customer</summary><div class="accordion-body"><div class="sec"><div class="kv">${infoRow('Name',escHtml(o.name))}${infoRow('WhatsApp',escHtml(o.wcode+' '+o.wnum))}${infoRow('Instagram',o.instagram?'@'+escHtml(o.instagram):'—')}${infoRow('Email',escHtml(o.email||'—'))}${infoRow('Form language',escHtml(o.lang||'—'))}${infoRow('Found us via',escHtml(o.heard+(o.referredBy?' · '+o.referredBy:'')))}${infoRow('Ordering experience',o.feedback?`${FB_EMOJI[o.feedback.toLowerCase()]||'💬'} ${escHtml(o.feedback)}`:'Not submitted')}</div></div></div></details>
@@ -1120,8 +1178,8 @@ function renderOrderDetail(o){
 }
 function openSheet(id){const o=ORDERS.find(x=>x.id===id);if(!o)return;openId=id;if(!o.read){o.read=true;if(sb)sb.from('orders').update({is_read:true}).eq('id',id).then(()=>{});}if(view==='orders'){renderTop();renderList();}else if(view==='calendar')renderCalendar();document.getElementById('shName').textContent=o.name;document.getElementById('shSub').textContent=[o.type,shortSize(o.size),o.shape].filter(Boolean).join(' · ');document.getElementById('shOrdered').innerHTML=o.createdAt?`Ordered: <b>${escHtml(fmtOrderedAt(o.createdAt))}</b> · ${escHtml(o.created)}`:'';document.getElementById('shBody').innerHTML=(isBlacklisted(o)?`<div class="warnbox" style="margin-bottom:9px"><b>Blacklisted customer.</b> Review before accepting this order.</div>`:'')+renderOrderDetail(o);document.getElementById('overlay').classList.add('show');document.getElementById('sheet').classList.add('show');}
 function unlockFinalPrice(id){const o=ORDERS.find(x=>x.id===id),row=document.getElementById('finalQuoteRow');if(!o||!row)return;row.className='final-quote-controls';row.innerHTML=`<input id="quotePrice" type="number" min="0" step="0.5" value="${Number(o.price||0)}" aria-label="Final price in euros"><button class="final-price-btn" onclick="finalizePrice(${id})">Final Price</button>`;const input=document.getElementById('quotePrice');if(input){input.focus();input.select();}}
-async function finalizePrice(id){const o=ORDERS.find(x=>x.id===id),input=document.getElementById('quotePrice'),v=Number(input&&input.value);if(!Number.isFinite(v)||v<=0){alert('Enter the final price first.');return;}const nextStatus=o.status==='new'?'quoted':o.status;const {error}=await sb.from('orders').update({price:v,price_range:false,status:nextStatus}).eq('id',id);if(error){alert('Could not save final price: '+error.message);return;}o.price=v;o.range=false;o.status=nextStatus;activeBucket=nextStatus;refreshView();openSheet(id);}
-async function archiveOrder(id){const o=ORDERS.find(x=>x.id===id),next=o.status==='deleted'?'new':'deleted';const {error}=await sb.from('orders').update({status:next}).eq('id',id);if(error){alert('Could not update archive: '+error.message);return;}o.status=next;activeBucket=next;closeSheet();refreshView();}
+async function finalizePrice(id){const o=ORDERS.find(x=>x.id===id),input=document.getElementById('quotePrice'),v=Number(input&&input.value);if(!Number.isFinite(v)||v<=0){alert('Enter the final price first.');return;}const nextStatus=o.status==='new'?'quoted':o.status;const {error}=await sb.from('orders').update({price:v,price_range:false,status:nextStatus}).eq('id',id);if(error){alert('Could not save final price: '+error.message);return;}o.price=v;o.range=false;o.status=nextStatus;activeBucket=bucketOf(o);refreshView();openSheet(id);}
+async function archiveOrder(id){const o=ORDERS.find(x=>x.id===id),next=o.status==='deleted'?'new':'deleted';const {error}=await sb.from('orders').update({status:next}).eq('id',id);if(error){alert('Could not update archive: '+error.message);return;}o.status=next;activeBucket=bucketOf(o);closeSheet();refreshView();}
 let deleteTap={id:null,at:0};
 async function permanentDeleteTap(id,btn){const now=Date.now();if(deleteTap.id!==id||now-deleteTap.at>1500){deleteTap={id,at:now};btn.classList.add('armed');btn.textContent='Tap again to confirm deletion';btn.title='Tap once more to permanently delete';setTimeout(()=>{if(deleteTap.id===id&&Date.now()-deleteTap.at>=1450){deleteTap={id:null,at:0};if(btn){btn.classList.remove('armed');btn.textContent='Delete permanently';btn.title='Tap twice to permanently delete';}}},1550);return;}deleteTap={id:null,at:0};btn.disabled=true;const {error}=await sb.from('orders').delete().eq('id',id);if(error){btn.disabled=false;btn.classList.remove('armed');btn.textContent='Delete permanently';alert('Could not permanently delete this order: '+error.message);return;}ORDERS=ORDERS.filter(x=>x.id!==id);closeSheet();refreshView();}
 
@@ -1129,9 +1187,9 @@ async function permanentDeleteTap(id,btn){const now=Date.now();if(deleteTap.id!=
 function confirmedMessage(o){const pt=orderLanguage(o)==='pt',address=BIZ.address||'Rua Francisco Lyon de Castro nº 14\nEntrecampos, Lisbon 1600-311',remaining=Math.max(0,o.price-o.paid);let payment='';if(o.paid>=o.price&&o.price>0)payment=pt?`Recebemos o pagamento total de ${money(o.price)}.`:`We have received the full payment of ${money(o.price)}.`;else if(o.paid>0)payment=pt?`O valor total da sua encomenda é ${money(o.price)}. Recebemos o sinal de ${money(o.paid)}, ficando ${money(remaining)} por pagar.`:`The full price of your order is ${money(o.price)}. We have received your ${money(o.paid)} deposit, leaving ${money(remaining)} remaining.`;return pt?`A sua encomenda está confirmada ✔️${payment?'\n\n'+payment:''}\n\n📅 Data de levantamento: ${fmtDate(o.pdate)}\n🕒 Hora: ${o.ptime}\n📍 Local de levantamento:\n${address}\n\nQuando chegar, envie-me uma mensagem. Abrirei a porta e encontrá-la-ei no átrio com a sua encomenda.\n\nPor favor, chegue à hora marcada. Atrasos podem afetar o levantamento.\n\nObrigada!${courierReminder(o,'pt')}`:`Your order is confirmed ✔️${payment?'\n\n'+payment:''}\n\n📅 Pick-up date: ${fmtDate(o.pdate)}\n🕒 Time: ${o.ptime}\n📍 Pick-up location:\n${address}\n\nUpon arrival, send me a message. I’ll buzz you in and meet you in the lobby with your order.\n\nPlease arrive at your scheduled time. Late arrivals may affect your collection.\n\nThank you!${courierReminder(o,'en')}`;}
 function messageIcon(kind){if(kind==='copy')return '<svg viewBox="0 0 24 24" fill="none" stroke-width="2" aria-hidden="true"><rect x="8" y="8" width="11" height="11" rx="2"></rect><path d="M16 8V6a2 2 0 0 0-2-2H6a2 2 0 0 0-2 2v8a2 2 0 0 0 2 2h2"></path></svg>';return '<svg viewBox="0 0 24 24" fill="none" stroke-width="2" aria-hidden="true"><path d="M20 11.5a8 8 0 0 1-11.8 7L4 20l1.5-4.1A8 8 0 1 1 20 11.5Z"></path><path d="M9 8.5c.4 2.5 2 4.1 4.5 4.9l1.2-1.1 1.8.9c.2.1.3.4.2.6-.5 1.2-1.5 1.8-2.7 1.6-4.2-.8-6.6-3.2-7.4-7.4-.2-1.2.4-2.2 1.6-2.7.2-.1.5 0 .6.2l.9 1.8L9 8.5Z"></path></svg>';}
 function msgCard(o,key,title,textValue,doneAt){const actions=doneAt?`<button onclick="markMessage(${o.id},'${key}',false)">Marked Complete — Reopen</button>`:`<button class="primary" onclick="copyMessage('${key}')">${messageIcon('copy')}<span>Copy for WhatsApp</span></button><a class="whatsapp-action" href="${whatsappUrl(o)}" target="_blank" onclick="completeMessageAndOpen(event,${o.id},'${key}','${whatsappUrl(o)}')">${messageIcon('whatsapp')}<span>Open WhatsApp chat</span></a><button onclick="markMessage(${o.id},'${key}',true)">Mark Complete</button>`;return `<section class="message-card ${key} ${doneAt?'done':''}"><h3>${doneAt?'✓ ':''}${title}</h3><div class="message-preview">${escHtml(textValue)}</div><div class="message-actions">${actions}</div></section>`;}
-function openMessagePanel(key){const o=ORDERS.find(x=>x.id===openId);if(!o)return;const portal=isActivePortal(o)?`<div class="portal-box"><b>Customer quote page</b><div class="portal-url">${escHtml(o.portalUrl)}</div><div>Expires ${escHtml(new Date(o.portalExpires).toLocaleString())}</div><p><button onclick="copyText('${escAttr(o.portalUrl)}')">Copy link</button> <button class="muted-btn" onclick="generatePortal(${o.id})">Create new 48h link</button></p></div>`:`<div class="portal-box"><b>No active customer link</b><p class="infonote">Create the link after setting the Final Price.</p><button onclick="generatePortal(${o.id})">Create 48h quote link</button></div>`;window.__messages={quote:quoteMessage(o),confirmed:confirmedMessage(o),feedback:feedbackMessage(o)};const title={quote:'Generate WhatsApp Message #1',confirmed:'Generate WhatsApp Message #2',feedback:'Generate WhatsApp Message #3'}[key]||'WhatsApp Message';const card={quote:msgCard(o,'quote','1. Quote Ready',window.__messages.quote,o.quoteSentAt),confirmed:msgCard(o,'confirmed','2. Order Confirmed',window.__messages.confirmed,o.confirmedSentAt),feedback:msgCard(o,'feedback','3. Post-order Feedback',window.__messages.feedback,o.feedbackSentAt)}[key]||'';document.getElementById('contactTitle').textContent=title;document.getElementById('contactBody').innerHTML=(key==='quote'?portal:'')+card;document.getElementById('panelOverlay').classList.add('show');document.getElementById('contactPanel').classList.add('show');}
+function openMessagePanel(key){const o=ORDERS.find(x=>x.id===openId);if(!o)return;const portal=isActivePortal(o)?`<div class="portal-box"><b>Customer quote page</b><div class="portal-url">${escHtml(o.portalUrl)}</div><div>Expires ${escHtml(new Date(o.portalExpires).toLocaleString())}</div><p><button onclick="copyText('${escAttr(o.portalUrl)}')">Copy link</button> <button class="muted-btn" onclick="generatePortal(${o.id})">Create new 48h link</button></p></div>`:`<div class="portal-box"><b>No active customer link</b><p class="infonote">Create the link after setting the Final Price.</p><button onclick="generatePortal(${o.id})">Create 48h quote link</button></div>`;window.__messages={quote:quoteMessage(o),confirmed:confirmedMessage(o),feedback:feedbackMessage(o)};const title={quote:'Send Quote via WhatsApp',confirmed:'Send Information via WhatsApp',feedback:'Feedback Request via WhatsApp'}[key]||'WhatsApp Message';const card={quote:msgCard(o,'quote','1. Quote Ready',window.__messages.quote,o.quoteSentAt),confirmed:msgCard(o,'confirmed','2. Order Confirmed',window.__messages.confirmed,o.confirmedSentAt),feedback:msgCard(o,'feedback','3. Post-order Feedback',window.__messages.feedback,o.feedbackSentAt)}[key]||'';document.getElementById('contactTitle').textContent=title;document.getElementById('contactBody').innerHTML=(key==='quote'?portal:'')+card;document.getElementById('panelOverlay').classList.add('show');document.getElementById('contactPanel').classList.add('show');}
 function openContactPanel(){const o=ORDERS.find(x=>x.id===openId);if(!o)return;openMessagePanel(messageStepFor(o)||'quote');}
-async function markMessage(id,key,complete){const o=ORDERS.find(x=>x.id===id);if(!o)return;if(complete&&key==='quote'&&!isActivePortal(o)){alert('Create an active 48-hour customer link first.');return;}if(complete&&key==='confirmed'&&o.paid<o.price/2){alert('Record the 50% deposit before completing this step.');return;}if(complete&&key==='feedback'&&o.paid<o.price){alert('Set Paid in full before completing WhatsApp Message #3.');return;}const field={quote:'message_quote_sent_at',confirmed:'message_confirmed_sent_at',feedback:'message_feedback_sent_at'}[key],value=complete?new Date().toISOString():null,patch={[field]:value};let next=o.status;if(complete&&key==='quote')next='awaiting_payment';if(complete&&key==='feedback')next='done';if(next!==o.status)patch.status=next;const {error}=await sb.from('orders').update(patch).eq('id',id);if(error){alert('Could not save this step: '+error.message);return;}o[key+'SentAt']=value;o.status=next;if(next!==activeBucket&&complete)activeBucket=next;refreshView();openSheet(id);openMessagePanel(key);}
+async function markMessage(id,key,complete){const o=ORDERS.find(x=>x.id===id);if(!o)return;if(complete&&key==='quote'&&!isActivePortal(o)){alert('Create an active 48-hour customer link first.');return;}if(complete&&key==='confirmed'&&o.paid<=0){alert('Record the received payment before completing this step.');return;}const field={quote:'message_quote_sent_at',confirmed:'message_confirmed_sent_at',feedback:'message_feedback_sent_at'}[key],value=complete?new Date().toISOString():null,patch={[field]:value};let next=o.status;if(complete&&key==='quote')next='awaiting_payment';if(complete&&key==='feedback')next='done';if(next!==o.status)patch.status=next;const {error}=await sb.from('orders').update(patch).eq('id',id);if(error){alert('Could not save this step: '+error.message);return;}o[key+'SentAt']=value;o.status=next;activeBucket=bucketOf(o);refreshView();openSheet(id);openMessagePanel(key);}
 function completeMessageAndOpen(event,id,key,url){event.preventDefault();window.open(url,'_blank');markMessage(id,key,true);return false;}
 
 /* Keep a short, visible press state even when an action immediately redraws or opens another app. */

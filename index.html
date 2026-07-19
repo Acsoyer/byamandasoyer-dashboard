@@ -455,8 +455,8 @@
   #buckets .bpill:nth-child(-n+4) .btxt{display:block;overflow:visible!important;text-overflow:clip!important;white-space:normal!important;text-align:center;font-size:11px;font-weight:750}
   #buckets .bpill:nth-child(-n+4).active{border-color:var(--accent)!important;background:var(--accent)!important;color:#fff!important;box-shadow:0 5px 13px rgba(109,36,53,.18)!important}
   .workflow-heading{display:grid;grid-template-columns:auto minmax(0,1fr);align-items:center;gap:10px;min-height:40px;margin-bottom:9px;padding:8px 11px;border:1px solid #D9DEDB;border-radius:10px;background:rgba(255,255,255,.54);line-height:1.2}.workflow-heading b{color:var(--ink-faint);font-size:10px;font-weight:850;letter-spacing:.07em;white-space:nowrap}.workflow-heading span{min-width:0;color:var(--ink);font-size:12.5px;font-weight:750;overflow:hidden;text-align:right;text-overflow:ellipsis;white-space:nowrap}
-  .progress-step{white-space:normal!important;text-align:center!important;line-height:1.08!important}
-  .progress-step .step-line{display:block}
+  .progress-step{flex-direction:column!important;white-space:nowrap!important;text-align:center!important;line-height:1.12!important}
+  .progress-step .step-line{display:block!important;width:100%;white-space:nowrap!important;word-break:keep-all!important;overflow-wrap:normal!important;text-align:center}
   .progress-step.workflow-complete{background:#82A875!important;color:#fff!important}.progress-step.workflow-active{background:var(--confirmed)!important;color:#fff!important;filter:saturate(1.08) brightness(.98)!important}
   .progress-step.customer-accepted{border:0!important;outline:0!important;background:var(--card)!important;color:var(--confirmed)!important;box-shadow:none!important}
   .payment-accordion{margin-top:11px;border:1px solid var(--line);border-radius:13px;background:var(--card);overflow:hidden}

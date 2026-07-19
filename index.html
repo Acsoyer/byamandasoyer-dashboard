@@ -343,7 +343,7 @@
   .final-quote-line{display:grid;grid-template-columns:auto minmax(0,1fr);align-items:center;gap:12px}
   .final-quote-line>.lbl{margin:0;white-space:nowrap}
   .final-quote-controls{display:grid;grid-template-columns:minmax(78px,1fr) auto;gap:7px;min-width:0}
-  .final-quote-controls input{min-width:0;height:39px;border:1.5px solid var(--line);border-radius:10px;padding:8px 10px;font:700 15px 'Instrument Sans',sans-serif}
+  .final-quote-controls input{min-width:0;height:42px;border:1.5px solid var(--line);border-radius:10px;padding:8px 10px;font:700 17px 'Instrument Sans',sans-serif;touch-action:manipulation}
   .final-quote-controls input:disabled{background:#EEF0EE;color:var(--ink-soft)}
   .final-quote-controls .final-price-btn{height:39px;min-width:88px;padding:0 12px}
   .final-quote-controls .final-price-btn.edit{min-width:42px}
@@ -466,6 +466,9 @@
   .do-next{border-color:#AFC8B8!important;box-shadow:0 0 0 3px rgba(110,155,91,.10),0 0 17px rgba(110,155,91,.22)!important}.do-next-label{font-size:10px!important;font-weight:900!important;letter-spacing:.075em!important}.do-next-text strong{font-weight:850;color:var(--ink)}
   .finance-cell{min-height:41px!important;padding:7px 10px!important}.finance-cell b{font-size:14px!important}.finance-cell.total b{font-size:18px!important}
   @media(max-width:560px){#buckets .bpill:nth-child(-n+4) .btxt{font-size:10.5px}.workflow-heading{grid-template-columns:auto minmax(0,1fr);gap:7px;padding-left:9px;padding-right:9px}.workflow-heading b{font-size:9px}.workflow-heading span{font-size:11.5px}.progress-step{font-size:9.5px!important}.finance-cell{min-height:39px!important;padding:6px 8px!important}}
+  /* v29 mobile-safe quote input and test-order utility */
+  .final-quote-controls input#quotePrice{font-size:17px!important;line-height:1!important;-webkit-text-size-adjust:100%;appearance:none;-webkit-appearance:none}
+  .test-order-tool{margin-top:24px;padding:16px;border:1px solid #D8C7CD;border-radius:16px;background:linear-gradient(145deg,#FFF9FA,#F8EEEF);box-shadow:0 5px 16px rgba(105,22,45,.07)}.test-order-tool .test-kicker{color:var(--accent);font-size:10px;font-weight:850;letter-spacing:.09em;text-transform:uppercase}.test-order-tool h2{margin:5px 0 7px;font-size:18px}.test-order-tool p{margin:0;color:var(--ink-soft);font-size:12.5px;line-height:1.5}.test-order-tool button{width:100%;min-height:50px;margin-top:13px;border:0;border-radius:12px;background:var(--accent);color:#fff;font:800 13px 'Instrument Sans',sans-serif;cursor:pointer;box-shadow:0 6px 15px rgba(140,29,58,.2);transition:transform .1s ease,filter .1s ease}.test-order-tool button:active{transform:translateY(2px) scale(.985);filter:brightness(.88)}.test-order-tool button:disabled{opacity:.62;cursor:wait}
 </style>
 </head>
 <body>
@@ -894,10 +897,37 @@ function renderInfo(){
     ${row('hours','Pick-up hours',BIZ.hours,true)}
     <div class="ghead" style="margin-top:24px"><span>🚫 Blacklist</span><span class="ln"></span></div>
     ${bl}
+    <section class="test-order-tool"><div class="test-kicker">Testing tool</div><h2>Create a complete test order</h2><p>Creates one realistic fictional order using the same fields as the customer form. The record is marked as a dashboard test in Customer notes and uses non-customer contact details.</p><button type="button" onclick="createTestOrder(this)">Create and send test order</button></section>
     <p class="infonote">Changes save to Supabase and are used automatically on new customer quote pages.</p>`;
   document.querySelectorAll('#main [data-k]').forEach(el=>el.oninput=e=>{BIZ[e.target.dataset.k]=e.target.value;saveBiz();});
 }
 function copyField(btn,key){copyText(BIZ[key]);btn.textContent="Copied ✓";btn.classList.add('ok');setTimeout(()=>{btn.textContent="Copy";btn.classList.remove('ok');},1400);}
+let testOrderSb=null;
+function testChoice(values){return values[Math.floor(Math.random()*values.length)];}
+function testUuid(){return window.crypto&&window.crypto.randomUUID?window.crypto.randomUUID():'xxxxxxxx-xxxx-4xxx-yxxx-xxxxxxxxxxxx'.replace(/[xy]/g,c=>{const r=Math.random()*16|0,v=c==='x'?r:(r&3|8);return v.toString(16);});}
+function testPickupDate(){const date=new Date();date.setHours(12,0,0,0);date.setDate(date.getDate()+7+Math.floor(Math.random()*29));while([1,2].includes(date.getDay()))date.setDate(date.getDate()+1);const pad=n=>String(n).padStart(2,'0');return `${date.getFullYear()}-${pad(date.getMonth()+1)}-${pad(date.getDate())}`;}
+function buildTestOrder(){
+  const names=['Sofia Martins','Inês Almeida','Marta Costa','Joana Ferreira','Beatriz Sousa','Mariana Lopes','Leonor Santos','Carolina Rocha'];
+  const customFlavors=['Vanilla Berry','Vanilla Chocolate Duo','Red Velvet Classic','Lemon Raspberry','Chocolate Salted Caramel'];
+  const bentoFlavors=['Vanilla Chocolate Duo','Chocolate Vanilla Duo','Red Velvet Classic'];
+  const palettes=[[['Ivory','#F4E9D8'],['Burgundy','#6D2435']],[['Baby Pink','#F4B8C6'],['Cream','#FFF1D7']],[['Sage Green','#A9B79B'],['White','#FFFFFF']],[['Lilac','#C9B1D6'],['Yellow','#F4D66D']]];
+  const sizeChoice=testChoice([{cakeType:'Bento',size:'XS (4–6)',price:30},{cakeType:'Custom',size:'S (6–8)',price:40},{cakeType:'Custom',size:'M (10–12)',price:55},{cakeType:'Custom',size:'L (16–20)',price:80},{cakeType:'Custom',size:'XL (24–28)',price:110}]);
+  const noAllergy=Math.random()<.75,seed=String(Date.now()).slice(-6),name=testChoice(names),decor=testChoice([['Bows'],['Edible prints'],['Paper butterflies'],['Maraschino cherries'],['Fresh edible flowers'],['Fresh fruits']]);
+  const estimatedPrice=sizeChoice.price+(decor[0]==='Bows'?5:decor[0]==='Paper butterflies'?8:10);
+  return {status:'new',is_read:false,paid:0,language:testChoice(['EN','PT']),cake_type:sizeChoice.cakeType,size:sizeChoice.size,shape:testChoice(sizeChoice.cakeType==='Bento'?['Round','Heart']:['Round','Heart','Square','Rectangle']),flavor:testChoice(sizeChoice.cakeType==='Bento'?bentoFlavors:customFlavors),colors:testChoice(palettes),pigment:Math.random()<.3?['Dark colour coverage']:[],write_methods:['Piping'],writing:testChoice(['Happy Birthday','Parabéns','Thirty & Thriving','Baby on the way']),writing_color:testChoice(['Burgundy','White','Gold']),cupcakes:testChoice(['No cupcakes','6 Cupcakes','12 Cupcakes']),decor,candles:testChoice(['Yes','No']),photo_url:null,photo_note:'TEST ORDER: Reference image intentionally omitted by the dashboard generator.',no_allergy:noAllergy,allergies:noAllergy?'':'Nuts — test value only',notes:'TEST ORDER — Generated from the dashboard testing tool. Do not contact this fictional customer.\n\nCustomer would like a clean, elegant finish and is flexible about small design adjustments.',name,whatsapp:`+351 999 000 ${seed.slice(-3)}`,instagram:`test_order_${seed}`,pickup_date:testPickupDate(),pickup_time:testChoice(['11:30','13:00','15:30','17:00']),heard:testChoice(['Instagram','Google','Friend recommendation']),referred_by:'Dashboard test generator',email:`dashboard.test.${seed}@example.com`,email_opt_in:false,price:estimatedPrice,price_range:['Fresh edible flowers','Fresh fruits'].includes(decor[0]),agreed:true,submission_token:testUuid()};
+}
+async function createTestOrder(button){
+  if(!window.supabase){alert('Connection is not ready. Refresh the dashboard and try again.');return;}
+  const original=button.textContent;button.disabled=true;button.textContent='Creating test order…';
+  try{
+    if(!testOrderSb)testOrderSb=window.supabase.createClient(SB_URL,SB_KEY,{auth:{persistSession:false,autoRefreshToken:false,detectSessionInUrl:false}});
+    const payload=buildTestOrder();let {error}=await testOrderSb.from('orders').insert(payload);
+    if(error&&(error.code==='PGRST204'||/submission_token/i.test(error.message||''))){delete payload.submission_token;({error}=await testOrderSb.from('orders').insert(payload));}
+    if(error)throw error;
+    await refreshOrders();activeBucket='new_orders';setView('orders');
+    alert(`${payload.name} test order was created. It is now listed under New Orders.`);
+  }catch(error){button.disabled=false;button.textContent=original;alert('Could not create the test order: '+(error.message||error));}
+}
 
 /* ---------- detail sheet ---------- */
 let openId=null;
@@ -1151,7 +1181,9 @@ function progressHTML(o){
 }
 function financeCell(label,value,key){return `<div class="finance-cell ${key||''}"><span>${label}</span><b>${value}</b></div>`;}
 function infoRow(k,v){return `<div class="r"><span class="k">${escHtml(k)}</span><span class="v">${v||'—'}</span></div>`;}
-function finalQuoteHTML(o){const locked=o.status!=='new'&&o.price>0;if(locked)return `<div class="final-quote-saved" id="finalQuoteRow"><span class="final-quote-amount">${money(o.price)}</span><button type="button" class="final-quote-edit-btn" onclick="unlockFinalPrice(${o.id})" aria-label="Edit final price" title="Edit final price">✎</button></div>`;return `<div class="final-quote-controls" id="finalQuoteRow"><input id="quotePrice" type="number" min="0" step="0.5" value="${Number(o.price||0)}" aria-label="Final price in euros"><button class="final-price-btn" onclick="finalizePrice(${o.id})">Final Price</button></div>`;}
+function quoteInputHTML(value){return `<input id="quotePrice" type="text" inputmode="decimal" enterkeyhint="done" autocomplete="off" pattern="[0-9]+([.,][0-9]{0,2})?" value="${Number(value||0)}" oninput="sanitizeMoneyInput(this)" aria-label="Final price in euros">`;}
+function sanitizeMoneyInput(input){let value=String(input.value||'').replace(',','.').replace(/[^0-9.]/g,''),parts=value.split('.');if(parts.length>1)value=parts.shift()+'.'+parts.join('').slice(0,2);input.value=value;}
+function finalQuoteHTML(o){const locked=o.status!=='new'&&o.price>0;if(locked)return `<div class="final-quote-saved" id="finalQuoteRow"><span class="final-quote-amount">${money(o.price)}</span><button type="button" class="final-quote-edit-btn" onclick="unlockFinalPrice(${o.id})" aria-label="Edit final price" title="Edit final price">✎</button></div>`;return `<div class="final-quote-controls" id="finalQuoteRow">${quoteInputHTML(o.price)}<button class="final-price-btn" onclick="finalizePrice(${o.id})">Final Price</button></div>`;}
 function doNextConfig(o){
   const stage=workflowStage(o);
   if(stage===1)return {text:'Set the final quote',html:'Set the <strong>final quote</strong>.',action:'quote'};
@@ -1179,8 +1211,8 @@ function renderOrderDetail(o){
     <div class="bottom-actions"><div class="action-row"><button class="blbtn ${isBlacklisted(o)?'on':''}" onclick="toggleBlacklist(${o.id})">${isBlacklisted(o)?'Remove Bad Customer':'Mark as Bad Customer'}</button><button class="archivebtn" onclick="archiveOrder(${o.id})">${o.status==='deleted'?'Restore to Orders':'Move to Archived'}</button><button class="trashbtn" id="trashBtn" title="Tap twice to permanently delete" onclick="permanentDeleteTap(${o.id},this)">Delete permanently</button></div><a class="actionbtn owner-wa" href="${whatsappUrl(o)}" target="_blank">Open WhatsApp Chat</a></div>`;
 }
 function openSheet(id){const o=ORDERS.find(x=>x.id===id);if(!o)return;openId=id;if(!o.read){o.read=true;if(sb)sb.from('orders').update({is_read:true}).eq('id',id).then(()=>{});}if(view==='orders'){renderTop();renderList();}else if(view==='calendar')renderCalendar();document.getElementById('shName').textContent=o.name;document.getElementById('shSub').textContent=[o.type,shortSize(o.size),o.shape].filter(Boolean).join(' · ');document.getElementById('shOrdered').innerHTML=o.createdAt?`Ordered: <b>${escHtml(fmtOrderedAt(o.createdAt))}</b> · ${escHtml(o.created)}`:'';document.getElementById('shBody').innerHTML=(isBlacklisted(o)?`<div class="warnbox" style="margin-bottom:9px"><b>Blacklisted customer.</b> Review before accepting this order.</div>`:'')+renderOrderDetail(o);document.getElementById('overlay').classList.add('show');document.getElementById('sheet').classList.add('show');}
-function unlockFinalPrice(id){const o=ORDERS.find(x=>x.id===id),row=document.getElementById('finalQuoteRow');if(!o||!row)return;row.className='final-quote-controls';row.innerHTML=`<input id="quotePrice" type="number" min="0" step="0.5" value="${Number(o.price||0)}" aria-label="Final price in euros"><button class="final-price-btn" onclick="finalizePrice(${id})">Final Price</button>`;const input=document.getElementById('quotePrice');if(input){input.focus();input.select();}}
-async function finalizePrice(id){const o=ORDERS.find(x=>x.id===id),input=document.getElementById('quotePrice'),v=Number(input&&input.value);if(!Number.isFinite(v)||v<=0){alert('Enter the final price first.');return;}const nextStatus=o.status==='new'?'quoted':o.status;const {error}=await sb.from('orders').update({price:v,price_range:false,status:nextStatus}).eq('id',id);if(error){alert('Could not save final price: '+error.message);return;}o.price=v;o.range=false;o.status=nextStatus;activeBucket=bucketOf(o);refreshView();openSheet(id);}
+function unlockFinalPrice(id){const o=ORDERS.find(x=>x.id===id),row=document.getElementById('finalQuoteRow');if(!o||!row)return;row.className='final-quote-controls';row.innerHTML=`${quoteInputHTML(o.price)}<button class="final-price-btn" onclick="finalizePrice(${id})">Final Price</button>`;const input=document.getElementById('quotePrice');if(input){input.focus();input.select();}}
+async function finalizePrice(id){const o=ORDERS.find(x=>x.id===id),input=document.getElementById('quotePrice'),v=Number(String(input&&input.value||'').replace(',','.'));if(!Number.isFinite(v)||v<=0){alert('Enter the final price first.');return;}const nextStatus=o.status==='new'?'quoted':o.status;const {error}=await sb.from('orders').update({price:v,price_range:false,status:nextStatus}).eq('id',id);if(error){alert('Could not save final price: '+error.message);return;}o.price=v;o.range=false;o.status=nextStatus;activeBucket=bucketOf(o);refreshView();openSheet(id);}
 async function archiveOrder(id){const o=ORDERS.find(x=>x.id===id),next=o.status==='deleted'?'new':'deleted';const {error}=await sb.from('orders').update({status:next}).eq('id',id);if(error){alert('Could not update archive: '+error.message);return;}o.status=next;activeBucket=bucketOf(o);closeSheet();refreshView();}
 let deleteTap={id:null,at:0};
 async function permanentDeleteTap(id,btn){const now=Date.now();if(deleteTap.id!==id||now-deleteTap.at>1500){deleteTap={id,at:now};btn.classList.add('armed');btn.textContent='Tap again to confirm deletion';btn.title='Tap once more to permanently delete';setTimeout(()=>{if(deleteTap.id===id&&Date.now()-deleteTap.at>=1450){deleteTap={id:null,at:0};if(btn){btn.classList.remove('armed');btn.textContent='Delete permanently';btn.title='Tap twice to permanently delete';}}},1550);return;}deleteTap={id:null,at:0};btn.disabled=true;const {error}=await sb.from('orders').delete().eq('id',id);if(error){btn.disabled=false;btn.classList.remove('armed');btn.textContent='Delete permanently';alert('Could not permanently delete this order: '+error.message);return;}ORDERS=ORDERS.filter(x=>x.id!==id);closeSheet();refreshView();}

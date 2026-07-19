@@ -304,11 +304,15 @@
 
   /* definitive header, file-tabs and media layout */
   #buckets.buckets{position:relative;grid-auto-rows:40px;row-gap:14px;padding:13px 0 2px;isolation:isolate}
-  #buckets.buckets::before,#buckets.buckets::after{content:"";position:absolute;left:0;right:0;height:1px;background:#BEC6C1;z-index:0}
-  #buckets.buckets::before{top:52px}#buckets.buckets::after{bottom:1px}
+  #buckets.buckets::before{display:none}
+  #buckets.buckets::after{content:"";position:absolute;left:0;right:0;bottom:1px;height:1px;background:#BEC6C1;z-index:0}
   #buckets .bpill{height:40px;align-self:end;justify-content:center;background:#E7EAE8;border:1px solid #C9CFCC;border-bottom-color:#BEC6C1;border-radius:9px 9px 0 0;padding:7px 4px 6px;box-shadow:none;transform:none;z-index:1}
   #buckets .bpill.active{height:42px;align-self:end;background:var(--card);border-color:#BFC7C2;border-top:4px solid var(--accent);border-bottom-color:var(--card);padding-top:4px;margin-bottom:-1px;box-shadow:0 -4px 10px rgba(28,37,33,.07);z-index:3}
   #buckets .bpill .btxt{overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
+  #buckets .bpill:nth-child(-n+4){align-self:center;height:36px;border:1px solid #D1D7D3;border-radius:999px;background:#E7EAE8;padding:0 8px;color:#66706B;box-shadow:none;transform:none;position:relative}
+  #buckets .bpill:nth-child(-n+4).active{height:36px;margin:0;border-color:#7C2B40;background:#7C2B40;color:#fff;padding:0 8px;box-shadow:0 4px 11px rgba(109,36,53,.18)}
+  #buckets .bpill:nth-child(-n+4).active .n{background:rgba(255,255,255,.2);color:#fff}
+  #buckets .bpill .badge{position:absolute;top:-4px;right:-2px;width:10px;min-width:10px;height:10px;padding:0;border:2px solid var(--bg);border-radius:50%;background:#D83B45;box-shadow:none;font-size:0;line-height:0}
   #sheet{overflow:visible}
   #sheet .sh-head{position:relative;overflow:visible;min-height:0!important;padding:9px 18px 15px!important;background:var(--card)}
   #sheet .sh-grab{display:block!important;position:static;width:42px;height:4px;margin:0 auto 12px!important;background:#C6CDCA;border-radius:99px}
@@ -348,17 +352,19 @@
   @media(max-width:560px){#sheet>.sh-head{padding:10px 13px 13px!important}#sheet>.sh-head>.sh-grab{margin-bottom:11px!important}#sheet>.sh-head .sh-name{font-size:20px;line-height:1.2}#sheet>.sh-head .sh-sub{font-size:12.5px}#sheet>.sh-head .sh-ordered{font-size:10.8px}#sheet>.sh-head>.contact-dock{height:47px;margin-top:11px!important;font-size:14px}#sheet>.sh-head>.sh-close{top:-27px!important;right:12px!important;width:39px!important;height:39px!important}}
 
   /* isolated order header — intentionally uses no legacy sh-* or contact-dock classes */
-  #sheet>.order-head{box-sizing:border-box;display:block;position:relative;flex:0 0 auto;width:100%;min-width:0;padding:11px 17px 15px;background:var(--card);border-bottom:1px solid var(--line);overflow:visible}
+  #sheet>.order-head{box-sizing:border-box;display:block;position:relative;flex:0 0 auto;width:100%;min-width:0;padding:18px 17px 15px;background:var(--card);border-bottom:1px solid var(--line);overflow:visible}
   .order-grab{display:block;width:42px;height:4px;margin:0 auto 12px;background:#C6CDCA;border-radius:99px}
+  .order-head-main{display:grid;grid-template-columns:minmax(0,1fr) 104px;align-items:stretch;gap:12px;width:100%;min-width:0}
   .order-head-copy{display:block;box-sizing:border-box;width:100%;min-width:0;max-width:100%;margin:0;padding:0}
   .order-head-name,.order-head-sub,.order-head-ordered{display:block;box-sizing:border-box;width:100%;min-width:0;max-width:100%;margin-left:0;margin-right:0;padding:0;white-space:normal;overflow-wrap:anywhere;word-break:normal}
   .order-head-name{margin-top:0;margin-bottom:0;color:var(--ink);font:700 23px/1.2 'Instrument Sans',sans-serif;letter-spacing:-.02em}
   .order-head-sub{margin-top:5px;color:var(--ink-soft);font:600 13.5px/1.35 'Instrument Sans',sans-serif}
   .order-head-ordered{margin-top:7px;color:var(--ink-faint);font:500 11.5px/1.4 'Instrument Sans',sans-serif}
   .order-head-ordered b{color:var(--ink-soft);font-weight:650}
-  .order-contact{box-sizing:border-box;display:flex;position:static;align-items:center;justify-content:center;width:100%;height:48px;margin:13px 0 0;padding:0 18px;border:0;border-radius:12px;background:linear-gradient(135deg,#7C2B40,#602032);color:#fff;box-shadow:0 7px 18px rgba(109,36,53,.22);font:750 14px/1 'Instrument Sans',sans-serif;letter-spacing:.03em;cursor:pointer;-webkit-appearance:none;appearance:none}
+  .order-contact{box-sizing:border-box;display:flex;position:static;align-items:center;justify-content:center;width:100%;min-height:76px;height:auto;margin:0;padding:0 12px;border:0;border-radius:12px;background:linear-gradient(135deg,#7C2B40,#602032);color:#fff;box-shadow:0 7px 18px rgba(109,36,53,.22);font:750 14px/1 'Instrument Sans',sans-serif;letter-spacing:.03em;cursor:pointer;-webkit-appearance:none;appearance:none}
   .order-close{box-sizing:border-box;display:flex;position:absolute;top:-28px;right:14px;align-items:center;justify-content:center;width:40px;height:40px;margin:0;padding:0;border:1px solid #C8CFCC;border-radius:50%;background:var(--card);color:var(--ink-soft);box-shadow:0 5px 16px rgba(28,37,33,.18);font:400 24px/1 'Instrument Sans',sans-serif;cursor:pointer;z-index:12;-webkit-appearance:none;appearance:none}
-  @media(max-width:560px){#sheet>.order-head{padding:10px 13px 13px}.order-grab{margin-bottom:11px}.order-head-name{font-size:20px}.order-head-sub{font-size:12.5px}.order-head-ordered{font-size:10.8px}.order-contact{height:47px;margin-top:11px}.order-close{top:-27px;right:12px;width:39px;height:39px}}
+  .oc-copy{min-width:0;flex:1}.oc-side{display:flex;flex:0 0 auto;min-width:86px;flex-direction:column;align-items:flex-end;gap:7px}.oc-side .paychip{display:inline-flex;margin:0;white-space:nowrap;font-size:10px}.oc-cake{margin-top:5px;color:var(--ink);font-size:13px;font-weight:650}.oc-flavour{margin-top:2px;color:var(--ink-soft);font-size:13px}.oc-ordered{margin-top:9px;color:var(--ink-faint);font-size:11.5px}.oc-pickup{margin-top:4px;color:var(--ink-soft);font-size:12px}.oc-pickup b{color:var(--ink);font-weight:650}.oc-pickup span{color:var(--ink-faint)}
+  @media(max-width:560px){#buckets .bpill:nth-child(-n+4),#buckets .bpill:nth-child(-n+4).active{height:34px;padding:0 5px}#sheet>.order-head{padding:17px 13px 13px}.order-grab{margin-bottom:11px}.order-head-main{grid-template-columns:minmax(0,1fr) 90px;gap:9px}.order-head-name{font-size:20px}.order-head-sub{font-size:12.5px}.order-head-ordered{font-size:10.8px}.order-contact{min-height:72px;height:auto;margin:0;padding:0 8px;font-size:13px}.order-close{top:-27px;right:12px;width:39px;height:39px}.oc-side{min-width:78px}.oc-cake,.oc-flavour{font-size:12.5px}.oc-pickup{font-size:11.5px}}
 </style>
 </head>
 <body>
@@ -400,12 +406,14 @@
   <div class="order-head">
     <div class="order-grab"></div>
     <button class="order-close" onclick="closeSheet()" aria-label="Close order details">&times;</button>
-    <div class="order-head-copy">
-      <div class="order-head-name" id="shName"></div>
-      <div class="order-head-sub" id="shSub"></div>
-      <div class="order-head-ordered" id="shOrdered"></div>
+    <div class="order-head-main">
+      <div class="order-head-copy">
+        <div class="order-head-name" id="shName"></div>
+        <div class="order-head-sub" id="shSub"></div>
+        <div class="order-head-ordered" id="shOrdered"></div>
+      </div>
+      <button class="order-contact" onclick="openContactPanel()">Contact</button>
     </div>
-    <button class="order-contact" onclick="openContactPanel()">Contact</button>
   </div>
   <div class="sh-body" id="shBody"></div>
 </div>
@@ -560,7 +568,7 @@ function renderTop(){
   ORDERS.forEach(o=>counts[bucketOf(o)]=(counts[bucketOf(o)]||0)+1);
   let html='';
   BUCKETS.forEach(b=>{const newBadge=b.id==='new'?ORDERS.filter(o=>o.status==='new'&&!o.read).length:0;const count=b.id==='deleted'?'':`<span class="n">${counts[b.id]||0}</span>`;
-    html+=`<div class="bpill ${activeBucket===b.id?'active':''}" onclick="setBucket('${b.id}')"><span class="btxt">${b.label}</span>${count}${newBadge?`<span class="badge">${newBadge}</span>`:''}</div>`;});
+    html+=`<div class="bpill ${activeBucket===b.id?'active':''}" onclick="setBucket('${b.id}')"><span class="btxt">${b.label}</span>${count}${newBadge?`<span class="badge" aria-label="New orders"></span>`:''}</div>`;});
   document.getElementById('buckets').innerHTML=html;
   document.getElementById('statusrow').innerHTML='';
 }
@@ -929,7 +937,9 @@ function renderList(){
   }else{html+=`<div class="ghead"><span>${LIST_TITLES[activeBucket]||stLabel(activeBucket)}</span><span class="ln"></span><span>${items.length}</span></div>`;sortCreated(items).forEach(o=>html+=cardHTML(o));}
   el.innerHTML=html;
 }
-function cardHTML(o){const overdue=relDate(o.pdate).includes('ago'),ps=payStatus(o),price=['cancelled','deleted'].includes(o.status)?'—':((o.range?'~':'')+money(o.price));return `<div class="ocard ${o.read?'':'unread'}" style="--st:${stColor(o.status)}" onclick="openSheet(${o.id})"><div class="oc-top"><div><div class="oc-name">${escHtml(o.name)}${isBlacklisted(o)?'<span class="blchip">Blacklisted</span>':''}</div><div class="oc-meta">${escHtml([o.type,shortSize(o.size),o.shape,o.flavor].filter(Boolean).join(' · '))}</div></div><div class="oc-price">${price}</div></div><div class="oc-timegrid"><span>Received <b>${escHtml(o.created)}</b></span><span class="${overdue?'oc-date over':''}">Pick-up <b>${escHtml(fmtDate(o.pdate))} · ${escHtml(o.ptime)}</b> (${escHtml(relDate(o.pdate))})</span></div><div class="oc-bottom"><span></span><div class="chips">${o.feedback?`<span class="fbchip" title="Ordering experience: ${escAttr(o.feedback)}">${FB_EMOJI[o.feedback.toLowerCase()]||'Feedback'}</span>`:''}${ps?`<span class="paychip" style="color:${payColor[ps]};border-color:${payColor[ps]}">${payLabel[ps]}</span>`:''}</div></div></div>`;}
+function cardPickupDate(o){if(!o.pdate)return 'Date not set';const d=new Date(o.pdate+'T00:00:00');return `${WD[d.getDay()]} - ${MO[d.getMonth()]} ${d.getDate()} - ${o.ptime||'—'}`;}
+function pickupDistance(iso){if(!iso)return '';const d=new Date(iso+'T00:00:00');d.setHours(0,0,0,0);const n=Math.round((d-today)/86400000);if(n===0)return 'today';if(n===1)return 'in 1 day';if(n>1)return `in ${n} days`;if(n===-1)return '1 day ago';return `${-n} days ago`;}
+function cardHTML(o){const ps=o.paid>=o.price&&o.price>0?'paid':(o.paid>0?'deposit':null),price=['cancelled','deleted'].includes(o.status)?'—':((o.range?'~':'')+money(o.price)),cakeLine=[o.type,shortSize(o.size)].filter(Boolean).join(' ')+' - '+(o.shape||'—');return `<div class="ocard ${o.read?'':'unread'}" style="--st:${stColor(o.status)}" onclick="openSheet(${o.id})"><div class="oc-top"><div class="oc-copy"><div class="oc-name">${escHtml(o.name)}${isBlacklisted(o)?'<span class="blchip">Blacklisted</span>':''}</div><div class="oc-cake">${escHtml(cakeLine)}</div><div class="oc-flavour">${escHtml(o.flavor||'—')}</div><div class="oc-ordered">Ordered: ${escHtml(o.created)}</div><div class="oc-pickup">Pick-up: <b>${escHtml(cardPickupDate(o))}</b> <span>(${escHtml(pickupDistance(o.pdate))})</span></div></div><div class="oc-side"><div class="oc-price">${price}</div>${ps?`<span class="paychip" style="color:${payColor[ps]};border-color:${payColor[ps]}">${ps==='paid'?'Paid in full':'Deposit'}</span>`:''}</div></div></div>`;}
 function shortSize(v){return String(v||'').replace(/\s*\([^)]*\)/g,'').trim();}
 function progressHTML(o){const idx=FLOW.indexOf(o.status);return `<div class="progress">${FLOW.map((s,i)=>`<button class="progress-step ${idx>=i?(idx===i?'current':'complete'):''}" onclick="setOrderStatus(${o.id},'${s}')">${s==='awaiting_payment'?'Waiting':stLabel(s)}</button>`).join('')}</div>`;}
 function financeCell(label,value,key){return `<div class="finance-cell ${key||''}"><span>${label}</span><b>${value}</b></div>`;}

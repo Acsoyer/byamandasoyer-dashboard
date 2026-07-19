@@ -1,0 +1,24 @@
+{
+  "name": "by Amanda Soyer Orders",
+  "short_name": "byAS Orders",
+  "description": "by Amanda Soyer order management dashboard",
+  "start_url": "./",
+  "scope": "./",
+  "display": "standalone",
+  "background_color": "#F7F1EA",
+  "theme_color": "#69162D",
+  "icons": [
+    {
+      "src": "https://ivnybivjjydihltknlmo.supabase.co/storage/v1/object/public/references/icons-dashboard/android-chrome-192x192.png",
+      "sizes": "192x192",
+      "type": "image/png",
+      "purpose": "any"
+    },
+    {
+      "src": "https://ivnybivjjydihltknlmo.supabase.co/storage/v1/object/public/references/icons-dashboard/android-chrome-512x512.png",
+      "sizes": "512x512",
+      "type": "image/png",
+      "purpose": "any"
+    }
+  ]
+}

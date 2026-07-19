@@ -270,6 +270,8 @@
   .progress-step{min-width:0;height:48px;padding:0 4px;border:1px solid var(--line);border-radius:10px;background:var(--card);font-size:10.5px;display:flex;align-items:center;justify-content:center;line-height:1.15}
   .progress-step::before,.progress-step::after{display:none}
   .progress-step.complete,.progress-step.current{background:var(--confirmed);border-color:var(--confirmed);color:#fff;box-shadow:0 4px 10px rgba(52,116,90,.14)}
+  .progress-step.customer-accepted{background:var(--card)!important;border:2px solid var(--confirmed)!important;color:var(--confirmed)!important;box-shadow:0 0 0 3px rgba(52,116,90,.1)!important}
+  .customer-cancelled-progress{padding:13px 14px;border:1px solid rgba(180,35,58,.28);border-radius:11px;background:#FFF1F2;color:#B4233A;font-size:13px;font-weight:700;line-height:1.4;text-align:center}
   .detail-accordion{margin-top:12px;background:var(--card);border:1px solid var(--line);border-radius:14px;overflow:hidden}
   .detail-accordion summary{list-style:none;display:flex;align-items:center;justify-content:space-between;padding:14px 15px;font-size:13px;font-weight:700;cursor:pointer;user-select:none}
   .detail-accordion summary::-webkit-details-marker{display:none}.detail-accordion summary::after{content:"+";font-size:19px;font-weight:400;color:var(--ink-faint);transition:transform .14s ease}.detail-accordion[open] summary::after{transform:rotate(45deg)}
@@ -365,6 +367,7 @@
   .order-close{box-sizing:border-box;display:flex;position:absolute;top:-28px;right:14px;align-items:center;justify-content:center;width:40px;height:40px;margin:0;padding:0;border:1px solid #C8CFCC;border-radius:50%;background:var(--card);color:var(--ink-soft);box-shadow:0 5px 16px rgba(28,37,33,.18);font:400 24px/1 'Instrument Sans',sans-serif;cursor:pointer;z-index:12;-webkit-appearance:none;appearance:none}
   .oc-copy{min-width:0;flex:1}.oc-side{display:flex;flex:0 0 auto;min-width:86px;flex-direction:column;align-items:flex-end;gap:7px}.oc-side .paychip{display:inline-flex;margin:0;white-space:nowrap;font-size:10px}.oc-cake{margin-top:5px;color:var(--ink);font-size:13px;font-weight:650}.oc-flavour{margin-top:2px;color:var(--ink-soft);font-size:13px}.oc-ordered{margin-top:9px;color:var(--ink-faint);font-size:11.5px}.oc-pickup{margin-top:4px;color:var(--ink-soft);font-size:12px}.oc-pickup b{color:var(--ink);font-weight:650}.oc-pickup span{color:var(--ink-faint)}
   @media(max-width:560px){#buckets .bpill:nth-child(-n+4),#buckets .bpill:nth-child(-n+4).active{height:34px;padding:0 5px}#sheet>.order-head{padding:17px 13px 13px}.order-grab{margin-bottom:11px}.order-head-main{grid-template-columns:minmax(0,1fr) 90px;gap:9px}.order-head-name{font-size:20px}.order-head-sub{font-size:12.5px}.order-head-ordered{font-size:10.8px}.order-contact{min-height:72px;height:auto;margin:0;padding:0 8px;font-size:13px}.order-close{top:-27px;right:12px;width:39px;height:39px}.oc-side{min-width:78px}.oc-cake,.oc-flavour{font-size:12.5px}.oc-pickup{font-size:11.5px}}
+  .header-actions{display:flex;align-items:center;gap:8px}.activity-btn{position:relative;width:38px;height:36px;display:flex;align-items:center;justify-content:center;border:1px solid var(--line);border-radius:10px;background:var(--card);color:var(--ink-soft);cursor:pointer}.activity-btn svg{width:19px;height:19px}.activity-badge{display:none;position:absolute;top:-5px;right:-5px;min-width:18px;height:18px;padding:0 5px;border:2px solid var(--bg);border-radius:99px;background:#D83B45;color:#fff;font-size:10px;font-weight:800;line-height:14px}.activity-badge.show{display:block}.activity-overlay{display:none;position:fixed;inset:0;z-index:79;background:rgba(22,28,25,.18)}.activity-overlay.show{display:block}.activity-panel{display:none;position:fixed;z-index:80;top:66px;left:50%;transform:translateX(-50%);width:min(440px,calc(100% - 24px));max-height:min(620px,calc(100dvh - 84px));overflow:hidden;border:1px solid var(--line);border-radius:16px;background:var(--card);box-shadow:0 20px 55px rgba(25,34,29,.22)}.activity-panel.show{display:flex;flex-direction:column}.activity-head{display:flex;align-items:center;justify-content:space-between;padding:15px 16px;border-bottom:1px solid var(--line)}.activity-head h2{margin:0;font-size:17px}.activity-head button{width:32px;height:32px;border:0;border-radius:50%;background:var(--bg);color:var(--ink-soft);font-size:21px;cursor:pointer}.activity-list{overflow-y:auto;padding:7px 14px 14px}.activity-item{display:grid;grid-template-columns:10px 1fr;gap:10px;padding:12px 2px;border-bottom:1px solid var(--line)}.activity-dot{width:8px;height:8px;margin-top:5px;border-radius:50%;background:#AAB2AE}.activity-item.customer .activity-dot{background:#D83B45;box-shadow:0 0 0 4px rgba(216,59,69,.1)}.activity-message{font-size:13px;line-height:1.45;color:var(--ink)}.activity-time{margin-top:4px;color:var(--ink-faint);font-size:10.5px}.activity-empty{padding:34px 10px;text-align:center;color:var(--ink-faint);font-size:13px}
 </style>
 </head>
 <body>
@@ -384,7 +387,13 @@
   <header>
     <div class="htop">
       <div class="brand"><img src="https://ivnybivjjydihltknlmo.supabase.co/storage/v1/object/public/references/images/byAmandaSoyer_Logo_NoBackground.png" alt="by Amanda Soyer"><span class="dt" id="todayLbl"></span></div>
-      <button class="logout" onclick="logout()">Sign out</button>
+      <div class="header-actions">
+        <button class="activity-btn" onclick="toggleActivity()" aria-label="Notifications" title="Notifications">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M18 8a6 6 0 0 0-12 0c0 7-3 7-3 9h18c0-2-3-2-3-9"/><path d="M10 21h4"/></svg>
+          <span class="activity-badge" id="activityBadge"></span>
+        </button>
+        <button class="logout" onclick="logout()">Sign out</button>
+      </div>
     </div>
     <div class="tabs">
       <div class="tab on" data-v="orders" onclick="setView('orders')">Orders</div>
@@ -400,6 +409,12 @@
   </header>
   <div id="main"></div>
 </div>
+
+<div class="activity-overlay" id="activityOverlay" onclick="closeActivity()"></div>
+<aside class="activity-panel" id="activityPanel" aria-label="Recent activity">
+  <div class="activity-head"><h2>Recent activity</h2><button onclick="closeActivity()" aria-label="Close notifications">&times;</button></div>
+  <div class="activity-list" id="activityList"></div>
+</aside>
 
 <div id="overlay" onclick="closeSheet()"></div>
 <div id="sheet">
@@ -473,6 +488,39 @@ function saveBiz(){clearTimeout(_bizTimer);_bizTimer=setTimeout(()=>{sb.from('se
 
 const today=new Date(); today.setHours(0,0,0,0);
 let ORDERS=[];
+let ACTIVITY=[];
+
+function activityTime(iso){
+  if(!iso)return '';
+  const d=new Date(iso),diff=Math.max(0,Date.now()-d.getTime());
+  if(diff<60000)return 'Just now';
+  if(diff<3600000)return Math.floor(diff/60000)+'m ago';
+  if(diff<86400000)return Math.floor(diff/3600000)+'h ago';
+  return d.toLocaleDateString('en-GB',{day:'numeric',month:'short',year:d.getFullYear()!==new Date().getFullYear()?'numeric':undefined});
+}
+function renderActivity(){
+  const unread=ACTIVITY.filter(a=>a.source==='customer'&&!a.is_read).length;
+  const badge=document.getElementById('activityBadge');
+  badge.textContent=unread>9?'9+':String(unread);badge.classList.toggle('show',unread>0);
+  document.getElementById('activityList').innerHTML=ACTIVITY.length?ACTIVITY.map(a=>`<div class="activity-item ${a.source==='customer'?'customer':''}"><span class="activity-dot"></span><div><div class="activity-message">${escHtml(a.message)}</div><div class="activity-time">${escHtml(activityTime(a.created_at))}</div></div></div>`).join(''):'<div class="activity-empty">No activity yet.</div>';
+}
+async function refreshActivity(){
+  try{
+    const {data,error}=await sb.from('order_activity').select('*').order('created_at',{ascending:false}).limit(50);
+    if(error)throw error;ACTIVITY=data||[];renderActivity();
+  }catch(e){ACTIVITY=[];renderActivity();console.error('Activity refresh failed',e);}
+}
+async function toggleActivity(){
+  const panel=document.getElementById('activityPanel'),opening=!panel.classList.contains('show');
+  panel.classList.toggle('show',opening);document.getElementById('activityOverlay').classList.toggle('show',opening);
+  if(!opening)return;
+  renderActivity();
+  if(ACTIVITY.some(a=>a.source==='customer'&&!a.is_read)){
+    const {error}=await sb.from('order_activity').update({is_read:true}).eq('source','customer').eq('is_read',false);
+    if(!error){ACTIVITY.forEach(a=>{if(a.source==='customer')a.is_read=true;});renderActivity();}
+  }
+}
+function closeActivity(){document.getElementById('activityPanel').classList.remove('show');document.getElementById('activityOverlay').classList.remove('show');}
 
 /* map a database row to the shape the UI expects */
 function relTime(iso){
@@ -524,9 +572,22 @@ async function loadAll(){
   ORDERS=(od||[]).map(fromRow);
   try{const {data:st}=await sb.from('settings').select('data').eq('id',1).single();if(st&&st.data)BIZ=Object.assign({},BIZ,st.data);}catch(e){}
   try{const {data:bl}=await sb.from('blacklist').select('*');BLACKLIST=(bl||[]).map(b=>({id:b.id,name:b.name,phone:b.phone,digits:b.digits,note:b.note}));}catch(e){}
+  await refreshActivity();
 }
 async function refreshOrders(){
-  try{const {data:od}=await sb.from('orders').select('*').order('pickup_date',{ascending:true});ORDERS=(od||[]).map(fromRow);refreshView();}catch(e){}
+  try{
+    const feedbackBefore=new Map(ORDERS.map(o=>[o.id,o.feedback||'']));
+    const selectedId=openId;
+    const {data:od,error}=await sb.from('orders').select('*').order('pickup_date',{ascending:true});
+    if(error)throw error;
+    ORDERS=(od||[]).map(fromRow);
+    refreshView();
+    if(selectedId!==null){
+      const selected=ORDERS.find(o=>o.id===selectedId);
+      if(selected&&(feedbackBefore.get(selectedId)||'')!==(selected.feedback||''))openSheet(selectedId);
+    }
+    await refreshActivity();
+  }catch(e){console.error('Order refresh failed',e);}
 }
 
 /* ---------- helpers ---------- */
@@ -867,7 +928,7 @@ function cardHTML(o){
 }
 
 const FLOW=['new','quoted','awaiting_payment','confirmed','done'];
-function progressHTML(o){const idx=FLOW.indexOf(o.status);return `<div class="progress">${FLOW.map((s,i)=>`<button class="progress-step ${idx>=i?(idx===i?'current':'complete'):''}" onclick="setOrderStatus(${o.id},'${s}')">${stLabel(s)}</button>`).join('')}</div>`;}
+function progressHTML(o){if(o.status==='cancelled'&&o.cancelledBy==='customer')return '<div class="customer-cancelled-progress">Cancelled by the Customer at the order confirmation process</div>';const idx=FLOW.indexOf(o.status);return `<div class="progress">${FLOW.map((s,i)=>`<button class="progress-step ${idx>=i?(idx===i?'current':'complete'):''} ${o.status==='awaiting_payment'&&o.customerDecision==='accepted'&&s==='confirmed'?'customer-accepted':''}" onclick="setOrderStatus(${o.id},'${s}')">${stLabel(s)}</button>`).join('')}</div>`;}
 function photoGrid(o){const cells=[];for(let i=0;i<3;i++){const u=o.photos[i];cells.push(u?`<button class="pgi" onclick="openPhoto('${escAttr(u)}')"><img src="${escAttr(u)}" loading="lazy" alt="Reference ${i+1}"><span class="pgn">${i+1}</span></button>`:`<div class="photo-slot">Empty</div>`);}return `<div class="pgal">${cells.join('')}</div>`;}
 
 function openSheet(id){
@@ -941,7 +1002,7 @@ function cardPickupDate(o){if(!o.pdate)return 'Date not set';const d=new Date(o.
 function pickupDistance(iso){if(!iso)return '';const d=new Date(iso+'T00:00:00');d.setHours(0,0,0,0);const n=Math.round((d-today)/86400000);if(n===0)return 'today';if(n===1)return 'in 1 day';if(n>1)return `in ${n} days`;if(n===-1)return '1 day ago';return `${-n} days ago`;}
 function cardHTML(o){const ps=o.paid>=o.price&&o.price>0?'paid':(o.paid>0?'deposit':null),price=['cancelled','deleted'].includes(o.status)?'—':((o.range?'~':'')+money(o.price)),cakeLine=[o.type,shortSize(o.size)].filter(Boolean).join(' ')+' - '+(o.shape||'—');return `<div class="ocard ${o.read?'':'unread'}" style="--st:${stColor(o.status)}" onclick="openSheet(${o.id})"><div class="oc-top"><div class="oc-copy"><div class="oc-name">${escHtml(o.name)}${isBlacklisted(o)?'<span class="blchip">Blacklisted</span>':''}</div><div class="oc-cake">${escHtml(cakeLine)}</div><div class="oc-flavour">${escHtml(o.flavor||'—')}</div><div class="oc-ordered">Ordered: ${escHtml(o.created)}</div><div class="oc-pickup">Pick-up: <b>${escHtml(cardPickupDate(o))}</b> <span>(${escHtml(pickupDistance(o.pdate))})</span></div></div><div class="oc-side"><div class="oc-price">${price}</div>${ps?`<span class="paychip" style="color:${payColor[ps]};border-color:${payColor[ps]}">${ps==='paid'?'Paid in full':'Deposit'}</span>`:''}</div></div></div>`;}
 function shortSize(v){return String(v||'').replace(/\s*\([^)]*\)/g,'').trim();}
-function progressHTML(o){const idx=FLOW.indexOf(o.status);return `<div class="progress">${FLOW.map((s,i)=>`<button class="progress-step ${idx>=i?(idx===i?'current':'complete'):''}" onclick="setOrderStatus(${o.id},'${s}')">${s==='awaiting_payment'?'Waiting':stLabel(s)}</button>`).join('')}</div>`;}
+function progressHTML(o){if(o.status==='cancelled'&&o.cancelledBy==='customer')return '<div class="customer-cancelled-progress">Cancelled by the Customer at the order confirmation process</div>';const idx=FLOW.indexOf(o.status);return `<div class="progress">${FLOW.map((s,i)=>`<button class="progress-step ${idx>=i?(idx===i?'current':'complete'):''} ${o.status==='awaiting_payment'&&o.customerDecision==='accepted'&&s==='confirmed'?'customer-accepted':''}" onclick="setOrderStatus(${o.id},'${s}')">${s==='awaiting_payment'?'Waiting':stLabel(s)}</button>`).join('')}</div>`;}
 function financeCell(label,value,key){return `<div class="finance-cell ${key||''}"><span>${label}</span><b>${value}</b></div>`;}
 function infoRow(k,v){return `<div class="r"><span class="k">${escHtml(k)}</span><span class="v">${v||'—'}</span></div>`;}
 function finalQuoteHTML(o){const locked=o.status!=='new'&&o.price>0;return `<div class="final-quote-controls" id="finalQuoteRow"><input id="quotePrice" type="number" min="0" step="0.5" value="${Number(o.price||0)}" ${locked?'disabled':''} aria-label="Final price in euros"><button class="final-price-btn ${locked?'edit':''}" onclick="${locked?`unlockFinalPrice(${o.id})`:`finalizePrice(${o.id})`}">${locked?'✎':'Final Price'}</button></div>`;}
@@ -975,9 +1036,9 @@ function completeMessageAndOpen(event,id,key,url){event.preventDefault();window.
 let pollTimer=null;
 function startAutoRefresh(){
   if(pollTimer)clearInterval(pollTimer);
-  pollTimer=setInterval(()=>{if(!document.hidden&&openId===null)refreshOrders();},30000);
+  pollTimer=setInterval(()=>{if(!document.hidden)refreshOrders();},15000);
 }
-document.addEventListener('visibilitychange',()=>{if(!document.hidden&&openId===null)refreshOrders();});
+document.addEventListener('visibilitychange',()=>{if(!document.hidden)refreshOrders();});
 
 async function tryLogin(){
   const pw=document.getElementById('pw').value;

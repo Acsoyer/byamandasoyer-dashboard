@@ -454,16 +454,18 @@
   #buckets .bpill:nth-child(-n+4),#buckets .bpill:nth-child(-n+4).active{height:52px!important;border-radius:12px!important;padding:0 7px!important;line-height:1.08!important}
   #buckets .bpill:nth-child(-n+4) .btxt{display:block;overflow:visible!important;text-overflow:clip!important;white-space:normal!important;text-align:center;font-size:11px;font-weight:750}
   #buckets .bpill:nth-child(-n+4).active{border-color:var(--accent)!important;background:var(--accent)!important;color:#fff!important;box-shadow:0 5px 13px rgba(109,36,53,.18)!important}
-  .workflow-heading{display:flex;align-items:baseline;gap:9px;margin-bottom:9px;line-height:1.3}.workflow-heading b{flex:0 0 auto;color:var(--ink-faint);font-size:10.5px;font-weight:850;letter-spacing:.08em}.workflow-heading span{color:var(--ink);font-size:13px;font-weight:750}
+  .workflow-heading{display:grid;grid-template-columns:auto minmax(0,1fr);align-items:center;gap:10px;min-height:40px;margin-bottom:9px;padding:8px 11px;border:1px solid #D9DEDB;border-radius:10px;background:rgba(255,255,255,.54);line-height:1.2}.workflow-heading b{color:var(--ink-faint);font-size:10px;font-weight:850;letter-spacing:.07em;white-space:nowrap}.workflow-heading span{min-width:0;color:var(--ink);font-size:12.5px;font-weight:750;overflow:hidden;text-align:right;text-overflow:ellipsis;white-space:nowrap}
   .progress-step{white-space:normal!important;text-align:center!important;line-height:1.08!important}
   .progress-step .step-line{display:block}
-  .progress-step.workflow-active{background:var(--confirmed)!important;color:#fff!important}
+  .progress-step.workflow-complete{background:#82A875!important;color:#fff!important}.progress-step.workflow-active{background:var(--confirmed)!important;color:#fff!important;filter:saturate(1.08) brightness(.98)!important}
   .progress-step.customer-accepted{border:0!important;outline:0!important;background:var(--card)!important;color:var(--confirmed)!important;box-shadow:none!important}
   .payment-accordion{margin-top:11px;border:1px solid var(--line);border-radius:13px;background:var(--card);overflow:hidden}
   .payment-accordion>summary{display:flex;align-items:center;justify-content:space-between;min-height:48px;padding:0 13px;list-style:none;color:var(--ink);font-size:12px;font-weight:800;letter-spacing:.06em;text-transform:uppercase;cursor:pointer}.payment-accordion>summary::-webkit-details-marker{display:none}.payment-accordion>summary::after{content:'+';color:var(--ink-faint);font-size:20px;font-weight:500;transition:transform .15s ease}.payment-accordion[open]>summary::after{transform:rotate(45deg)}
   .payment-accordion .payment-workspace{margin:0;border:0;border-top:1px solid var(--line);border-radius:0}
   .payment-accordion.payment-attention{animation:paymentAttention 1s ease 2}@keyframes paymentAttention{50%{border-color:var(--confirmed);box-shadow:0 0 0 5px rgba(110,155,91,.16)}}
-  @media(max-width:560px){#buckets .bpill:nth-child(-n+4) .btxt{font-size:10.5px}.workflow-heading{align-items:flex-start;flex-direction:column;gap:2px}.progress-step{font-size:9.5px!important}}
+  .do-next{border-color:#AFC8B8!important;box-shadow:0 0 0 3px rgba(110,155,91,.10),0 0 17px rgba(110,155,91,.22)!important}.do-next-label{font-size:10px!important;font-weight:900!important;letter-spacing:.075em!important}.do-next-text strong{font-weight:850;color:var(--ink)}
+  .finance-cell{min-height:41px!important;padding:7px 10px!important}.finance-cell b{font-size:14px!important}.finance-cell.total b{font-size:18px!important}
+  @media(max-width:560px){#buckets .bpill:nth-child(-n+4) .btxt{font-size:10.5px}.workflow-heading{grid-template-columns:auto minmax(0,1fr);gap:7px;padding-left:9px;padding-right:9px}.workflow-heading b{font-size:9px}.workflow-heading span{font-size:11.5px}.progress-step{font-size:9.5px!important}.finance-cell{min-height:39px!important;padding:6px 8px!important}}
 </style>
 </head>
 <body>
@@ -1140,24 +1142,24 @@ function cardPickupDate(o){if(!o.pdate)return 'Date not set';const d=new Date(o.
 function pickupDistance(iso){if(!iso)return '';const d=new Date(iso+'T00:00:00');d.setHours(0,0,0,0);const n=Math.round((d-today)/86400000);if(n===0)return 'today';if(n===1)return 'in 1 day';if(n>1)return `in ${n} days`;if(n===-1)return '1 day ago';return `${-n} days ago`;}
 function cardHTML(o){const ps=o.paid>=o.price&&o.price>0?'paid':(o.paid>0?'deposit':null),price=['cancelled','deleted'].includes(o.status)?'—':((o.range?'~':'')+money(o.price)),cakeLine=[o.type,shortSize(o.size)].filter(Boolean).join(' ')+' - '+(o.shape||'—');return `<div class="ocard ${o.read?'':'unread'}" style="--st:${stColor(o.status)}" onclick="openSheet(${o.id})"><div class="oc-top"><div class="oc-copy"><div class="oc-name">${escHtml(o.name)}${isBlacklisted(o)?'<span class="blchip">Blacklisted</span>':''}</div><div class="oc-cake">${escHtml(cakeLine)}</div><div class="oc-flavour">${escHtml(o.flavor||'—')}</div><div class="oc-ordered">Ordered: ${escHtml(o.created)}</div><div class="oc-pickup">Pick-up: <b>${escHtml(cardPickupDate(o))}</b> <span>(${escHtml(pickupDistance(o.pdate))})</span></div></div><div class="oc-side"><div class="oc-price">${price}</div>${ps?`<span class="paychip" style="color:${payColor[ps]};border-color:${payColor[ps]}">${ps==='paid'?'Paid in full':'Deposit'}</span>`:''}</div></div></div>`;}
 function shortSize(v){return String(v||'').replace(/\s*\([^)]*\)/g,'').trim();}
-const WORKFLOW_STEPS=[['Send the','Quote'],['Wait','Customer'],['Deposit','Paid'],['Before','Delivery'],['Cake is','Delivered']];
+const WORKFLOW_STEPS=[['Send the','Quote'],['Wait for','Customer'],['Deposit','Paid'],['Before','Delivery'],['Cake is','Delivered']];
 const WORKFLOW_HEADINGS={1:'New Order! Set the quote',2:'Send the quote',3:'Waiting for the Deposit Payment',4:'Deposit Paid - Send Message',5:'Prepare the cake',6:'Send a Feedback Request'};
 function progressHTML(o){
   if(o.status==='cancelled'&&o.cancelledBy==='customer')return '<div class="customer-cancelled-progress">Cancelled by the Customer at the order confirmation process</div>';
   const stage=workflowStage(o),activeIndex=stage>=2?stage-2:-1,accepted=stage===3&&o.customerDecision==='accepted';
-  return `<div class="workflow-heading"><b>ORDER PROGRESS:</b><span>${escHtml(WORKFLOW_HEADINGS[stage]||'Review this order')}</span></div><div class="progress-wrap"><div class="progress">${WORKFLOW_STEPS.map((lines,i)=>`<div class="progress-step ${i===activeIndex?'workflow-active':''} ${accepted&&i===2?'customer-accepted':''}"><span class="step-line">${lines[0]}</span><span class="step-line">${lines[1]}</span></div>`).join('')}</div></div>`;
+  return `<div class="workflow-heading"><b>ORDER PROGRESS:</b><span>${escHtml(WORKFLOW_HEADINGS[stage]||'Review this order')}</span></div><div class="progress-wrap"><div class="progress">${WORKFLOW_STEPS.map((lines,i)=>`<div class="progress-step ${i<activeIndex?'workflow-complete':''} ${i===activeIndex?'workflow-active':''} ${accepted&&i===2?'customer-accepted':''}"><span class="step-line">${lines[0]}</span><span class="step-line">${lines[1]}</span></div>`).join('')}</div></div>`;
 }
 function financeCell(label,value,key){return `<div class="finance-cell ${key||''}"><span>${label}</span><b>${value}</b></div>`;}
 function infoRow(k,v){return `<div class="r"><span class="k">${escHtml(k)}</span><span class="v">${v||'—'}</span></div>`;}
 function finalQuoteHTML(o){const locked=o.status!=='new'&&o.price>0;if(locked)return `<div class="final-quote-saved" id="finalQuoteRow"><span class="final-quote-amount">${money(o.price)}</span><button type="button" class="final-quote-edit-btn" onclick="unlockFinalPrice(${o.id})" aria-label="Edit final price" title="Edit final price">✎</button></div>`;return `<div class="final-quote-controls" id="finalQuoteRow"><input id="quotePrice" type="number" min="0" step="0.5" value="${Number(o.price||0)}" aria-label="Final price in euros"><button class="final-price-btn" onclick="finalizePrice(${o.id})">Final Price</button></div>`;}
 function doNextConfig(o){
   const stage=workflowStage(o);
-  if(stage===1)return {text:'Set the final quote',action:'quote'};
-  if(stage===2)return {text:'Press "Go" and create the link. Then Send the message',action:'message1'};
-  if(stage===3)return {text:o.customerDecision==='accepted'?'Customer accepted the the payment on the Order Fom. 🎉 When Customer submit the proof of payment, press "Go" button':'When Customer submit the proof of payment, enter the amount',action:'payment'};
-  if(stage===4)return {text:'Press Go button and send the customer necessary information',action:'message2'};
-  if(stage===5)return {text:'Once you Deliver the Cake Press Go button and Set the payment as Fully Paid',action:'payment'};
-  if(stage===6)return {text:'Press Go and send the customer a feedback request',action:'message3'};
+  if(stage===1)return {text:'Set the final quote',html:'Set the <strong>final quote</strong>.',action:'quote'};
+  if(stage===2)return {text:'Press "Go" and create the link. Then send the message.',html:'Press <strong>"Go"</strong> and create the link. Then send the message.',action:'message1'};
+  if(stage===3)return o.customerDecision==='accepted'?{text:'Customer accepted the payment on the order form. 🎉 When the customer submits proof of payment, press "Go".',html:'<strong>Customer accepted the payment on the order form.</strong> 🎉 When the customer submits proof of payment, press <strong>"Go"</strong>.',action:'payment'}:{text:'When the customer submits proof of payment, enter the amount.',html:'When the customer submits proof of payment, enter the <strong>amount received</strong>.',action:'payment'};
+  if(stage===4)return {text:'Press "Go" and send the customer the necessary information.',html:'Press <strong>"Go"</strong> and send the customer the necessary information.',action:'message2'};
+  if(stage===5)return {text:'Once you deliver the cake, press "Go" and set the payment as fully paid.',html:'Once you deliver the cake, press <strong>"Go"</strong> and set the payment as <strong>fully paid</strong>.',action:'payment'};
+  if(stage===6)return {text:'Press "Go" and send the customer a feedback request.',html:'Press <strong>"Go"</strong> and send the customer a feedback request.',action:'message3'};
   return {text:'Review this order before taking the next action.',action:'none'};
 }
 function doNextHTML(o){const n=doNextConfig(o);return `<div class="do-next"><div class="do-next-copy"><span class="do-next-label">Do Next:</span><span class="do-next-text">${n.html||escHtml(n.text)}</span></div><button type="button" class="do-next-action" onclick="runDoNext(${o.id},'${n.action}')" aria-label="Go to the next action" title="Go to the next action">GO</button></div>`;}

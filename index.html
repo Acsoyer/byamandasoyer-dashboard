@@ -851,6 +851,7 @@ function analyticsSetDays(days){analyticsDays=days;renderStats();}
 function analyticsDateISO(date){const y=date.getFullYear(),m=String(date.getMonth()+1).padStart(2,'0'),d=String(date.getDate()).padStart(2,'0');return `${y}-${m}-${d}`;}
 function analyticsDuration(seconds){seconds=Math.max(0,Number(seconds)||0);if(seconds<60)return `${Math.round(seconds)}s`;const minutes=Math.round(seconds/60);if(minutes<60)return `${minutes}m`;return `${Math.floor(minutes/60)}h ${minutes%60}m`;}
 function analyticsPercent(value,total){return total?Math.round(Number(value||0)/total*100):0;}
+function analyticsSourceLabel(value){const label=String(value||'Direct').trim()||'Direct',known={instagram:'Instagram',facebook:'Facebook',tiktok:'TikTok',direct:'Direct'};return known[label.toLowerCase()]||label;}
 const FORM_STEP_LABELS=['Cake size','Flavour','Colours','Writing','Decorations','Candles','Reference photo','Allergies','Policies','Contact','Pick-up','How they found us','Email','Review'];
 async function renderWebsiteInsights(){
   const el=document.getElementById('websiteInsights');if(!el||!sb)return;const token=++analyticsToken;
@@ -861,7 +862,7 @@ async function renderWebsiteInsights(){
   const a=typeof data==='string'?JSON.parse(data):data||{},visits=Number(a.visitors)||0,opens=Number(a.order_opens)||0,starts=Number(a.form_starts)||0,submissions=Number(a.submissions)||0;
   const funnel=[['Landing visits',visits],['Order form opened',opens],['Form started',starts],['Order submitted',submissions]];
   const daily=Array.isArray(a.daily)?a.daily:[],dailyMax=Math.max(1,...daily.map(d=>Number(d.visitors)||0));
-  const sources=(Array.isArray(a.sources)?a.sources:[]).slice(0,6),dropoffs=(Array.isArray(a.dropoffs)?a.dropoffs:[]).slice(0,6);
+  const sources=(Array.isArray(a.sources)?a.sources:[]).slice(0,6).map(x=>Object.assign({},x,{label:analyticsSourceLabel(x.label)})),dropoffs=(Array.isArray(a.dropoffs)?a.dropoffs:[]).slice(0,6);
   el.innerHTML=`
     <div class="analytics-metrics">
       <div class="analytics-metric"><strong>${visits}</strong><span>Visits</span></div>

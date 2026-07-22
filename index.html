@@ -514,6 +514,9 @@
   @media(max-width:560px){.quote-preview{padding:8px}.quote-preview-card{height:calc(100dvh - 16px);border-radius:14px}.order-action{min-height:50px;padding:9px;font-size:10.5px}.order-action svg{width:17px;height:17px}}
   .do-next.conditional .do-next-copy{display:grid;gap:9px}.do-next-rule{display:grid;grid-template-columns:58px minmax(0,1fr);align-items:start;gap:8px}.do-next-rule+.do-next-rule{padding-top:9px;border-top:1px solid rgba(77,111,91,.18)}.do-next-rule .do-next-label{margin:2px 0 0!important}.do-next-rule .do-next-text{line-height:1.35!important}
   @media(max-width:560px){.do-next-rule{grid-template-columns:52px minmax(0,1fr);gap:6px}.do-next.conditional .do-next-copy{padding:12px!important}}
+  /* v60 active-order overview */
+  .overview-toolbar{display:flex;align-items:center;justify-content:space-between;gap:12px;margin:2px 0 11px;padding:0 2px}.overview-toolbar>div{display:flex;min-width:0;flex-direction:column;gap:2px}.overview-toolbar b{font:700 17px/1.2 'Fraunces',serif;color:var(--ink)}.overview-toolbar>div span{color:var(--ink-faint);font-size:10.5px}.overview-toolbar button{display:inline-flex;flex:0 0 auto;align-items:center;justify-content:center;gap:6px;min-height:34px;padding:0 10px;border:1px solid #D1D7D3;border-radius:10px;background:var(--card);color:var(--ink-soft);font:750 10.5px 'Instrument Sans',sans-serif;cursor:pointer}.overview-toolbar button svg{width:15px;height:15px;fill:none;stroke:currentColor;stroke-width:1.8;stroke-linecap:round;stroke-linejoin:round}.overview-grid{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:8px}.overview-card{position:relative;min-width:0;overflow:visible;padding:11px 11px 10px 14px;border:1px solid var(--line);border-radius:12px;background:var(--card);box-shadow:0 2px 9px rgba(42,48,45,.055);cursor:pointer}.overview-card::before{content:"";position:absolute;left:0;top:9px;bottom:9px;width:3px;border-radius:0 3px 3px 0;background:var(--st)}.overview-card.unread{border-color:#D9A7B3;background:#FFF9FA}.overview-card.unread::after{content:"NEW";position:absolute;top:-6px;right:9px;padding:2px 6px;border-radius:99px;background:var(--new);color:#fff;font-size:7.5px;font-weight:850;letter-spacing:.07em}.overview-card-top{display:flex;align-items:flex-start;justify-content:space-between;gap:8px}.overview-card-name{min-width:0;overflow:hidden;color:var(--ink);font-size:13px;font-weight:800;line-height:1.25;text-overflow:ellipsis;white-space:nowrap}.overview-card-name .blchip{margin-left:5px;font-size:7.5px}.overview-card-price{flex:0 0 auto;color:var(--accent);font:700 15px/1.1 'Fraunces',serif;white-space:nowrap}.overview-dates{display:grid;gap:4px;margin-top:9px;padding:7px 0;border-top:1px solid #F0E8E2;border-bottom:1px solid #F0E8E2}.overview-dates div{display:grid;grid-template-columns:48px minmax(0,1fr);align-items:baseline;min-width:0;gap:5px}.overview-dates span{color:var(--ink-faint);font-size:7.5px;font-weight:800;letter-spacing:.07em;text-transform:uppercase}.overview-dates p{min-width:0;margin:0;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}.overview-dates b{color:var(--ink);font-size:10.5px;font-weight:750}.overview-dates em{color:var(--ink-soft);font-size:9px;font-style:normal}.overview-badges{display:flex;align-items:center;gap:5px;min-width:0;margin-top:8px}.overview-badges .paychip,.overview-badges .customer-accepted-chip{flex:0 0 auto;padding:3px 6px;font-size:7.8px}.overview-badges .order-progress-chip{min-width:0;min-height:27px;margin-left:auto;padding:3px 6px;font-size:7.8px}.overview-badges .order-progress-chip>span{white-space:nowrap}
+  @media(max-width:620px){.overview-grid{grid-template-columns:1fr}.overview-card{padding:11px 12px 10px 15px}.overview-card-name{font-size:13.5px}.overview-dates b{font-size:11px}.overview-badges .order-progress-chip{max-width:132px}}
 </style>
 </head>
 <body>
@@ -542,7 +545,7 @@
       </div>
     </div>
     <div class="tabs">
-      <div class="tab on" data-v="orders" onclick="setView('orders')">Orders</div>
+      <div class="tab on" data-v="orders" onclick="openOrdersOverview()">Orders</div>
       <div class="tab" data-v="calendar" onclick="setView('calendar')">Calendar</div>
       <div class="tab" data-v="stats" onclick="setView('stats')">Stats</div>
       <div class="tab" data-v="info" onclick="setView('info')">My info</div>
@@ -792,7 +795,7 @@ const BUCKETS=[
   {id:"new_orders",label:"New<br>Orders"},{id:"waiting_customer",label:"Waiting<br>Customer"},{id:"deposit_paid",label:"Deposit<br>Paid"},{id:"cake_delivered",label:"Cake<br>Delivered"},
   {id:"done",label:"Done"},{id:"cancelled",label:"Cancelled"},{id:"deleted",label:"Archived"}
 ];
-let activeBucket="new_orders", statusSet=new Set(), view="orders", calMonth=new Date(today.getFullYear(),today.getMonth(),1), calSel=null, statsMonth=new Date(today.getFullYear(),today.getMonth(),1), statsScope='month', statsBreakdown='size', statsTab='web', infoTab='info', customerOpenKey='', customerMenuKey='', analyticsDays=30, analyticsToken=0;
+let activeBucket="new_orders", ordersOverview=true, overviewSort='none', statusSet=new Set(), view="orders", calMonth=new Date(today.getFullYear(),today.getMonth(),1), calSel=null, statsMonth=new Date(today.getFullYear(),today.getMonth(),1), statsScope='month', statsBreakdown='size', statsTab='web', infoTab='info', customerOpenKey='', customerMenuKey='', analyticsDays=30, analyticsToken=0;
 
 const MO=["January","February","March","April","May","June","July","August","September","October","November","December"];
 const MOS=["Jan","Feb","Mar","Apr","May","Jun","Jul","Aug","Sep","Oct","Nov","Dec"];
@@ -816,6 +819,7 @@ function setView(v){
   else if(v==='stats')renderStats();
   else if(v==='info')renderInfo();
 }
+function openOrdersOverview(){ordersOverview=true;setView('orders');}
 
 /* ---------- orders ---------- */
 function renderTop(){
@@ -825,11 +829,11 @@ function renderTop(){
   ORDERS.forEach(o=>counts[bucketOf(o)]=(counts[bucketOf(o)]||0)+1);
   let html='';
   BUCKETS.forEach(b=>{const newBadge=b.id==='new_orders'?ORDERS.filter(o=>bucketOf(o)==='new_orders'&&!o.read).length:0;const count=b.id==='deleted'?'':`<span class="n">${counts[b.id]||0}</span>`;
-    html+=`<div class="bpill ${activeBucket===b.id?'active':''}" onclick="setBucket('${b.id}')"><span class="btxt">${b.label}</span>${count}${newBadge?`<span class="badge" aria-label="New orders"></span>`:''}</div>`;});
+    html+=`<div class="bpill ${!ordersOverview&&activeBucket===b.id?'active':''}" onclick="setBucket('${b.id}')"><span class="btxt">${b.label}</span>${count}${newBadge?`<span class="badge" aria-label="New orders"></span>`:''}</div>`;});
   document.getElementById('buckets').innerHTML=html;
   document.getElementById('statusrow').innerHTML='';
 }
-function setBucket(b){activeBucket=b;renderTop();renderList();}
+function setBucket(b){ordersOverview=false;activeBucket=b;renderTop();renderList();}
 function setStatus(s){if(statusSet.has(s))statusSet.delete(s);else statusSet.add(s);renderTop();renderList();}
 function matchSearch(o,q){if(!q)return true;q=q.toLowerCase();return [o.name,o.flavor,o.wnum,o.instagram,o.type,o.size].join(' ').toLowerCase().includes(q);}
 /* Orders are operational records: newest submission first. */
@@ -1262,7 +1266,9 @@ async function setPayment(id,amt){await savePaymentAmount(id,amt);}
 /* ---------- compact workspace v2 ---------- */
 const LIST_TITLES={new_orders:'New Orders',waiting_customer:'Waiting Customer',deposit_paid:'Deposit Paid',cake_delivered:'Cake Delivered',done:'Done',cancelled:'Cancelled',deleted:'Archived'};
 function renderList(){
-  const q=document.getElementById('search').value.trim();let items=ORDERS.filter(o=>matchSearch(o,q)&&bucketOf(o)===activeBucket);const el=document.getElementById('main');
+  const q=document.getElementById('search').value.trim();const el=document.getElementById('main');
+  if(ordersOverview){renderOrdersOverview(q,el);return;}
+  let items=ORDERS.filter(o=>matchSearch(o,q)&&bucketOf(o)===activeBucket);
   if(!items.length){el.innerHTML=`<div class="empty">No orders here.</div>`;return;}
   let html='';
   if(activeBucket==='new_orders'){
@@ -1272,6 +1278,13 @@ function renderList(){
   }else{html+=`<div class="ghead"><span>${LIST_TITLES[activeBucket]||stLabel(activeBucket)}</span><span class="ln"></span><span>${items.length}</span></div>`;sortCreated(items).forEach(o=>html+=cardHTML(o));}
   el.innerHTML=html;
 }
+const OVERVIEW_SORT_LABELS={none:'Sort',order:'Order date',pickup:'Nearest pick-up',alpha:'A–Z'};
+function cycleOverviewSort(){const modes=['order','pickup','alpha'],index=modes.indexOf(overviewSort);overviewSort=modes[(index+1)%modes.length];renderList();}
+function overviewDate(value,dateOnly=false){if(!value)return 'Not set';const d=new Date(dateOnly?value+'T00:00:00':value);if(Number.isNaN(d.getTime()))return 'Not set';const pad=n=>String(n).padStart(2,'0');return `${pad(d.getDate())}-${pad(d.getMonth()+1)}-${String(d.getFullYear()).slice(-2)}`;}
+function overviewDayDistance(value,dateOnly=false){if(!value)return '';const d=new Date(dateOnly?value+'T00:00:00':value);if(Number.isNaN(d.getTime()))return '';d.setHours(0,0,0,0);const n=Math.round((d-today)/86400000);if(n===0)return 'today';if(n===1)return 'in 1 day';if(n>1)return `in ${n} days`;if(n===-1)return '1 day ago';return `${-n} days ago`;}
+function sortOverviewOrders(items){const list=[...items];if(overviewSort==='order')return list.sort((a,b)=>new Date(b.createdAt||0)-new Date(a.createdAt||0));if(overviewSort==='pickup')return list.sort((a,b)=>(a.pdate?new Date(a.pdate+'T00:00:00').getTime():Infinity)-(b.pdate?new Date(b.pdate+'T00:00:00').getTime():Infinity));if(overviewSort==='alpha')return list.sort((a,b)=>String(a.name||'').localeCompare(String(b.name||''),undefined,{sensitivity:'base'}));return list;}
+function overviewCardHTML(o){const ps=o.paid>=o.price&&o.price>0?'paid':(o.paid>0?'deposit':null),progress=cardProgressLabel(o),accepted=workflowStage(o)===3&&o.customerDecision==='accepted',price=(o.range?'~':'')+money(o.price);return `<article class="overview-card ${o.read?'':'unread'}" style="--st:${stColor(o.status)}" onclick="openSheet(${o.id})"><div class="overview-card-top"><div class="overview-card-name">${escHtml(o.name)}${isBlacklisted(o)?'<span class="blchip">Blacklisted</span>':''}</div><div class="overview-card-price">${price}</div></div><div class="overview-dates"><div><span>Ordered</span><p><b>${escHtml(overviewDate(o.createdAt))}</b><em> - ${escHtml(overviewDayDistance(o.createdAt))}</em></p></div><div><span>Pick-up</span><p><b>${escHtml(overviewDate(o.pdate,true))}</b><em> ${escHtml(overviewDayDistance(o.pdate,true))}</em></p></div></div><div class="overview-badges">${ps?`<span class="paychip" style="color:${payColor[ps]};border-color:${payColor[ps]}">${ps==='paid'?'Paid in full':'Deposit'}</span>`:''}${accepted?'<span class="customer-accepted-chip">Customer Accepted</span>':''}<span class="order-progress-chip ${progress.kind||''}">${progress.lines.map(line=>`<span>${escHtml(line)}</span>`).join('')}</span></div></article>`;}
+function renderOrdersOverview(q,el){let items=ORDERS.filter(o=>!['done','cancelled','deleted'].includes(o.status)&&matchSearch(o,q));items=sortOverviewOrders(items);const sortIcon='<svg viewBox="0 0 24 24" aria-hidden="true"><path d="M8 7h11M8 12h8M8 17h5M4 5v14m0 0-2.5-2.5M4 19l2.5-2.5"/></svg>';if(!items.length){el.innerHTML='<div class="overview-toolbar"><div><b>Active orders</b><span>Everything currently in progress</span></div><button onclick="cycleOverviewSort()">'+sortIcon+'<span>'+OVERVIEW_SORT_LABELS[overviewSort]+'</span></button></div><div class="empty">No active orders.</div>';return;}el.innerHTML=`<div class="overview-toolbar"><div><b>Active orders</b><span>${items.length} order${items.length===1?'':'s'} currently in progress</span></div><button onclick="cycleOverviewSort()">${sortIcon}<span>${OVERVIEW_SORT_LABELS[overviewSort]}</span></button></div><div class="overview-grid">${items.map(overviewCardHTML).join('')}</div>`;}
 function cardPickupDate(o){if(!o.pdate)return 'Date not set';const d=new Date(o.pdate+'T00:00:00');return `${WD[d.getDay()]} - ${MO[d.getMonth()]} ${d.getDate()} - ${o.ptime||'—'}`;}
 function pickupDistance(iso){if(!iso)return '';const d=new Date(iso+'T00:00:00');d.setHours(0,0,0,0);const n=Math.round((d-today)/86400000);if(n===0)return 'today';if(n===1)return 'in 1 day';if(n>1)return `in ${n} days`;if(n===-1)return '1 day ago';return `${-n} days ago`;}
 function cardProgressLabel(o){if(o.status==='cancelled')return {lines:['Cancelled'],kind:'closed'};if(o.status==='deleted')return {lines:['Archived'],kind:'closed'};if(o.status==='done')return {lines:['Cake Delivered'],kind:'closed'};const stage=workflowStage(o);if(stage===1)return {lines:['Set the Quote']};if(stage===2)return {lines:['Send Quoted Link']};if(stage===3)return {lines:['Wait for customer']};if(stage===4)return {lines:['Deposit Paid -','Send Info']};if(stage===5)return {lines:['Delivery Date','incoming']};if(stage===6)return {lines:['Cake Delivered']};return {lines:[stLabel(o.status)],kind:'closed'};}

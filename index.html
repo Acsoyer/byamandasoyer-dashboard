@@ -2,7 +2,7 @@
 <html lang="en">
 <head>
 <meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="viewport" content="width=device-width, initial-scale=1, minimum-scale=1, maximum-scale=1, user-scalable=no, viewport-fit=cover">
 <meta name="theme-color" content="#69162D">
 <meta name="apple-mobile-web-app-capable" content="yes">
 <meta name="apple-mobile-web-app-status-bar-style" content="default">
@@ -45,9 +45,9 @@
   .htop{display:flex;align-items:center;justify-content:space-between;gap:12px;margin-bottom:12px}
   .brand{display:flex;align-items:center;gap:10px}
   .brand img{height:34px}
+  .brand-restart{display:flex;align-items:center;margin:0;padding:0;border:0;background:transparent;cursor:pointer}
   .brand .dt{color:var(--ink-soft);font-size:13px}
-  .logout,.restart-dashboard{background:none;border:1px solid var(--line);border-radius:10px;padding:7px 12px;font-family:inherit;font-size:13px;font-weight:600;color:var(--ink-soft);cursor:pointer}
-  .restart-dashboard{background:var(--card);color:var(--ink)}
+  .logout{background:none;border:1px solid var(--line);border-radius:10px;padding:7px 12px;font-family:inherit;font-size:13px;font-weight:600;color:var(--ink-soft);cursor:pointer}
 
   /* view tabs */
   .tabs{display:flex;gap:4px;background:#EFE3DA;border-radius:12px;padding:4px}
@@ -341,9 +341,10 @@
   .pgi img,.pgal.one .pgi img{position:absolute;inset:0;width:100%;height:100%;aspect-ratio:1;object-fit:cover;border:0;margin:0;display:block}
   .pgn{z-index:2;line-height:17px}.photo-slot{width:100%;aspect-ratio:1;border-radius:10px}
   .final-quote-section{margin-top:13px!important}
-  .final-quote-line{display:grid;grid-template-columns:auto minmax(0,1fr);align-items:center;gap:12px}
+  .final-quote-line{display:grid;grid-template-columns:auto auto minmax(0,1fr);align-items:center;gap:8px}
   .final-quote-line>.lbl{margin:0;white-space:nowrap}
-  .final-quote-controls{display:grid;grid-template-columns:minmax(78px,1fr) auto;gap:7px;min-width:0}
+  .final-quote-separator,.final-quote-currency{color:var(--ink-soft);font-size:12px;font-weight:750;white-space:nowrap}
+  .final-quote-controls{display:grid;grid-template-columns:minmax(58px,1fr) auto auto;align-items:center;gap:7px;min-width:0}
   .final-quote-controls input{min-width:0;height:42px;border:1.5px solid var(--line);border-radius:10px;padding:8px 10px;font:700 17px 'Instrument Sans',sans-serif;touch-action:manipulation}
   .final-quote-controls input:disabled{background:#EEF0EE;color:var(--ink-soft)}
   .final-quote-controls .final-price-btn{height:39px;min-width:88px;padding:0 12px}
@@ -352,6 +353,8 @@
   .quoted-description{display:block;padding:10px;border:1px solid #D8C7CD;border-radius:10px;background:#FFF9FA}
   .quoted-description label{display:block;margin-bottom:6px;color:var(--accent);font-size:10.5px;font-weight:850;letter-spacing:.035em}
   .quoted-description textarea{display:block;width:100%;min-height:72px;resize:vertical;border:1px solid var(--line);border-radius:9px;background:#fff;padding:9px 10px;color:var(--ink);font:500 12.5px/1.45 'Instrument Sans',sans-serif}
+  html,body{touch-action:pan-x pan-y}
+  @media(max-width:768px){input,textarea,select{font-size:16px!important}}
   @media(max-width:560px){#buckets.buckets{grid-auto-rows:38px;row-gap:12px;padding-top:11px}#buckets.buckets::before{top:48px}#buckets .bpill{height:38px}#buckets .bpill.active{height:40px}#sheet .sh-head{padding:8px 13px 13px!important}#sheet .sh-close{top:-27px!important;right:7px!important;width:36px;height:36px}#sheet .contact-dock{height:46px;margin-top:11px}.final-quote-line{gap:8px}.final-quote-controls{gap:5px}.final-quote-controls .final-price-btn{min-width:76px;padding:0 8px;font-size:11px}}
 
   /* Safari-safe order header: direct flow, no nested positioning contexts */
@@ -529,13 +532,12 @@
 <div id="app">
   <header>
     <div class="htop">
-      <div class="brand"><img src="https://ivnybivjjydihltknlmo.supabase.co/storage/v1/object/public/references/images/byAmandaSoyer_Logo_NoBackground.png" alt="by Amanda Soyer"><span class="dt" id="todayLbl"></span></div>
+      <div class="brand"><button class="brand-restart" type="button" onclick="hardRestartDashboard()" aria-label="Restart dashboard" title="Restart dashboard"><img src="https://ivnybivjjydihltknlmo.supabase.co/storage/v1/object/public/references/images/byAmandaSoyer_Logo_NoBackground.png" alt="by Amanda Soyer"></button><span class="dt" id="todayLbl"></span></div>
       <div class="header-actions">
         <button class="activity-btn" onclick="toggleActivity()" aria-label="Notifications" title="Notifications">
           <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M18 8a6 6 0 0 0-12 0c0 7-3 7-3 9h18c0-2-3-2-3-9"/><path d="M10 21h4"/></svg>
           <span class="activity-badge" id="activityBadge"></span>
         </button>
-        <button class="restart-dashboard" onclick="restartDashboard()">Restart</button>
         <button class="logout" onclick="logout()">Sign out</button>
       </div>
     </div>
@@ -1290,9 +1292,9 @@ function financeCell(label,value,key){return `<div class="finance-cell ${key||''
 function infoRow(k,v){return `<div class="r"><span class="k">${escHtml(k)}</span><span class="v">${v||'—'}</span></div>`;}
 function quoteInputHTML(value){return `<input id="quotePrice" type="text" inputmode="decimal" enterkeyhint="done" autocomplete="off" pattern="[0-9]+([.,][0-9]{0,2})?" value="${Number(value||0)}" oninput="sanitizeMoneyInput(this)" aria-label="Final price in euros">`;}
 function sanitizeMoneyInput(input){let value=String(input.value||'').replace(',','.').replace(/[^0-9.]/g,''),parts=value.split('.');if(parts.length>1)value=parts.shift()+'.'+parts.join('').slice(0,2);input.value=value;}
-function quotedDescriptionEditor(o){const description=o.quotedItemsDescription||'';return `<div class="quoted-description" id="quotedDescriptionWrap"><label for="quotedItemsDescription">Quoted items Description:</label><textarea id="quotedItemsDescription" maxlength="800" placeholder="e.g., The big text is a high-pigment colour, which adds €5.">${escHtml(description)}</textarea></div>`;}
-function finalQuoteEditorHTML(o){return `<div class="final-quote-editor" id="finalQuoteRow"><div class="final-quote-controls">${quoteInputHTML(o.price)}<button class="final-price-btn" onclick="finalizePrice(${o.id})">Final Price</button></div>${quotedDescriptionEditor(o)}</div>`;}
-function finalQuoteHTML(o){const locked=o.status!=='new'&&o.price>0;if(locked)return `<div class="final-quote-saved" id="finalQuoteRow"><span class="final-quote-amount">${money(o.price)}</span><button type="button" class="final-quote-edit-btn" onclick="unlockFinalPrice(${o.id})" aria-label="Edit final price" title="Edit final price">✎</button></div>`;return finalQuoteEditorHTML(o);}
+function quotedDescriptionEditor(o){const description=o.quotedItemsDescription||'';return `<div class="quoted-description" id="quotedDescriptionWrap"><label for="quotedItemsDescription">Quoted Item Description:</label><textarea id="quotedItemsDescription" maxlength="800" placeholder="e.g., The big text is a high-pigment colour, which adds €5.">${escHtml(description)}</textarea></div>`;}
+function finalQuoteEditorHTML(o){return `<div class="final-quote-editor" id="finalQuoteRow"><div class="final-quote-line"><div class="lbl">Final Quote</div><span class="final-quote-separator">-</span><div class="final-quote-controls">${quoteInputHTML(o.price)}<span class="final-quote-currency">- EUR</span><button class="final-price-btn" onclick="finalizePrice(${o.id})">Final Price</button></div></div>${quotedDescriptionEditor(o)}</div>`;}
+function finalQuoteHTML(o){const locked=o.status!=='new'&&o.price>0;if(locked)return `<div class="final-quote-editor" id="finalQuoteRow"><div class="final-quote-line"><div class="lbl">Final Quote</div><span class="final-quote-separator">-</span><div class="final-quote-saved"><span class="final-quote-amount">${money(o.price)}</span><button type="button" class="final-quote-edit-btn" onclick="unlockFinalPrice(${o.id})" aria-label="Edit final price" title="Edit final price">✎</button></div></div></div>`;return finalQuoteEditorHTML(o);}
 function doNextConfig(o){
   if(o.status==='done')return {text:'Cake has been delivered, feedback request message has been sent. You can move this order to Archive',html:'Cake has been delivered, feedback request message has been sent. You can move this order to <strong>Archive</strong>',action:'archive'};
   const stage=workflowStage(o);
@@ -1323,7 +1325,7 @@ function renderOrderDetail(o){
   const addons=/^(no cupcakes|none|nenhuma|—)?$/i.test(String(o.cupcakes||''))?'No add-ons':o.cupcakes;
   return `<div class="finance-table">${financeCell('Paid',money(o.paid),'paid')}${financeCell('Total',money(o.price),'total')}${financeCell('Remaining',money(remaining),'remaining')}${financeCell('Pick-up',escHtml(relDate(o.pdate)),'pickup')}</div>
     <div class="sec">${progressHTML(o)}${quoteStatusHTML(o)}${doNextHTML(o)}${paymentWorkspaceHTML(o)}</div>
-    <details class="detail-accordion" open><summary>The Cake</summary><div class="accordion-body"><div class="sec"><div class="kv">${infoRow('Type & size',escHtml(o.type+' · '+shortSize(o.size)))}${infoRow('Shape',escHtml(o.shape))}${infoRow('Flavour',escHtml(o.flavor))}${infoRow('Colours',`<span class="cols">${cols}</span>`)}${infoRow('Writing',o.writing?`“${escHtml(o.writing)}” · ${escHtml(o.writingColor)}`:'—')}${infoRow('Add-ons',escHtml(addons))}${infoRow('Decorations',escHtml(decor.join(', ')||'—'))}${infoRow('High-pigment',escHtml((o.pigment||[]).join(', ')||'—'))}${infoRow('Candles',escHtml(o.candles||'—'))}${infoRow('Allergies',allergy)}</div></div>${note?`<div class="sec"><div class="lbl">Customer notes</div><div class="notebox">${escHtml(note)}</div></div>`:''}<div class="sec"><div class="lbl">Reference photos</div>${photoGrid(o)}${o.photoNote?`<div class="notebox" style="margin-top:9px">${escHtml(o.photoNote)}</div>`:''}</div><div class="sec final-quote-section" id="finalQuoteSection"><div class="final-quote-line"><div class="lbl">Final Quote</div>${finalQuoteHTML(o)}</div></div></div></details>
+    <details class="detail-accordion" open><summary>The Cake</summary><div class="accordion-body"><div class="sec"><div class="kv">${infoRow('Type & size',escHtml(o.type+' · '+shortSize(o.size)))}${infoRow('Shape',escHtml(o.shape))}${infoRow('Flavour',escHtml(o.flavor))}${infoRow('Colours',`<span class="cols">${cols}</span>`)}${infoRow('Writing',o.writing?`“${escHtml(o.writing)}” · ${escHtml(o.writingColor)}`:'—')}${infoRow('Add-ons',escHtml(addons))}${infoRow('Decorations',escHtml(decor.join(', ')||'—'))}${infoRow('High-pigment',escHtml((o.pigment||[]).join(', ')||'—'))}${infoRow('Candles',escHtml(o.candles||'—'))}${infoRow('Allergies',allergy)}</div></div>${note?`<div class="sec"><div class="lbl">Customer notes</div><div class="notebox">${escHtml(note)}</div></div>`:''}<div class="sec"><div class="lbl">Reference photos</div>${photoGrid(o)}${o.photoNote?`<div class="notebox" style="margin-top:9px">${escHtml(o.photoNote)}</div>`:''}</div><div class="sec final-quote-section" id="finalQuoteSection">${finalQuoteHTML(o)}</div></div></details>
     <details class="detail-accordion"><summary>Pick-up</summary><div class="accordion-body"><div class="sec"><div class="kv">${infoRow('Date',escHtml(fmtDate(o.pdate))+' · '+escHtml(relDate(o.pdate)))}${infoRow('Time',escHtml(o.ptime))}${infoRow('Collection',o.courier?'Uber/Bolt courier collection':'Customer collection')}</div></div></div></details>
     <details class="detail-accordion"><summary>Customer</summary><div class="accordion-body"><div class="sec"><div class="kv">${infoRow('Name',escHtml(o.name))}${infoRow('WhatsApp',escHtml(o.wcode+' '+o.wnum))}${infoRow('Instagram',o.instagram?'@'+escHtml(o.instagram):'—')}${infoRow('Email',escHtml(o.email||'—'))}${infoRow('Form language',escHtml(o.lang||'—'))}${infoRow('Found us via',escHtml(o.heard+(o.referredBy?' · '+o.referredBy:'')))}${infoRow('Ordering experience',o.feedback?`${FB_EMOJI[o.feedback.toLowerCase()]||'💬'} ${escHtml(o.feedback)}`:'Not submitted')}</div></div></div></details>
     ${orderActionsHTML(o)}`;
@@ -1380,8 +1382,14 @@ async function tryLogin(){
     document.getElementById('pwErr').style.display='block';
   }
 }
-function restartDashboard(){window.location.reload();}
+function hardRestartDashboard(){const url=new URL(window.location.href);url.searchParams.set('_restart',Date.now());window.stop();window.location.replace(url.toString());}
 function logout(){if(sb)sb.auth.signOut();document.getElementById('app').style.display='none';document.getElementById('login').style.display='flex';document.getElementById('pw').value='';document.getElementById('pwErr').style.display='none';}
+/* Prevent focus zoom, pinch zoom and accidental browser zoom throughout the dashboard. */
+['gesturestart','gesturechange','gestureend'].forEach(type=>document.addEventListener(type,event=>event.preventDefault(),{passive:false}));
+document.addEventListener('touchmove',event=>{if(event.touches.length>1)event.preventDefault();},{passive:false});
+document.addEventListener('dblclick',event=>event.preventDefault(),{passive:false});
+document.addEventListener('wheel',event=>{if(event.ctrlKey)event.preventDefault();},{passive:false});
+document.addEventListener('keydown',event=>{const key=String(event.key||'').toLowerCase();if((event.ctrlKey||event.metaKey)&&['+','-','=','0'].includes(key))event.preventDefault();},true);
 document.getElementById('pw').addEventListener('keydown',e=>{if(e.key==='Enter')tryLogin();});
 
 /* stay signed in across reloads */

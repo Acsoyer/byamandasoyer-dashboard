@@ -601,9 +601,9 @@
   /* ============================================================
      CARD REFINEMENTS (v58)
      ============================================================ */
-  /* full-height, square-edged colour stripe covering the whole card */
-  .overview-card{overflow:hidden!important}
-  .overview-card::before{top:0!important;bottom:0!important;left:0!important;width:6px!important;border-radius:0!important;
+  /* Keep the raised NEW badge visible outside the compact overview card. */
+  .overview-card{overflow:visible!important}
+  .overview-card::before{top:0!important;bottom:0!important;left:0!important;width:6px!important;border-radius:11px 0 0 11px!important;
     background:color-mix(in srgb,var(--bucket-color) 78%,#fff)!important}
 
   /* price matches .ocard: Instrument Sans, 21px, ink colour */
@@ -723,7 +723,7 @@
      PROGRESS STEPPER — single authoritative definition (v60)
      Overrides every earlier conflicting generation.
      ============================================================ */
-  .progress{--arrow:9px;--overlap:10px;display:flex!important;align-items:center!important;
+  .progress{--arrow:9px;--overlap:8px;display:flex!important;align-items:center!important;
     width:max-content!important;min-width:100%!important;gap:0!important;margin:7px auto 2px!important;
     padding:0!important;overflow:visible!important}
   .progress-step{position:relative!important;display:flex!important;flex-direction:column!important;
@@ -748,10 +748,8 @@
   .progress-step.workflow-complete{background:#82A875!important;color:#fff!important}
   .progress-step.workflow-active{background:#2F6F55!important;color:#fff!important}
   .progress-step.customer-accepted{background:var(--card)!important;color:#2F6F55!important}
-  /* Keep each chevron readable in every state with a slim white separator. */
-  .progress-step:not(:last-child){filter:drop-shadow(1px 0 0 #fff)!important}
   @media(max-width:560px){
-    .progress{--arrow:8px;--overlap:9px}
+    .progress{--arrow:8px;--overlap:7px}
     .progress-step{min-width:70px!important;height:38px!important;padding:0 8px 0 15px!important;font-size:9.5px!important}
     .progress-step:first-child{padding-left:9px!important}
     .progress-step:last-child{padding-right:10px!important}

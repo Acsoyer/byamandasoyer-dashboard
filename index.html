@@ -530,6 +530,51 @@
   .overview-badges .order-progress-chip{min-height:25px}
   .overview-badges .order-progress-chip>span{white-space:nowrap}
   @media(max-width:620px){#buckets.buckets{row-gap:4px!important}.overview-card{grid-template-columns:minmax(0,1fr) 104px;padding:9px 9px 9px 13px!important}.overview-dates div{grid-template-columns:46px minmax(0,1fr)}.overview-badges{padding-left:7px}}
+  /* ============================================================
+     UNIFIED NAVIGATION (v56) — overrides all earlier tab/bucket CSS.
+     Three layers, one language: underline top-nav, coloured order
+     flow-card, quiet archive row, centered section sub-navs.
+     ============================================================ */
+  /* top nav */
+  .topnav{display:flex;position:relative;border-bottom:1px solid var(--line);margin-bottom:0}
+  .topnav-a{position:relative;padding:12px 0;margin-right:20px;font-size:13.5px;font-weight:600;color:var(--ink-soft);cursor:pointer;white-space:nowrap;background:none;border:0;font-family:inherit;transition:color .18s}
+  .topnav-a:hover{color:var(--ink)}
+  .topnav-a.on{color:var(--ink)}
+  .topnav-ink{position:absolute;bottom:-1px;left:0;height:2px;width:0;background:var(--accent);border-radius:2px;transition:transform .26s cubic-bezier(.4,0,.2,1),width .26s cubic-bezier(.4,0,.2,1);pointer-events:none}
+
+  /* orders flow-card (first four, a sequence) */
+  #buckets{display:block;overflow:visible;padding:0}
+  .flowcard{display:flex;background:var(--card);border:1px solid var(--line);border-radius:13px;padding:4px;margin-top:14px;box-shadow:0 1px 3px rgba(25,35,31,.05)}
+  .ftab{position:relative;flex:1 1 0;min-width:0;background:none;border:0;font-family:inherit;cursor:pointer;text-align:center;padding:10px 3px 11px;border-radius:9px;transition:background .2s}
+  .ftab .fnm{display:block;font-size:11.5px;font-weight:600;line-height:1.18;color:var(--ink-soft);transition:color .18s}
+  .ftab .fct{position:absolute;top:5px;right:6px;font-size:10px;font-weight:800;font-variant-numeric:tabular-nums;background:#EAEDEB;color:var(--ink-faint);border-radius:99px;min-width:16px;height:16px;line-height:16px;padding:0 4px;transition:all .2s}
+  .ftab .fdot{position:absolute;top:6px;right:7px;width:7px;height:7px;border-radius:50%;background:var(--sc)}
+  .ftab.on{background:color-mix(in srgb,var(--sc) 12%,#fff)}
+  .ftab.on .fnm{color:var(--sc-ink);font-weight:700}
+  .ftab.on .fct{background:color-mix(in srgb,var(--sc) 20%,#fff);color:var(--sc-ink)}
+  .ftab.on::after{content:"";position:absolute;left:22%;right:22%;bottom:4px;height:2.5px;border-radius:2px;background:var(--sc)}
+
+  /* archive row (last three, quiet, pulled close) */
+  .archrow{display:flex;margin-top:9px;padding:0 2px}
+  .atab{flex:1 1 0;text-align:center;font-size:11.5px;font-weight:600;color:var(--ink-faint);cursor:pointer;padding:8px 2px;border-radius:8px;position:relative;transition:background .2s;display:flex;align-items:center;justify-content:center;gap:4px}
+  .atab .act{font-size:10px;opacity:.75}
+  .atab.on{color:var(--ink-soft);background:#ECEEEC}
+  .atab.on .anm{font-weight:700}
+
+  /* centered section sub-navs (Stats, My info) */
+  .subnav{display:flex;justify-content:center;gap:34px;position:relative;border-bottom:1px solid var(--line);margin:2px 0 16px}
+  .subnav-a{position:relative;padding:12px 2px;font-size:13.5px;font-weight:600;color:var(--ink-soft);cursor:pointer;background:none;border:0;font-family:inherit;display:flex;align-items:center;justify-content:center;transition:color .18s;min-height:44px}
+  .subnav-a:hover{color:var(--ink)}
+  .subnav-a.on{color:var(--ink)}
+  .subnav-icon svg{width:16px;height:16px;stroke:currentColor;fill:none}
+  .subnav-ink{position:absolute;bottom:-1px;left:0;height:2px;width:0;background:var(--accent);border-radius:2px;transition:transform .26s cubic-bezier(.4,0,.2,1),width .26s cubic-bezier(.4,0,.2,1);pointer-events:none}
+
+  @media(max-width:560px){
+    .topnav-a{margin-right:16px;font-size:13px}
+    .ftab .fnm{font-size:11px}
+    .subnav{gap:24px}
+    .subnav-a{font-size:13px}
+  }
 </style>
 </head>
 <body>
@@ -542,7 +587,7 @@
     <div class="err" id="pwErr">Wrong password — try again.</div>
     <button onclick="tryLogin()">Sign in</button>
   </div>
-  <div class="hint">Demo password: <b>cake2026</b></div>
+  <div class="hint">from Caner Soyer to <b>Amanda Soyer</b> 😘</div>
 </div>
 
 <div id="app">
@@ -557,12 +602,13 @@
         <button class="logout" onclick="logout()">Sign out</button>
       </div>
     </div>
-    <div class="tabs">
-      <div class="tab on" data-v="orders" onclick="openOrdersOverview()">Orders</div>
-      <div class="tab" data-v="calendar" onclick="setView('calendar')">Calendar</div>
-      <div class="tab" data-v="stats" onclick="setView('stats')">Stats</div>
-      <div class="tab" data-v="info" onclick="setView('info')">My info</div>
-    </div>
+    <nav class="topnav" id="topnav">
+      <a class="topnav-a on" data-v="orders" onclick="openOrdersOverview()">Orders</a>
+      <a class="topnav-a" data-v="calendar" onclick="setView('calendar')">Calendar</a>
+      <a class="topnav-a" data-v="stats" onclick="setView('stats')">Stats</a>
+      <a class="topnav-a" data-v="info" onclick="setView('info')">My info</a>
+      <span class="topnav-ink" id="topnavInk"></span>
+    </nav>
     <div class="ordersUI" id="ordersUI">
       <input class="search" id="search" placeholder="Search name, flavour, WhatsApp…" oninput="renderList()">
       <div class="buckets" id="buckets"></div>
@@ -808,7 +854,9 @@ const BUCKETS=[
   {id:"new_orders",label:"New<br>Orders"},{id:"waiting_customer",label:"Waiting<br>Customer"},{id:"deposit_paid",label:"Deposit<br>Paid"},{id:"cake_delivered",label:"Cake<br>Delivered"},
   {id:"done",label:"Done"},{id:"cancelled",label:"Cancelled"},{id:"deleted",label:"Archived"}
 ];
-const BUCKET_COLORS={new_orders:'#D14D72',waiting_customer:'#C98A2E',deposit_paid:'#6E9B5B',cake_delivered:'#46765F',done:'#9A8C93',cancelled:'#B26B6B',deleted:'#756B70'};
+const BUCKET_COLORS={new_orders:'#B4233A',waiting_customer:'#C6971C',deposit_paid:'#315E74',cake_delivered:'#34745A',done:'#9A8C93',cancelled:'#B26B6B',deleted:'#756B70'};
+const BUCKET_INK={new_orders:'#7E1526',waiting_customer:'#7E5D08',deposit_paid:'#1E3E4E',cake_delivered:'#1E4A38'};
+function bucketInk(id){return BUCKET_INK[id]||'#43423E';}
 function bucketColor(id){return BUCKET_COLORS[id]||'#9A8C93';}
 let activeBucket="new_orders", ordersOverview=true, overviewSort='none', statusSet=new Set(), view="orders", calMonth=new Date(today.getFullYear(),today.getMonth(),1), calSel=null, statsMonth=new Date(today.getFullYear(),today.getMonth(),1), statsScope='month', statsBreakdown='size', statsTab='web', infoTab='info', customerOpenKey='', customerMenuKey='', analyticsDays=30, analyticsToken=0;
 
@@ -825,9 +873,19 @@ const payColor={paid:"var(--paid)",deposit:"var(--deposit)",unpaid:"var(--unpaid
 const payLabel={paid:"Paid",deposit:"Deposit",unpaid:"Unpaid"};
 
 /* ---------- view switch ---------- */
+function moveTopnavInk(){
+  const nav=document.getElementById('topnav'),on=nav&&nav.querySelector('.topnav-a.on'),ink=document.getElementById('topnavInk');
+  if(nav&&on&&ink){ink.style.width=on.offsetWidth+'px';ink.style.transform=`translateX(${on.offsetLeft}px)`;}
+}
+function moveSubnavInk(navId){
+  const nav=document.getElementById(navId);if(!nav)return;
+  const on=nav.querySelector('.subnav-a.on'),ink=nav.querySelector('.subnav-ink');
+  if(on&&ink){ink.style.width=on.offsetWidth+'px';ink.style.transform=`translateX(${on.offsetLeft}px)`;}
+}
 function setView(v){
   view=v;
-  document.querySelectorAll('.tab').forEach(t=>t.classList.toggle('on',t.dataset.v===v));
+  document.querySelectorAll('.topnav-a').forEach(t=>t.classList.toggle('on',t.dataset.v===v));
+  requestAnimationFrame(moveTopnavInk);
   document.getElementById('ordersUI').style.display=(v==='orders')?'block':'none';
   if(v==='orders'){renderTop();renderList();}
   else if(v==='calendar')renderCalendar();
@@ -842,10 +900,25 @@ function renderTop(){
   document.getElementById('todayLbl').textContent=`${WD[now.getDay()]} ${now.getDate()} ${MOS[now.getMonth()]}`;
   const counts={};BUCKETS.forEach(b=>counts[b.id]=0);
   ORDERS.forEach(o=>counts[bucketOf(o)]=(counts[bucketOf(o)]||0)+1);
-  let html='';
-  BUCKETS.forEach(b=>{const newBadge=b.id==='new_orders'?ORDERS.filter(o=>bucketOf(o)==='new_orders'&&!o.read).length:0;const count=b.id==='deleted'?'':`<span class="n">${counts[b.id]||0}</span>`;
-    html+=`<div class="bpill ${!ordersOverview&&activeBucket===b.id?'active':''}" style="--bucket-color:${bucketColor(b.id)}" onclick="setBucket('${b.id}')"><span class="btxt">${b.label}</span>${count}${newBadge?`<span class="badge" aria-label="New orders"></span>`:''}</div>`;});
-  document.getElementById('buckets').innerHTML=html;
+  const flowIds=['new_orders','waiting_customer','deposit_paid','cake_delivered'];
+  const archIds=['done','cancelled','deleted'];
+  let flow='';
+  flowIds.forEach(id=>{
+    const b=BUCKETS.find(x=>x.id===id);if(!b)return;
+    const on=!ordersOverview&&activeBucket===id;
+    const unread=id==='new_orders'?ORDERS.filter(o=>bucketOf(o)==='new_orders'&&!o.read).length:0;
+    const badge=unread?`<span class="fdot"></span>`:`<span class="fct">${counts[id]||0}</span>`;
+    flow+=`<button class="ftab ${on?'on':''}" style="--sc:${bucketColor(id)};--sc-ink:${bucketInk(id)}" onclick="setBucket('${id}')"><span class="fnm">${b.label}</span>${badge}</button>`;
+  });
+  let arch='';
+  archIds.forEach(id=>{
+    const b=BUCKETS.find(x=>x.id===id);if(!b)return;
+    const on=!ordersOverview&&activeBucket===id;
+    const ct=id==='deleted'?'':`<span class="act">${counts[id]||0}</span>`;
+    arch+=`<a class="atab ${on?'on':''}" onclick="setBucket('${id}')"><span class="anm">${b.label}</span>${ct}</a>`;
+  });
+  document.getElementById('buckets').innerHTML=
+    `<div class="flowcard">${flow}</div><div class="archrow">${arch}</div>`;
   document.getElementById('statusrow').innerHTML='';
 }
 function setBucket(b){ordersOverview=false;activeBucket=b;renderTop();renderList();}
@@ -975,7 +1048,8 @@ function renderStats(){
   const cakeHtml=`<div class="stats-toolbar"><div class="stats-scope"><button class="${statsScope==='month'?'active':''}" onclick="statsSetScope('month')">Monthly</button><button class="${statsScope==='year'?'active':''}" onclick="statsSetScope('year')">Yearly</button></div><div class="stats-period"><button class="calnav" onclick="statsShift(-1)">‹</button><div class="mo">${label}</div><button class="calnav" onclick="statsShift(1)">›</button></div></div>
     <div class="stats-report"><section class="report-card"><div class="report-kicker">Cake business</div><h2>${active.length} order${active.length===1?'':'s'} in ${label}</h2><p>${active.length?`The order value is <b>${money(revenue)}</b>, with <b>${money(collected)}</b> collected and <b>${money(outstanding)}</b> still outstanding. The average quote is ${money(average)}.`:'There are no active orders with a pick-up date in this period.'}</p><p>${active.length?`The most ordered flavour is <b>${escHtml(topFlavour)}</b>, and <b>${escHtml(topDay)}</b> is the busiest pick-up day. ${cancelled?`${cancelled} order${cancelled===1?' was':'s were'} cancelled.`:'There were no cancellations.'}`:''}</p><div class="report-metrics"><div class="report-metric"><strong>${active.length}</strong><span>Orders</span></div><div class="report-metric"><strong>${money(revenue)}</strong><span>Order value</span></div><div class="report-metric"><strong>${money(average)}</strong><span>Average quote</span></div><div class="report-metric"><strong>${money(collected)}</strong><span>Collected</span></div><div class="report-metric"><strong>${money(outstanding)}</strong><span>Outstanding</span></div><div class="report-metric"><strong>${cancelled}</strong><span>Cancelled</span></div></div></section>
     <div class="report-columns"><section class="report-card"><div class="report-kicker">Customer choices</div><h2>What people order</h2><p>The lists show the most common choices for this period.</p><div class="report-list"><div class="report-row"><span><b>Top sizes</b></span><b>Orders</b></div>${compactList(distributions.size,active.length)}</div><div class="report-list"><div class="report-row"><span><b>Top flavours</b></span><b>Orders</b></div>${compactList(distributions.flavour,active.length)}</div></section><section class="report-card"><div class="report-kicker">Operations</div><h2>Payments & pick-up</h2><p>${paidFull} order${paidFull===1?' is':'s are'} paid in full and ${deposits} currently have a deposit recorded.</p><div class="report-list"><div class="report-row"><span><b>Popular shapes</b></span><b>Orders</b></div>${compactList(distributions.shape,active.length)}</div><div class="report-list"><div class="report-row"><span><b>Pick-up days</b></span><b>Orders</b></div>${compactList(distributions.pickup,active.length)}</div></section></div><p class="report-note">Cake statistics use the pick-up date. Cancelled orders are counted separately and excluded from revenue and customer preferences.</p></div>`;
-  document.getElementById('main').innerHTML=`<div class="section-tabs stats-tabs"><button class="${statsTab==='web'?'active':''}" onclick="statsSetTab('web')">Web Stats</button><button class="${statsTab==='cake'?'active':''}" onclick="statsSetTab('cake')">Cake Stats</button></div>${statsTab==='web'?webHtml:cakeHtml}`;
+  document.getElementById('main').innerHTML=`<nav class="subnav" id="statsSub"><a class="subnav-a ${statsTab==='web'?'on':''}" onclick="statsSetTab('web')">Web Stats</a><a class="subnav-a ${statsTab==='cake'?'on':''}" onclick="statsSetTab('cake')">Cake Stats</a><span class="subnav-ink"></span></nav>${statsTab==='web'?webHtml:cakeHtml}`;
+  requestAnimationFrame(()=>moveSubnavInk('statsSub'));
   if(statsTab==='web')renderWebsiteInsights();
 }
 function statsSetTab(tab){statsTab=tab;renderStats();}
@@ -998,7 +1072,8 @@ function renderInfo(){
     ${row('hours','Pick-up hours',BIZ.hours,true)}
     <p class="infonote">Changes save to Supabase and are used automatically on new customer quote pages.</p>`;
   const blacklistHtml=`<div class="ghead"><span>🚫 Blacklist</span><span class="ln"></span></div>${bl}`;
-  document.getElementById('main').innerHTML=`<div class="section-tabs info-tabs"><button class="${infoTab==='info'?'active':''}" onclick="infoSetTab('info')">Info</button><button class="${infoTab==='blacklist'?'active':''}" onclick="infoSetTab('blacklist')">Blacklist</button><button class="${infoTab==='customers'?'active':''}" onclick="infoSetTab('customers')">Customers</button><button class="settings-tab ${infoTab==='settings'?'active':''}" onclick="infoSetTab('settings')" aria-label="Settings" title="Settings"><svg viewBox="0 0 24 24" fill="none" stroke-width="1.8"><circle cx="12" cy="12" r="3"></circle><path d="M19.4 15a1.7 1.7 0 0 0 .34 1.88l.06.06-2.83 2.83-.06-.06A1.7 1.7 0 0 0 15 19.4a1.7 1.7 0 0 0-1 .6 1.7 1.7 0 0 0-.4 1.1V21h-4v-.1A1.7 1.7 0 0 0 8.6 19.4a1.7 1.7 0 0 0-1.88.34l-.06.06-2.83-2.83.06-.06A1.7 1.7 0 0 0 4.6 15a1.7 1.7 0 0 0-.6-1 1.7 1.7 0 0 0-1.1-.4H3v-4h.1A1.7 1.7 0 0 0 4.6 8.6a1.7 1.7 0 0 0-.34-1.88l-.06-.06 2.83-2.83.06.06A1.7 1.7 0 0 0 9 4.6a1.7 1.7 0 0 0 1-.6 1.7 1.7 0 0 0 .4-1.1V3h4v.1A1.7 1.7 0 0 0 15.4 4.6a1.7 1.7 0 0 0 1.88-.34l.06-.06 2.83 2.83-.06.06A1.7 1.7 0 0 0 19.4 9c.12.38.34.72.64.98.3.25.67.4 1.06.42h.1v4h-.1a1.7 1.7 0 0 0-1.7.6Z"></path></svg></button></div>${infoTab==='info'?infoHtml:infoTab==='blacklist'?blacklistHtml:infoTab==='customers'?renderCustomersPanel():renderSettingsPanel()}`;
+  document.getElementById('main').innerHTML=`<nav class="subnav" id="infoSub"><a class="subnav-a ${infoTab==='info'?'on':''}" onclick="infoSetTab('info')">Info</a><a class="subnav-a ${infoTab==='blacklist'?'on':''}" onclick="infoSetTab('blacklist')">Blacklist</a><a class="subnav-a ${infoTab==='customers'?'on':''}" onclick="infoSetTab('customers')">Customers</a><a class="subnav-a subnav-icon ${infoTab==='settings'?'on':''}" onclick="infoSetTab('settings')" aria-label="Settings" title="Settings"><svg viewBox="0 0 24 24" fill="none" stroke-width="1.8"><circle cx="12" cy="12" r="3"></circle><path d="M19.4 15a1.7 1.7 0 0 0 .34 1.88l.06.06-2.83 2.83-.06-.06A1.7 1.7 0 0 0 15 19.4a1.7 1.7 0 0 0-1 .6 1.7 1.7 0 0 0-.4 1.1V21h-4v-.1A1.7 1.7 0 0 0 8.6 19.4a1.7 1.7 0 0 0-1.88.34l-.06.06-2.83-2.83.06-.06A1.7 1.7 0 0 0 4.6 15a1.7 1.7 0 0 0-.6-1 1.7 1.7 0 0 0-1.1-.4H3v-4h.1A1.7 1.7 0 0 0 4.6 8.6a1.7 1.7 0 0 0-.34-1.88l-.06-.06 2.83-2.83.06.06A1.7 1.7 0 0 0 9 4.6a1.7 1.7 0 0 0 1-.6 1.7 1.7 0 0 0 .4-1.1V3h4v.1A1.7 1.7 0 0 0 15.4 4.6a1.7 1.7 0 0 0 1.88-.34l.06-.06 2.83 2.83-.06.06A1.7 1.7 0 0 0 19.4 9c.12.38.34.72.64.98.3.25.67.4 1.06.42h.1v4h-.1a1.7 1.7 0 0 0-1.7.6Z"></path></svg></a><span class="subnav-ink"></span></nav>${infoTab==='info'?infoHtml:infoTab==='blacklist'?blacklistHtml:infoTab==='customers'?renderCustomersPanel():renderSettingsPanel()}`;
+  requestAnimationFrame(()=>moveSubnavInk('infoSub'));
   if(infoTab==='info')document.querySelectorAll('#main [data-k]').forEach(el=>el.oninput=e=>{BIZ[e.target.dataset.k]=e.target.value;saveBiz();});
 }
 function infoSetTab(tab){infoTab=tab;renderInfo();}
@@ -1348,17 +1423,17 @@ function focusFinalQuote(){const el=document.getElementById('finalQuoteSection')
 function focusPayment(){const details=document.getElementById('paymentDetails');if(!details)return;details.open=true;details.scrollIntoView({behavior:'smooth',block:'center'});details.classList.remove('payment-attention');void details.offsetWidth;details.classList.add('payment-attention');setTimeout(()=>{const input=document.getElementById('payAmt');if(input)input.focus();},450);}
 function historyRow(k,v){return `<div class="history-row"><span class="k">${escHtml(k)}</span><span class="v">${v||'—'}</span></div>`;}
 function historySection(title,rows){return `<div class="history-section-title">${escHtml(title)}</div>${rows.join('')}`;}
-function renderHistoryDetail(o){const decor=(o.decor||[]).filter(d=>d!=='No decoration'),note=cleanNotes(o),addonsList=[].concat((o.cupcakes&&!/^(no cupcakes|none|nenhuma|—)?$/i.test(String(o.cupcakes)))?[o.cupcakes]:[]).concat(decor),addons=addonsList.length?addonsList.join(', '):'No add-ons',colourNames=(o.colors||[]).map(c=>c[0]).join(', ')||'—',allergy=o.allergies&&!['none','nenhuma'].includes(String(o.allergies).toLowerCase())?`⚠ ${escHtml(o.allergies)}`:'None';return `<div class="history-order-view"><div class="sec history-progress">${progressHTML(o)}${o.status==='done'?doNextHTML(o):''}</div><div class="history-list">${historySection('Customer',[historyRow('Name',escHtml(o.name)),historyRow('WhatsApp',escHtml(o.wcode+' '+o.wnum)),historyRow('Instagram',o.instagram?'@'+escHtml(o.instagram):'—'),historyRow('Email',escHtml(o.email||'—')),historyRow('Form language',escHtml(o.lang||'—')),historyRow('Found us via',escHtml((o.heard||'—')+(o.referredBy?' · '+o.referredBy:''))),historyRow('Form feedback',o.feedback?escHtml(o.feedback):'Not submitted')])}${historySection('Pickup',[historyRow('Order Date',escHtml(fmtOrderedAt(o.createdAt))),historyRow('Delivery Date',escHtml(fmtPickupAt(o))),historyRow('Total time',escHtml(orderElapsedDays(o))),historyRow('Time',escHtml(o.ptime||'—')),historyRow('Collection',o.courier?'Uber/Bolt courier collection':'Customer collection')])}${historySection('The Cake',[historyRow('Type & size',escHtml(o.type+' · '+shortSize(o.size))),historyRow('Shape',escHtml(o.shape)),historyRow('Flavour',escHtml(o.flavor)),historyRow('Colours',escHtml(colourNames)),historyRow('Writing',o.writing?`“${escHtml(o.writing)}” · ${escHtml(o.writingColor)}`:'—'),historyRow('Add-ons',escHtml(addons)),...(o.pigment&&o.pigment.length?[historyRow('High-pigment',escHtml(o.pigment.join(', ')))]:[]),historyRow('Candles',escHtml(o.candles||'—')),historyRow('Allergies',allergy),historyRow('Customer notes',note?escHtml(note):'—')])}<div class="history-section-title">Reference photos</div><div class="history-reference">${photoGrid(o)}${o.photoNote?`<div class="notebox" style="margin-top:9px">${escHtml(o.photoNote)}</div>`:''}</div></div>${orderActionsHTML(o)}</div>`;}
+function renderHistoryDetail(o){const decor=(o.decor||[]).filter(d=>d!=='No decoration'),note=cleanNotes(o),addons=/^(no cupcakes|none|nenhuma|—)?$/i.test(String(o.cupcakes||''))?'No add-ons':o.cupcakes,colourNames=(o.colors||[]).map(c=>c[0]).join(', ')||'—',allergy=o.allergies&&!['none','nenhuma'].includes(String(o.allergies).toLowerCase())?`⚠ ${escHtml(o.allergies)}`:'None';return `<div class="history-order-view"><div class="sec history-progress">${progressHTML(o)}${o.status==='done'?doNextHTML(o):''}</div><div class="history-list">${historySection('Customer',[historyRow('Name',escHtml(o.name)),historyRow('WhatsApp',escHtml(o.wcode+' '+o.wnum)),historyRow('Instagram',o.instagram?'@'+escHtml(o.instagram):'—'),historyRow('Email',escHtml(o.email||'—')),historyRow('Form language',escHtml(o.lang||'—')),historyRow('Found us via',escHtml((o.heard||'—')+(o.referredBy?' · '+o.referredBy:''))),historyRow('Form feedback',o.feedback?escHtml(o.feedback):'Not submitted')])}${historySection('Pickup',[historyRow('Order Date',escHtml(fmtOrderedAt(o.createdAt))),historyRow('Delivery Date',escHtml(fmtPickupAt(o))),historyRow('Total time',escHtml(orderElapsedDays(o))),historyRow('Time',escHtml(o.ptime||'—')),historyRow('Collection',o.courier?'Uber/Bolt courier collection':'Customer collection')])}${historySection('The Cake',[historyRow('Type & size',escHtml(o.type+' · '+shortSize(o.size))),historyRow('Shape',escHtml(o.shape)),historyRow('Flavour',escHtml(o.flavor)),historyRow('Colours',escHtml(colourNames)),historyRow('Writing',o.writing?`“${escHtml(o.writing)}” · ${escHtml(o.writingColor)}`:'—'),historyRow('Add-ons',escHtml(addons)),historyRow('Decorations',escHtml(decor.join(', ')||'—')),historyRow('High-pigment',escHtml((o.pigment||[]).join(', ')||'—')),historyRow('Candles',escHtml(o.candles||'—')),historyRow('Allergies',allergy),historyRow('Customer notes',note?escHtml(note):'—')])}<div class="history-section-title">Reference photos</div><div class="history-reference">${photoGrid(o)}${o.photoNote?`<div class="notebox" style="margin-top:9px">${escHtml(o.photoNote)}</div>`:''}</div></div>${orderActionsHTML(o)}</div>`;}
 function orderActionIcon(kind){const paths={bad:'<circle cx="9" cy="8" r="3"/><path d="M3.5 19c.7-3.2 2.5-5 5.5-5 1.2 0 2.2.3 3.1.8M16 15l5 5m0-5-5 5"/>',archive:'<path d="M4 7h16v13H4zM3 3h18v4H3zm6 9h6"/>',trash:'<path d="M4 7h16M9 7V4h6v3m3 0-1 13H7L6 7m4 4v5m4-5v5"/>',cancel:'<circle cx="12" cy="12" r="9"/><path d="m9 9 6 6m0-6-6 6"/>',customer:'<circle cx="8.5" cy="8" r="3"/><path d="M3 19c.6-3.2 2.5-5 5.5-5 1.4 0 2.6.4 3.5 1.1M16 9l5 5m0-5-5 5"/>',reset:'<path d="M4 8V4h4M4.8 5.2A9 9 0 1 1 3 14"/><path d="M12 8v4l3 2"/>',whatsapp:'<path d="M20 11.5a8 8 0 0 1-11.8 7L4 20l1.5-4.1A8 8 0 1 1 20 11.5Z"/><path d="M9 8.5c.4 2.5 2 4.1 4.5 4.9l1.2-1.1 1.8.9"/>'};return `<svg viewBox="0 0 24 24" aria-hidden="true">${paths[kind]||''}</svg>`;}
 function orderActionsHTML(o){const canCancel=!['done','deleted','cancelled'].includes(o.status);return `<div class="bottom-actions"><div class="order-action-grid"><button class="order-action bad ${isBlacklisted(o)?'on':''}" onclick="toggleBlacklist(${o.id})">${orderActionIcon('bad')}<span>${isBlacklisted(o)?'Remove Bad Customer':'Mark as Bad Customer'}</span></button><button class="order-action archive" id="archiveAction" onclick="archiveOrder(${o.id})">${orderActionIcon('archive')}<span>${o.status==='deleted'?'Restore to Orders':'Move to Archived'}</span></button><button class="order-action delete" id="trashBtn" title="Tap twice to permanently delete" onclick="permanentDeleteTap(${o.id},this)">${orderActionIcon('trash')}<span>Delete the Order</span></button>${canCancel?`<button class="order-action cancel" onclick="cancelOrder(${o.id},'owner')">${orderActionIcon('cancel')}<span>Cancel the Order</span></button><button class="order-action customer-cancel" onclick="cancelOrder(${o.id},'customer')">${orderActionIcon('customer')}<span>Cancelled by Customer</span></button>`:''}<button class="order-action reset-progress" onclick="resetAllProgress(${o.id})">${orderActionIcon('reset')}<span>Reset All Progress</span></button><a class="order-action whatsapp" href="${whatsappUrl(o)}" target="_blank" rel="noopener">${orderActionIcon('whatsapp')}<span>Open WhatsApp Chat</span></a></div></div>`;}
 function renderOrderDetail(o){
   const decor=(o.decor||[]).filter(d=>d!=='No decoration'),note=cleanNotes(o),remaining=Math.max(0,o.price-o.paid);const cols=o.colors&&o.colors.length?o.colors.map(c=>`<span><i style="background:${escAttr(c[1])}"></i>${escHtml(c[0])}</span>`).join(''):'—';
   const allergy=o.allergies&&!['none','nenhuma'].includes(o.allergies.toLowerCase())?`<span style="color:var(--cancel);font-weight:700">⚠ ${escHtml(o.allergies)}</span>`:'None';
   if(['done','deleted'].includes(o.status))return renderHistoryDetail(o);
-  const addonsList=[].concat((o.cupcakes&&!/^(no cupcakes|none|nenhuma|—)?$/i.test(String(o.cupcakes)))?[o.cupcakes]:[]).concat(decor);const addons=addonsList.length?addonsList.join(', '):'No add-ons';
+  const addons=/^(no cupcakes|none|nenhuma|—)?$/i.test(String(o.cupcakes||''))?'No add-ons':o.cupcakes;
   return `<div class="finance-table">${financeCell('Paid',money(o.paid),'paid')}${financeCell('Total',money(o.price),'total')}${financeCell('Remaining',money(remaining),'remaining')}${financeCell('Pick-up',escHtml(relDate(o.pdate)),'pickup')}</div>
     <div class="sec">${progressHTML(o)}${quoteStatusHTML(o)}${doNextHTML(o)}${paymentWorkspaceHTML(o)}</div>
-    <details class="detail-accordion" open><summary>The Cake</summary><div class="accordion-body"><div class="sec"><div class="kv">${infoRow('Type & size',escHtml(o.type+' · '+shortSize(o.size)))}${infoRow('Shape',escHtml(o.shape))}${infoRow('Flavour',escHtml(o.flavor))}${infoRow('Colours',`<span class="cols">${cols}</span>`)}${infoRow('Writing',o.writing?`“${escHtml(o.writing)}” · ${escHtml(o.writingColor)}`:'—')}${infoRow('Add-ons',escHtml(addons))}${(o.pigment&&o.pigment.length)?infoRow('High-pigment',escHtml(o.pigment.join(', '))):''}${infoRow('Candles',escHtml(o.candles||'—'))}${infoRow('Allergies',allergy)}</div></div>${note?`<div class="sec"><div class="lbl">Customer notes</div><div class="notebox">${escHtml(note)}</div></div>`:''}<div class="sec"><div class="lbl">Reference photos</div>${photoGrid(o)}${o.photoNote?`<div class="notebox" style="margin-top:9px">${escHtml(o.photoNote)}</div>`:''}</div><div class="sec final-quote-section" id="finalQuoteSection">${finalQuoteHTML(o)}</div></div></details>
+    <details class="detail-accordion" open><summary>The Cake</summary><div class="accordion-body"><div class="sec"><div class="kv">${infoRow('Type & size',escHtml(o.type+' · '+shortSize(o.size)))}${infoRow('Shape',escHtml(o.shape))}${infoRow('Flavour',escHtml(o.flavor))}${infoRow('Colours',`<span class="cols">${cols}</span>`)}${infoRow('Writing',o.writing?`“${escHtml(o.writing)}” · ${escHtml(o.writingColor)}`:'—')}${infoRow('Add-ons',escHtml(addons))}${infoRow('Decorations',escHtml(decor.join(', ')||'—'))}${infoRow('High-pigment',escHtml((o.pigment||[]).join(', ')||'—'))}${infoRow('Candles',escHtml(o.candles||'—'))}${infoRow('Allergies',allergy)}</div></div>${note?`<div class="sec"><div class="lbl">Customer notes</div><div class="notebox">${escHtml(note)}</div></div>`:''}<div class="sec"><div class="lbl">Reference photos</div>${photoGrid(o)}${o.photoNote?`<div class="notebox" style="margin-top:9px">${escHtml(o.photoNote)}</div>`:''}</div><div class="sec final-quote-section" id="finalQuoteSection">${finalQuoteHTML(o)}</div></div></details>
     <details class="detail-accordion"><summary>Pick-up</summary><div class="accordion-body"><div class="sec"><div class="kv">${infoRow('Date',escHtml(fmtDate(o.pdate))+' · '+escHtml(relDate(o.pdate)))}${infoRow('Time',escHtml(o.ptime))}${infoRow('Collection',o.courier?'Uber/Bolt courier collection':'Customer collection')}</div></div></div></details>
     <details class="detail-accordion"><summary>Customer</summary><div class="accordion-body"><div class="sec"><div class="kv">${infoRow('Name',escHtml(o.name))}${infoRow('WhatsApp',escHtml(o.wcode+' '+o.wnum))}${infoRow('Instagram',o.instagram?'@'+escHtml(o.instagram):'—')}${infoRow('Email',escHtml(o.email||'—'))}${infoRow('Form language',escHtml(o.lang||'—'))}${infoRow('Found us via',escHtml(o.heard+(o.referredBy?' · '+o.referredBy:'')))}${infoRow('Ordering experience',o.feedback?`${FB_EMOJI[o.feedback.toLowerCase()]||'💬'} ${escHtml(o.feedback)}`:'Not submitted')}</div></div></div></details>
     ${orderActionsHTML(o)}`;
@@ -1415,6 +1490,8 @@ async function tryLogin(){
     document.getElementById('pwErr').style.display='block';
   }
 }
+let _navInkTimer=null;
+window.addEventListener('resize',()=>{clearTimeout(_navInkTimer);_navInkTimer=setTimeout(()=>{moveTopnavInk();moveSubnavInk('statsSub');moveSubnavInk('infoSub');},120);});
 function hardRestartDashboard(){const url=new URL(window.location.href);url.searchParams.set('_restart',Date.now());window.stop();window.location.replace(url.toString());}
 function logout(){if(sb)sb.auth.signOut();document.getElementById('app').style.display='none';document.getElementById('login').style.display='flex';document.getElementById('pw').value='';document.getElementById('pwErr').style.display='none';}
 /* Prevent focus zoom, pinch zoom and accidental browser zoom throughout the dashboard. */

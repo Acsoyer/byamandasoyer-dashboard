@@ -333,6 +333,40 @@
   #sheet .sh-name{margin:0;padding:0;font-size:23px;line-height:1.18}
   #sheet .sh-sub{margin-top:5px}
   #sheet .sh-ordered{margin-top:7px}
+
+  /* in-place order detail editor */
+  .detail-accordion summary::after{display:none!important}
+  .detail-summary-title{min-width:0}
+  .detail-summary-actions{display:flex;align-items:center;gap:9px;margin-left:auto}
+  .detail-toggle{display:grid;place-items:center;width:22px;height:22px;color:var(--ink-faint);font-size:20px;font-weight:400;line-height:1;transition:transform .14s ease}
+  .detail-accordion[open] .detail-toggle{transform:rotate(45deg)}
+  .detail-edit-btn{display:inline-flex;align-items:center;justify-content:center;gap:5px;height:30px;min-width:30px;padding:0 8px;border:1px solid var(--line);border-radius:9px;background:#F5F6F5;color:var(--ink-soft);font:700 11px 'Instrument Sans',sans-serif;cursor:pointer}
+  .detail-edit-btn svg{width:14px;height:14px;fill:none;stroke:currentColor;stroke-width:1.8;stroke-linecap:round;stroke-linejoin:round}
+  .detail-edit-btn.save{border-color:var(--confirmed);background:var(--confirmed);color:#fff;padding:0 11px}
+  .detail-editor{padding:3px 0 1px}
+  .edit-field{padding:10px 0;border-bottom:1px solid var(--line)}
+  .edit-field:last-child{border-bottom:0}
+  .edit-label{display:block;margin:0 0 7px;color:var(--ink-faint);font-size:10px;font-weight:750;letter-spacing:.055em;text-transform:uppercase}
+  .edit-picker-button{display:flex;align-items:center;justify-content:space-between;gap:12px;width:100%;min-height:44px;padding:10px 11px;border:1px solid var(--line);border-radius:11px;background:#F8F9F8;color:var(--ink);font:650 14px 'Instrument Sans',sans-serif;text-align:left;cursor:pointer}
+  .edit-picker-button small{display:block;margin-top:2px;color:var(--ink-faint);font-size:11px;font-weight:500}
+  .edit-picker-button .picker-arrow{flex:0 0 auto;color:var(--ink-faint);font-size:17px;transition:transform .14s ease}
+  .edit-picker-button.open .picker-arrow{transform:rotate(180deg)}
+  .edit-options{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:7px;margin-top:8px;padding:8px;border:1px solid var(--line);border-radius:12px;background:#F1F3F2}
+  .edit-option{min-height:42px;padding:8px 9px;border:1px solid transparent;border-radius:9px;background:var(--card);color:var(--ink-soft);font:650 12px 'Instrument Sans',sans-serif;text-align:left;cursor:pointer}
+  .edit-option small{display:block;margin-top:2px;color:var(--ink-faint);font-size:10px;font-weight:500}
+  .edit-option.selected{border-color:var(--accent);background:var(--accent-soft);color:var(--accent)}
+  .edit-options.swatches{grid-template-columns:repeat(4,minmax(0,1fr))}
+  .edit-swatch{display:flex;flex-direction:column;align-items:center;gap:5px;min-width:0;padding:7px 3px;border:1px solid transparent;border-radius:10px;background:transparent;color:var(--ink-soft);font:600 9.5px 'Instrument Sans',sans-serif;cursor:pointer}
+  .edit-swatch-dot{width:31px;height:31px;border:1px solid rgba(31,40,36,.14);border-radius:9px;background:var(--swatch)}
+  .edit-swatch.selected{border-color:var(--accent);background:var(--accent-soft);color:var(--accent)}
+  .edit-input,.edit-textarea{display:block;width:100%;min-height:44px;padding:10px 11px;border:1px solid var(--line);border-radius:11px;background:#F8F9F8;color:var(--ink);font:500 16px 'Instrument Sans',sans-serif;outline:none}
+  .edit-textarea{min-height:78px;resize:vertical}
+  .edit-input:focus,.edit-textarea:focus{border-color:var(--accent);box-shadow:0 0 0 3px rgba(115,8,44,.08)}
+  .edit-inline{display:grid;grid-template-columns:1fr 1fr;gap:8px}
+  .edit-note{margin:8px 0 0;color:var(--ink-faint);font-size:11px;line-height:1.4}
+  .edit-cancel{display:block;margin:11px 0 1px auto;padding:7px 2px;border:0;background:transparent;color:var(--ink-faint);font:650 11px 'Instrument Sans',sans-serif;cursor:pointer}
+  .edit-saving{opacity:.62;pointer-events:none}
+  @media(max-width:420px){.edit-options{grid-template-columns:1fr}.edit-options.swatches{grid-template-columns:repeat(4,minmax(0,1fr))}.edit-inline{grid-template-columns:1fr}}
   #sheet .sh-actions{display:block;position:static}
   #sheet .sh-close{position:absolute!important;top:-29px!important;right:-16px!important;width:38px;height:38px;border:1px solid #CDD3D0;background:var(--card);box-shadow:0 5px 16px rgba(28,37,33,.15);font-size:23px;z-index:8}
   #sheet .contact-dock{position:static!important;width:100%;height:47px;margin-top:13px;padding:0 18px;border-radius:12px;background:linear-gradient(135deg,#7C2B40,#602032);box-shadow:0 7px 18px rgba(109,36,53,.22);font-size:14px;font-weight:750;letter-spacing:.025em}
@@ -1540,7 +1574,7 @@ function closeContactPanel(){document.getElementById('panelOverlay').classList.r
 function copyMessage(key){const o=ORDERS.find(x=>x.id===openId);if(key==='quote'&&(!o||!isActivePortal(o))){alert('Create an active 48-hour customer link before copying this message.');return;}copyText((window.__messages||{})[key]||'');}
 async function markMessage(id,key,complete){const map={quote:'message_quote_sent_at',confirmed:'message_confirmed_sent_at',feedback:'message_feedback_sent_at'};const field=map[key];const value=complete?new Date().toISOString():null;const {error}=await sb.from('orders').update({[field]:value}).eq('id',id);if(error){alert('Could not save this step: '+error.message);return;}const o=ORDERS.find(x=>x.id===id);o[key+'SentAt']=value;openContactPanel();}
 async function generatePortal(id){const o=ORDERS.find(x=>x.id===id),canCreate=o&&['quoted','awaiting_payment'].includes(o.status);if(!canCreate||!(o.price>0)){alert('Save the final price before creating a customer link.');return;}const {data,error}=await sb.rpc('create_order_portal',{p_order_id:id});if(error){alert('Customer links are not installed in Supabase yet. Apply the supplied SQL migration first.\n\n'+error.message);return;}const result=typeof data==='string'?JSON.parse(data):data;o.portalToken=result.token;o.portalExpires=result.expires_at;const portalBase=result.url||`https://byamandasoyer.pt/order/${result.token}`;o.portalUrl=portalBase+(portalBase.includes('?')?'&':'?')+'lang='+orderLanguage(o);o.quoteSentAt='';const reset=await sb.from('orders').update({message_quote_sent_at:null}).eq('id',id);if(reset.error)console.error('Could not reset quote message state',reset.error);openMessagePanel('quote');}
-function closeSheet(){delArmed=null;closeContactPanel();closeQuotePreview();document.getElementById('overlay').classList.remove('show');document.getElementById('sheet').classList.remove('show');openId=null;}
+function closeSheet(){delArmed=null;detailEdit=null;detailFocusSection='';closeContactPanel();closeQuotePreview();document.getElementById('overlay').classList.remove('show');document.getElementById('sheet').classList.remove('show');openId=null;}
 async function savePaymentAmount(id,nextPaid){const o=ORDERS.find(x=>x.id===id);if(!o)return;const stageBefore=workflowStage(o),paid=Math.max(0,Number(nextPaid)||0),patch={paid};let nextStatus=o.status;if(stageBefore===3&&paid>0){nextStatus='confirmed';patch.status='confirmed';}else if(stageBefore===5&&o.price>0&&paid>=o.price){nextStatus='delivered';patch.status='delivered';}const {error}=await sb.from('orders').update(patch).eq('id',id);if(error){alert('Could not save payment: '+error.message);return;}o.paid=paid;o.status=nextStatus;activeBucket=bucketOf(o);refreshView();openSheet(id);}
 async function addPayment(id){const o=ORDERS.find(x=>x.id===id),input=document.getElementById('payAmt'),v=Number(input&&input.value);if(!o||!Number.isFinite(v)||v<=0)return;await savePaymentAmount(id,o.paid+v);}
 async function setPayment(id,amt){await savePaymentAmount(id,amt);}
@@ -1618,19 +1652,167 @@ function historySection(title,rows){return `<div class="history-section-title">$
 function renderHistoryDetail(o){const decor=(o.decor||[]).filter(d=>d!=='No decoration'),note=cleanNotes(o),addonsList=[].concat((o.cupcakes&&!/^(no cupcakes|none|nenhuma|—)?$/i.test(String(o.cupcakes)))?[o.cupcakes]:[]).concat(decor),addons=addonsList.length?addonsList.join(', '):'No add-ons',colourNames=(o.colors||[]).map(c=>c[0]).join(', ')||'—',allergy=o.allergies&&!['none','nenhuma'].includes(String(o.allergies).toLowerCase())?`⚠ ${escHtml(o.allergies)}`:'None';return `<div class="history-order-view"><div class="sec history-progress">${progressHTML(o)}${o.status==='done'?doNextHTML(o):''}</div><div class="history-list">${historySection('Customer',[historyRow('Name',escHtml(o.name)),historyRow('WhatsApp',escHtml(o.wcode+' '+o.wnum)),historyRow('Instagram',o.instagram?'@'+escHtml(o.instagram):'—'),historyRow('Email',escHtml(o.email||'—')),historyRow('Form language',escHtml(o.lang||'—')),historyRow('Found us via',escHtml((o.heard||'—')+(o.referredBy?' · '+o.referredBy:''))),historyRow('Form feedback',o.feedback?escHtml(o.feedback):'Not submitted')])}${historySection('Pickup',[historyRow('Order Date',escHtml(fmtOrderedAt(o.createdAt))),historyRow('Delivery Date',escHtml(fmtPickupAt(o))),historyRow('Total time',escHtml(orderElapsedDays(o))),historyRow('Time',escHtml(o.ptime||'—')),historyRow('Collection',o.courier?'Uber/Bolt courier collection':'Customer collection')])}${historySection('The Cake',[historyRow('Type & size',escHtml(o.type+' · '+shortSize(o.size))),historyRow('Shape',escHtml(o.shape)),historyRow('Flavour',escHtml(o.flavor)),historyRow('Colours',escHtml(colourNames)),historyRow('Writing',o.writing?`“${escHtml(o.writing)}” · ${escHtml(o.writingColor)}`:'—'),historyRow('Add-ons',escHtml(addons)),...(o.pigment&&o.pigment.length?[historyRow('High-pigment',escHtml(o.pigment.join(', ')))]:[]),historyRow('Candles',escHtml(o.candles||'—')),historyRow('Allergies',allergy),historyRow('Customer notes',note?escHtml(note):'—')])}<div class="history-section-title">Reference photos</div><div class="history-reference">${photoGrid(o)}${o.photoNote?`<div class="notebox" style="margin-top:9px">${escHtml(o.photoNote)}</div>`:''}</div></div>${orderActionsHTML(o)}</div>`;}
 function orderActionIcon(kind){const paths={bad:'<circle cx="9" cy="8" r="3"/><path d="M3.5 19c.7-3.2 2.5-5 5.5-5 1.2 0 2.2.3 3.1.8M16 15l5 5m0-5-5 5"/>',archive:'<path d="M4 7h16v13H4zM3 3h18v4H3zm6 9h6"/>',trash:'<path d="M4 7h16M9 7V4h6v3m3 0-1 13H7L6 7m4 4v5m4-5v5"/>',cancel:'<circle cx="12" cy="12" r="9"/><path d="m9 9 6 6m0-6-6 6"/>',customer:'<circle cx="8.5" cy="8" r="3"/><path d="M3 19c.6-3.2 2.5-5 5.5-5 1.4 0 2.6.4 3.5 1.1M16 9l5 5m0-5-5 5"/>',reset:'<path d="M4 8V4h4M4.8 5.2A9 9 0 1 1 3 14"/><path d="M12 8v4l3 2"/>',whatsapp:'<path d="M20 11.5a8 8 0 0 1-11.8 7L4 20l1.5-4.1A8 8 0 1 1 20 11.5Z"/><path d="M9 8.5c.4 2.5 2 4.1 4.5 4.9l1.2-1.1 1.8.9"/>'};return `<svg viewBox="0 0 24 24" aria-hidden="true">${paths[kind]||''}</svg>`;}
 function orderActionsHTML(o){const canCancel=!['done','deleted','cancelled'].includes(o.status);return `<div class="bottom-actions"><div class="order-action-grid"><button class="order-action bad ${isBlacklisted(o)?'on':''}" onclick="toggleBlacklist(${o.id})">${orderActionIcon('bad')}<span>${isBlacklisted(o)?'Remove Bad Customer':'Mark as Bad Customer'}</span></button><button class="order-action archive" id="archiveAction" onclick="archiveOrder(${o.id})">${orderActionIcon('archive')}<span>${o.status==='deleted'?'Restore to Orders':'Move to Archived'}</span></button><button class="order-action delete" id="trashBtn" title="Tap twice to permanently delete" onclick="permanentDeleteTap(${o.id},this)">${orderActionIcon('trash')}<span>Delete the Order</span></button>${canCancel?`<button class="order-action cancel" onclick="cancelOrder(${o.id},'owner')">${orderActionIcon('cancel')}<span>Cancel the Order</span></button><button class="order-action customer-cancel" onclick="cancelOrder(${o.id},'customer')">${orderActionIcon('customer')}<span>Cancelled by Customer</span></button>`:''}<button class="order-action reset-progress" onclick="resetAllProgress(${o.id})">${orderActionIcon('reset')}<span>Reset All Progress</span></button><a class="order-action whatsapp" href="${whatsappUrl(o)}" target="_blank" rel="noopener">${orderActionIcon('whatsapp')}<span>Open WhatsApp Chat</span></a></div></div>`;}
+
+const ORDER_EDIT={
+  sizes:[
+    {v:'XS',label:'XS Bento',sub:'4–6 portions',type:'Bento',size:'XS (4–6)',base:30,big:false},
+    {v:'S',label:'S',sub:'6–8 portions',type:'Custom',size:'S (6–8)',base:40,big:false},
+    {v:'M',label:'M',sub:'10–12 portions',type:'Custom',size:'M (10–12)',base:55,big:false},
+    {v:'L',label:'L',sub:'16–20 portions',type:'Custom',size:'L (16–20)',base:80,big:true},
+    {v:'XL',label:'XL',sub:'24–28 portions',type:'Custom',size:'XL (24–28)',base:110,big:true},
+    {v:'30+',label:'30+ portions',sub:'Custom quote',type:'Custom',size:'30+ (Custom quote)',base:null,big:true},
+    {v:'sm',label:'Double Tier · S+M',sub:'18–20 portions · custom quote',type:'Custom',size:'sm (18–20)',base:null,big:true},
+    {v:'ml',label:'Double Tier · M+L',sub:'35–40 portions · custom quote',type:'Custom',size:'ml (35–40)',base:null,big:true}
+  ],
+  shapes:['Round','Heart','Square','Rectangle'],
+  bentoFlavours:['Vanilla Chocolate Duo','Chocolate Vanilla Duo','Red Velvet Classic'],
+  flavours:['Vanilla Berry','Vanilla Chocolate Duo','Red Velvet Classic','Lemon Raspberry','Chocolate Berry Bliss','Chocolate Salted Caramel','Cookies and Cream','Berry Cheesecake','Pistachio Strawberry','Salted Caramel Peanut','Biscoff','Coconut Passion'],
+  signature:['Berry Cheesecake','Pistachio Strawberry','Salted Caramel Peanut','Biscoff','Coconut Passion'],
+  colours:[
+    ['White','#FFFFFF'],['Ivory','#F3ECE0'],['Blush','#F3C9D3'],['Pink','#EFA9BE'],['Rose','#E86A8E'],['Red','#C62828'],['Burgundy','#7A2233'],['Peach','#F0B57A'],['Orange','#E38B4E'],['Yellow','#EDD97A'],['Sage','#B7D6A0'],['Green','#5F7A4E'],['Mint','#CFE9DD'],['Sky','#9CC7D4'],['Navy','#2F4A6E'],['Lilac','#C7B7E0'],['Purple','#8A72C0'],['Brown','#8A6B52'],['Black','#1A1A1A'],['Teal','#2E8B8B']
+  ],
+  pigments:[['Black','#111111'],['Navy blue','#1E3A5F'],['Red','#C62828'],['Dark green','#1E5631'],['Neon green','#39FF14'],['Neon yellow','#EAFF00'],['Neon orange','#FF6A00']],
+  writing:['Handwritten Cursive Text','Fondant Letters','Cutout Letters'],
+  cupcakes:['No cupcakes','6 Cupcakes','12 Cupcakes'],
+  decor:['Bows','Edible prints','Custom themed images','Paper butterflies','Maraschino cherries','Maraschino cherries + glitter','Decorative balls','Disco balls','Fresh edible flowers','Fresh fruits','Gold or silver star, sun, moon','Custom'],
+  quoteDecor:['Custom themed images','Decorative balls','Disco balls','Fresh edible flowers','Fresh fruits','Gold or silver star, sun, moon','Custom'],
+  heard:['Instagram search','TikTok','Meta ad','Facebook groups','Returning customer','Referred by a friend'],
+  feedback:['Excellent','Good','Okay','Poor']
+};
+let detailEdit=null,detailFocusSection='';
+function editPencilIcon(){return '<svg viewBox="0 0 24 24" aria-hidden="true"><path d="m4 20 4.2-1 10.9-10.9a2.1 2.1 0 0 0-3-3L5.2 16 4 20Z"/><path d="m14.5 6.5 3 3"/></svg>';}
+function editSaveIcon(){return '<svg viewBox="0 0 24 24" aria-hidden="true"><path d="m5 12 4 4L19 6"/></svg>';}
+function isDetailEditing(o,section){return !!detailEdit&&detailEdit.orderId===o.id&&detailEdit.section===section;}
+function detailSummary(o,section,title){
+  const editing=isDetailEditing(o,section);
+  return `<summary><span class="detail-summary-title">${escHtml(title)}</span><span class="detail-summary-actions"><button type="button" class="detail-edit-btn ${editing?'save':''}" onclick="${editing?`saveDetailEdit(event,${o.id},'${section}',this)`:`startDetailEdit(event,${o.id},'${section}')`}" aria-label="${editing?'Save':'Edit'} ${escAttr(title)}">${editing?editSaveIcon()+'<span>Save</span>':editPencilIcon()}</button><span class="detail-toggle" aria-hidden="true">+</span></span></summary>`;
+}
+function editSizeId(o){
+  const s=String(o.size||'').toLowerCase();
+  if(o.type==='Bento'||/^xs\b/.test(s))return 'XS';
+  if(s.includes('s+m')||/^sm\b/.test(s))return 'sm';
+  if(s.includes('m+l')||/^ml\b/.test(s))return 'ml';
+  if(s.startsWith('30+'))return '30+';
+  return (s.match(/^(xl|l|m|s)\b/)||[])[1]?.toUpperCase()||'S';
+}
+function editableNoteParts(notes){
+  const value=String(notes||''),system=(value.match(/(?:COURIER|RUSH ORDER SURCHARGE):[^\n]*/gi)||[]);
+  return {customer:value.replace(/(?:\n\n)?(?:COURIER|RUSH ORDER SURCHARGE):[^\n]*/gi,'').trim(),system};
+}
+function rebuildNotes(customer,system){return [String(customer||'').trim(),...(system||[])].filter(Boolean).join('\n\n');}
+function startDetailEdit(event,id,section){
+  event.preventDefault();event.stopPropagation();
+  const o=ORDERS.find(x=>x.id===id);if(!o)return;
+  const notes=editableNoteParts(o.notes);
+  let draft;
+  if(section==='cake')draft={sizeId:editSizeId(o),shape:o.shape||'Round',flavor:o.flavor||'',colourHexes:(o.colors||[]).map(c=>c[1]),pigments:[...(o.pigment||[])],writingMethods:[...(o.writeMethods||[])],writing:o.writing||'',writingColor:o.writingColor||'',cupcakes:o.cupcakes||'No cupcakes',decor:(o.decor||[]).filter(x=>x!=='No decoration'),candles:o.candles||'No',noAllergy:!!o.noAllergy,allergies:o.allergies||'',notes:notes.customer,noteSystem:notes.system};
+  else if(section==='pickup')draft={pdate:o.pdate||'',ptime:o.ptime||'',courier:!!o.courier};
+  else draft={name:o.name||'',whatsapp:(o.wcode+' '+o.wnum).trim(),instagram:o.instagram||'',email:o.email||'',lang:o.lang||'EN',heard:o.heard||'',referredBy:o.referredBy||'',feedback:o.feedback?String(o.feedback).charAt(0).toUpperCase()+String(o.feedback).slice(1).toLowerCase():''};
+  detailEdit={orderId:id,section,draft,picker:''};detailFocusSection=section;openSheet(id,true);
+}
+function cancelDetailEdit(event,id,section){event.preventDefault();event.stopPropagation();if(!isDetailEditing({id},section))return;detailEdit=null;detailFocusSection=section;openSheet(id,true);}
+function toggleEditPicker(event,key){event.preventDefault();event.stopPropagation();if(!detailEdit)return;detailEdit.picker=detailEdit.picker===key?'':key;openSheet(detailEdit.orderId,true);}
+function setEditChoice(event,key,value,multi){
+  event.preventDefault();event.stopPropagation();if(!detailEdit)return;
+  if(multi){const list=Array.isArray(detailEdit.draft[key])?[...detailEdit.draft[key]]:[],i=list.indexOf(value);if(i>=0)list.splice(i,1);else list.push(value);detailEdit.draft[key]=list;}
+  else{detailEdit.draft[key]=value;detailEdit.picker='';}
+  openSheet(detailEdit.orderId,true);
+}
+function pickerHTML(label,key,value,options,multi=false){
+  const open=detailEdit&&detailEdit.picker===key,values=Array.isArray(value)?value:[value],selectedLabels=options.filter(x=>values.includes(x.v)).map(x=>x.label);
+  const shown=selectedLabels.length?selectedLabels.join(', '):(multi?'None selected':'Choose');
+  return `<div class="edit-field"><span class="edit-label">${escHtml(label)}</span><button type="button" class="edit-picker-button ${open?'open':''}" onclick="toggleEditPicker(event,'${key}')"><span>${escHtml(shown)}</span><span class="picker-arrow">⌄</span></button>${open?`<div class="edit-options">${options.map(x=>`<button type="button" class="edit-option ${values.includes(x.v)?'selected':''}" onclick="setEditChoice(event,'${key}','${escAttr(x.v)}',${multi})">${escHtml(x.label)}${x.sub?`<small>${escHtml(x.sub)}</small>`:''}</button>`).join('')}</div>`:''}</div>`;
+}
+function swatchPickerHTML(label,key,value,options){
+  const open=detailEdit&&detailEdit.picker===key,values=Array.isArray(value)?value:[],selected=options.filter(x=>values.includes(x.v)).map(x=>x.label);
+  return `<div class="edit-field"><span class="edit-label">${escHtml(label)}</span><button type="button" class="edit-picker-button ${open?'open':''}" onclick="toggleEditPicker(event,'${key}')"><span>${escHtml(selected.join(', ')||'None selected')}</span><span class="picker-arrow">⌄</span></button>${open?`<div class="edit-options swatches">${options.map(x=>`<button type="button" class="edit-swatch ${values.includes(x.v)?'selected':''}" onclick="setEditChoice(event,'${key}','${escAttr(x.v)}',true)"><span class="edit-swatch-dot" style="--swatch:${escAttr(x.color)}"></span><span>${escHtml(x.label)}</span></button>`).join('')}</div>`:''}</div>`;
+}
+function editInput(label,key,value,type='text',extra=''){
+  return `<div class="edit-field"><label class="edit-label" for="edit_${key}">${escHtml(label)}</label><input class="edit-input" id="edit_${key}" type="${type}" value="${escAttr(value)}" ${extra} oninput="if(detailEdit)detailEdit.draft['${key}']=this.value"></div>`;
+}
+function cakeEditorHTML(o){
+  const d=detailEdit.draft,size=ORDER_EDIT.sizes.find(x=>x.v===d.sizeId)||ORDER_EDIT.sizes[1],isBento=size.type==='Bento';
+  const sizeOptions=ORDER_EDIT.sizes.map(x=>({v:x.v,label:x.label,sub:x.sub}));
+  const shapeOptions=ORDER_EDIT.shapes.filter(x=>!isBento||['Round','Heart'].includes(x)).map(x=>({v:x,label:x}));
+  const flavourOptions=(isBento?ORDER_EDIT.bentoFlavours:ORDER_EDIT.flavours).map(x=>({v:x,label:x,sub:ORDER_EDIT.signature.includes(x)?'Signature flavour':''}));
+  const colourOptions=ORDER_EDIT.colours.map(x=>({v:x[1],label:x[0],color:x[1]})),pigmentOptions=ORDER_EDIT.pigments.map(x=>({v:x[0],label:x[0],color:x[1]}));
+  const writingOptions=ORDER_EDIT.writing.map(x=>({v:x,label:x})),colourNames=ORDER_EDIT.colours.map(x=>({v:x[0],label:x[0]}));
+  const cupOptions=ORDER_EDIT.cupcakes.map(x=>({v:x,label:x})),decorOptions=ORDER_EDIT.decor.map(x=>({v:x,label:x,sub:ORDER_EDIT.quoteDecor.includes(x)?'Custom quote':''}));
+  return `<div class="detail-editor">${pickerHTML('Type & size','sizeId',d.sizeId,sizeOptions)}${pickerHTML('Shape','shape',d.shape,shapeOptions)}${pickerHTML('Flavour','flavor',d.flavor,flavourOptions)}${swatchPickerHTML('Colours','colourHexes',d.colourHexes,colourOptions)}${swatchPickerHTML('High-pigment colours · +€5 each','pigments',d.pigments,pigmentOptions)}${pickerHTML('Writing method','writingMethods',d.writingMethods,writingOptions,true)}${editInput('Writing','writing',d.writing)}${pickerHTML('Writing colour','writingColor',d.writingColor,colourNames)}${pickerHTML('Cupcakes','cupcakes',d.cupcakes,cupOptions)}${pickerHTML('Add-ons','decor',d.decor,decorOptions,true)}${pickerHTML('Candles','candles',d.candles,[{v:'Yes',label:'Yes'},{v:'No',label:'No'}])}${pickerHTML('Allergies','noAllergy',d.noAllergy?'yes':'no',[{v:'yes',label:'No known allergies'},{v:'no',label:'Add allergy details'}])}${d.noAllergy?'':editInput('Allergy details','allergies',d.allergies)}<div class="edit-field"><label class="edit-label" for="edit_notes">Customer notes</label><textarea class="edit-textarea" id="edit_notes" maxlength="1200" oninput="if(detailEdit)detailEdit.draft.notes=this.value">${escHtml(d.notes)}</textarea></div>${size.base===null?'<p class="edit-note">This size needs a custom quote, so the current final price will be kept.</p>':''}<button class="edit-cancel" onclick="cancelDetailEdit(event,${o.id},'cake')">Cancel editing</button></div>`;
+}
+function pickupEditorHTML(o){
+  const d=detailEdit.draft;
+  return `<div class="detail-editor"><div class="edit-inline">${editInput('Date','pdate',d.pdate,'date')}${editInput('Time','ptime',d.ptime,'time')}</div>${pickerHTML('Collection','courier',d.courier?'courier':'customer',[{v:'customer',label:'Customer collection'},{v:'courier',label:'Uber/Bolt courier collection'}])}<button class="edit-cancel" onclick="cancelDetailEdit(event,${o.id},'pickup')">Cancel editing</button></div>`;
+}
+function customerEditorHTML(o){
+  const d=detailEdit.draft;
+  return `<div class="detail-editor">${editInput('Name','name',d.name)}${editInput('WhatsApp','whatsapp',d.whatsapp,'tel','inputmode="tel"')}${editInput('Instagram','instagram',d.instagram)}${editInput('Email','email',d.email,'email','inputmode="email"')}${pickerHTML('Form language','lang',d.lang,[{v:'EN',label:'English'},{v:'PT',label:'Portuguese'}])}${pickerHTML('Found us via','heard',d.heard,ORDER_EDIT.heard.map(x=>({v:x,label:x})))}${d.heard==='Referred by a friend'?editInput('Referred by','referredBy',d.referredBy):''}${pickerHTML('Ordering experience','feedback',d.feedback,[{v:'',label:'Not submitted'},...ORDER_EDIT.feedback.map(x=>({v:x,label:x}))])}<button class="edit-cancel" onclick="cancelDetailEdit(event,${o.id},'customer')">Cancel editing</button></div>`;
+}
+function editRushAmount(sizeId,pdate){
+  if(!pdate)return 0;const pickup=new Date(pdate+'T00:00:00'),now=new Date();now.setHours(0,0,0,0);
+  return Math.round((pickup-now)/86400000)===3?(sizeId==='XS'?10:20):0;
+}
+function calculatedEditPrice(o,d,pdate){
+  const size=ORDER_EDIT.sizes.find(x=>x.v===d.sizeId)||ORDER_EDIT.sizes[1];
+  if(size.base===null)return {price:o.price,range:o.range};
+  let sum=size.base,range=false;
+  if(d.shape==='Heart'||d.shape==='Square')sum+=size.big?8:5;
+  if(d.shape==='Rectangle')sum+=size.big?10:8;
+  if(ORDER_EDIT.signature.includes(d.flavor))sum+=size.v==='XL'?10:(size.v==='L'?8:6);
+  sum+=Math.max(0,(d.colourHexes||[]).length-2)*5+(d.pigments||[]).length*5;
+  if(d.cupcakes==='6 Cupcakes')sum+=15;if(d.cupcakes==='12 Cupcakes')sum+=30;
+  if((d.writingMethods||[]).includes('Fondant Letters'))sum+=size.big?6:5;
+  if((d.writingMethods||[]).includes('Cutout Letters'))sum+=size.big?10:8;
+  (d.decor||[]).forEach(x=>{if(x==='Bows')sum+=size.big?5:3;else if(x==='Edible prints')sum+=size.big?15:10;else if(x==='Paper butterflies')sum+=size.big?8:5;else if(x==='Maraschino cherries')sum+=size.big?8:6;else if(x==='Maraschino cherries + glitter')sum+=size.big?10:8;else if(ORDER_EDIT.quoteDecor.includes(x))range=true;});
+  sum+=editRushAmount(d.sizeId,pdate);
+  return {price:sum,range};
+}
+function rebuiltOrderNotes(customer,courier,rush,pdate){
+  const system=[];
+  if(courier)system.push('COURIER: Customer would like to arrange a Bolt/Uber courier.');
+  if(rush)system.push(`RUSH ORDER SURCHARGE: +€${rush} for pickup on ${pdate}.`);
+  return rebuildNotes(customer,system);
+}
+async function saveDetailEdit(event,id,section,button){
+  event.preventDefault();event.stopPropagation();const o=ORDERS.find(x=>x.id===id);
+  if(!o||!isDetailEditing(o,section))return;const d=detailEdit.draft;button.disabled=true;button.classList.add('edit-saving');
+  let patch={};
+  if(section==='cake'){
+    const size=ORDER_EDIT.sizes.find(x=>x.v===d.sizeId)||ORDER_EDIT.sizes[1];
+    if(size.type==='Bento'&&!['Round','Heart'].includes(d.shape))d.shape='Round';
+    if(size.type==='Bento'&&!ORDER_EDIT.bentoFlavours.includes(d.flavor))d.flavor=ORDER_EDIT.bentoFlavours[0];
+    if(size.type!=='Bento'&&!ORDER_EDIT.flavours.includes(d.flavor))d.flavor=ORDER_EDIT.flavours[0];
+    const price=calculatedEditPrice(o,d,o.pdate),rush=editRushAmount(d.sizeId,o.pdate);
+    const colors=(d.colourHexes||[]).map(hex=>{const c=ORDER_EDIT.colours.find(x=>x[1]===hex);return c?[c[0],c[1]]:[hex,hex];});
+    patch={cake_type:size.type,size:size.size,shape:d.shape,flavor:d.flavor,colors,pigment:d.pigments||[],write_methods:d.writingMethods||[],writing:String(d.writing||'').trim(),writing_color:d.writingColor||'',cupcakes:d.cupcakes||'No cupcakes',decor:(d.decor||[]).length?d.decor:['No decoration'],candles:d.candles||'No',no_allergy:d.noAllergy===true||d.noAllergy==='yes',allergies:(d.noAllergy===true||d.noAllergy==='yes')?'':String(d.allergies||'').trim(),notes:rebuiltOrderNotes(d.notes,o.courier,rush,o.pdate),price:price.price,price_range:price.range};
+  }else if(section==='pickup'){
+    if(!d.pdate||!d.ptime){alert('Choose both the pick-up date and time.');button.disabled=false;button.classList.remove('edit-saving');return;}
+    const cakeDraft={sizeId:editSizeId(o),shape:o.shape,flavor:o.flavor,colourHexes:(o.colors||[]).map(c=>c[1]),pigments:o.pigment||[],writingMethods:o.writeMethods||[],cupcakes:o.cupcakes,decor:(o.decor||[]).filter(x=>x!=='No decoration')},price=calculatedEditPrice(o,cakeDraft,d.pdate);
+    const parts=editableNoteParts(o.notes),rush=editRushAmount(cakeDraft.sizeId,d.pdate);
+    patch={pickup_date:d.pdate,pickup_time:d.ptime,notes:rebuiltOrderNotes(parts.customer,d.courier===true||d.courier==='courier',rush,d.pdate),price:price.price,price_range:price.range};
+  }else{
+    if(!String(d.name||'').trim()){alert('Customer name cannot be empty.');button.disabled=false;button.classList.remove('edit-saving');return;}
+    patch={name:String(d.name).trim(),whatsapp:String(d.whatsapp||'').trim(),instagram:String(d.instagram||'').replace(/^@/,'').trim(),email:String(d.email||'').trim(),language:d.lang||'EN',heard:d.heard||'',referred_by:d.heard==='Referred by a friend'?String(d.referredBy||'').trim():'',feedback:d.feedback?String(d.feedback).toLowerCase():null};
+  }
+  const {data,error}=await sb.from('orders').update(patch).eq('id',id).select('*').single();
+  if(error){alert('Could not save these changes: '+error.message);button.disabled=false;button.classList.remove('edit-saving');return;}
+  Object.assign(o,fromRow(data));detailEdit=null;detailFocusSection=section;activeBucket=bucketOf(o);refreshView();openSheet(id,true);
+}
 function renderOrderDetail(o){
   const decor=(o.decor||[]).filter(d=>d!=='No decoration'),note=cleanNotes(o),remaining=Math.max(0,o.price-o.paid);const cols=o.colors&&o.colors.length?o.colors.map(c=>`<span><i style="background:${escAttr(c[1])}"></i>${escHtml(c[0])}</span>`).join(''):'—';
   const allergy=o.allergies&&!['none','nenhuma'].includes(o.allergies.toLowerCase())?`<span style="color:var(--cancel);font-weight:700">⚠ ${escHtml(o.allergies)}</span>`:'None';
   if(['done','deleted'].includes(o.status))return renderHistoryDetail(o);
   const addonsList=[].concat((o.cupcakes&&!/^(no cupcakes|none|nenhuma|—)?$/i.test(String(o.cupcakes)))?[o.cupcakes]:[]).concat(decor);const addons=addonsList.length?addonsList.join(', '):'No add-ons';
+  const cakeEditing=isDetailEditing(o,'cake'),pickupEditing=isDetailEditing(o,'pickup'),customerEditing=isDetailEditing(o,'customer');
+  const cakeOpen=cakeEditing||detailFocusSection==='cake'||(!detailFocusSection&&!detailEdit),pickupOpen=pickupEditing||detailFocusSection==='pickup',customerOpen=customerEditing||detailFocusSection==='customer';
   return `<div class="finance-table">${financeCell('Paid',money(o.paid),'paid')}${financeCell('Total',money(o.price),'total')}${financeCell('Remaining',money(remaining),'remaining')}${financeCell('Pick-up',escHtml(relDate(o.pdate)),'pickup')}</div>
     <div class="sec">${progressHTML(o)}${quoteStatusHTML(o)}${doNextHTML(o)}${paymentWorkspaceHTML(o)}</div>
-    <details class="detail-accordion" open><summary>The Cake</summary><div class="accordion-body"><div class="sec"><div class="kv">${infoRow('Type & size',escHtml(o.type+' · '+shortSize(o.size)))}${infoRow('Shape',escHtml(o.shape))}${infoRow('Flavour',escHtml(o.flavor))}${infoRow('Colours',`<span class="cols">${cols}</span>`)}${infoRow('Writing',o.writing?`“${escHtml(o.writing)}” · ${escHtml(o.writingColor)}`:'—')}${infoRow('Add-ons',escHtml(addons))}${(o.pigment&&o.pigment.length)?infoRow('High-pigment',escHtml(o.pigment.join(', '))):''}${infoRow('Candles',escHtml(o.candles||'—'))}${infoRow('Allergies',allergy)}</div></div>${note?`<div class="sec"><div class="lbl">Customer notes</div><div class="notebox">${escHtml(note)}</div></div>`:''}<div class="sec"><div class="lbl">Reference photos</div>${photoGrid(o)}${o.photoNote?`<div class="notebox" style="margin-top:9px">${escHtml(o.photoNote)}</div>`:''}</div><div class="sec final-quote-section" id="finalQuoteSection">${finalQuoteHTML(o)}</div></div></details>
-    <details class="detail-accordion"><summary>Pick-up</summary><div class="accordion-body"><div class="sec"><div class="kv">${infoRow('Date',escHtml(fmtDate(o.pdate))+' · '+escHtml(relDate(o.pdate)))}${infoRow('Time',escHtml(o.ptime))}${infoRow('Collection',o.courier?'Uber/Bolt courier collection':'Customer collection')}</div></div></div></details>
-    <details class="detail-accordion"><summary>Customer</summary><div class="accordion-body"><div class="sec"><div class="kv">${infoRow('Name',escHtml(o.name))}${infoRow('WhatsApp',escHtml(o.wcode+' '+o.wnum))}${infoRow('Instagram',o.instagram?'@'+escHtml(o.instagram):'—')}${infoRow('Email',escHtml(o.email||'—'))}${infoRow('Form language',escHtml(o.lang||'—'))}${infoRow('Found us via',escHtml(o.heard+(o.referredBy?' · '+o.referredBy:'')))}${infoRow('Ordering experience',o.feedback?`${FB_EMOJI[o.feedback.toLowerCase()]||'💬'} ${escHtml(o.feedback)}`:'Not submitted')}</div></div></div></details>
+    <details class="detail-accordion" data-detail-section="cake" ${cakeOpen?'open':''}>${detailSummary(o,'cake','The Cake')}<div class="accordion-body">${cakeEditing?cakeEditorHTML(o):`<div class="sec"><div class="kv">${infoRow('Type & size',escHtml(o.type+' · '+shortSize(o.size)))}${infoRow('Shape',escHtml(o.shape))}${infoRow('Flavour',escHtml(o.flavor))}${infoRow('Colours',`<span class="cols">${cols}</span>`)}${infoRow('Writing',o.writing?`“${escHtml(o.writing)}” · ${escHtml(o.writingColor)}`:'—')}${infoRow('Add-ons',escHtml(addons))}${(o.pigment&&o.pigment.length)?infoRow('High-pigment',escHtml(o.pigment.join(', '))):''}${infoRow('Candles',escHtml(o.candles||'—'))}${infoRow('Allergies',allergy)}</div></div>${note?`<div class="sec"><div class="lbl">Customer notes</div><div class="notebox">${escHtml(note)}</div></div>`:''}<div class="sec"><div class="lbl">Reference photos</div>${photoGrid(o)}${o.photoNote?`<div class="notebox" style="margin-top:9px">${escHtml(o.photoNote)}</div>`:''}</div><div class="sec final-quote-section" id="finalQuoteSection">${finalQuoteHTML(o)}</div>`}</div></details>
+    <details class="detail-accordion" data-detail-section="pickup" ${pickupOpen?'open':''}>${detailSummary(o,'pickup','Pick-up')}<div class="accordion-body">${pickupEditing?pickupEditorHTML(o):`<div class="sec"><div class="kv">${infoRow('Date',escHtml(fmtDate(o.pdate))+' · '+escHtml(relDate(o.pdate)))}${infoRow('Time',escHtml(o.ptime))}${infoRow('Collection',o.courier?'Uber/Bolt courier collection':'Customer collection')}</div></div>`}</div></details>
+    <details class="detail-accordion" data-detail-section="customer" ${customerOpen?'open':''}>${detailSummary(o,'customer','Customer')}<div class="accordion-body">${customerEditing?customerEditorHTML(o):`<div class="sec"><div class="kv">${infoRow('Name',escHtml(o.name))}${infoRow('WhatsApp',escHtml(o.wcode+' '+o.wnum))}${infoRow('Instagram',o.instagram?'@'+escHtml(o.instagram):'—')}${infoRow('Email',escHtml(o.email||'—'))}${infoRow('Form language',escHtml(o.lang||'—'))}${infoRow('Found us via',escHtml(o.heard+(o.referredBy?' · '+o.referredBy:'')))}${infoRow('Ordering experience',o.feedback?`${FB_EMOJI[o.feedback.toLowerCase()]||'💬'} ${escHtml(o.feedback)}`:'Not submitted')}</div></div>`}</div></details>
     ${orderActionsHTML(o)}`;
 }
-function openSheet(id){const o=ORDERS.find(x=>x.id===id);if(!o)return;openId=id;if(!o.read){o.read=true;if(sb)sb.from('orders').update({is_read:true}).eq('id',id).then(()=>{});}if(view==='orders'){renderTop();renderList();}else if(view==='calendar')renderCalendar();const history=['done','deleted'].includes(o.status),head=document.querySelector('.order-head-main'),price=document.getElementById('shPrice');head.classList.toggle('history-layout',history);price.textContent=history?money(o.price):'';document.getElementById('shName').textContent=o.name;document.getElementById('shSub').textContent=[o.type,shortSize(o.size),o.shape].filter(Boolean).join(' · ');document.getElementById('shOrdered').innerHTML=o.createdAt?`Ordered: <b>${escHtml(fmtOrderedAt(o.createdAt))}</b> · ${escHtml(o.created)}`:'';document.getElementById('shBody').innerHTML=(isBlacklisted(o)?`<div class="warnbox" style="margin-bottom:9px"><b>Blacklisted customer.</b> Review before accepting this order.</div>`:'')+renderOrderDetail(o);document.getElementById('overlay').classList.add('show');document.getElementById('sheet').classList.add('show');const _sheetEl=document.getElementById('sheet');if(_sheetEl)_sheetEl.scrollTop=0;const _sheetBody=document.getElementById('shBody');if(_sheetBody)_sheetBody.scrollTop=0;requestAnimationFrame(()=>{if(_sheetEl)_sheetEl.scrollTop=0;});}
+function openSheet(id,preserveScroll=false){const o=ORDERS.find(x=>x.id===id);if(!o)return;const _sheetEl=document.getElementById('sheet'),previousScroll=preserveScroll&&_sheetEl?_sheetEl.scrollTop:0;openId=id;if(!o.read){o.read=true;if(sb)sb.from('orders').update({is_read:true}).eq('id',id).then(()=>{});}if(view==='orders'){renderTop();renderList();}else if(view==='calendar')renderCalendar();const history=['done','deleted'].includes(o.status),head=document.querySelector('.order-head-main'),price=document.getElementById('shPrice');head.classList.toggle('history-layout',history);price.textContent=history?money(o.price):'';document.getElementById('shName').textContent=o.name;document.getElementById('shSub').textContent=[o.type,shortSize(o.size),o.shape].filter(Boolean).join(' · ');document.getElementById('shOrdered').innerHTML=o.createdAt?`Ordered: <b>${escHtml(fmtOrderedAt(o.createdAt))}</b> · ${escHtml(o.created)}`:'';document.getElementById('shBody').innerHTML=(isBlacklisted(o)?`<div class="warnbox" style="margin-bottom:9px"><b>Blacklisted customer.</b> Review before accepting this order.</div>`:'')+renderOrderDetail(o);document.getElementById('overlay').classList.add('show');document.getElementById('sheet').classList.add('show');if(_sheetEl)_sheetEl.scrollTop=preserveScroll?previousScroll:0;requestAnimationFrame(()=>{if(_sheetEl)_sheetEl.scrollTop=preserveScroll?previousScroll:0;});}
 function unlockFinalPrice(id){const o=ORDERS.find(x=>x.id===id),row=document.getElementById('finalQuoteRow');if(!o||!row)return;row.outerHTML=finalQuoteEditorHTML(o);const input=document.getElementById('quotePrice');if(input){input.focus();input.select();}}
 async function finalizePrice(id){const o=ORDERS.find(x=>x.id===id),input=document.getElementById('quotePrice'),v=Number(String(input&&input.value||'').replace(',','.'));if(!Number.isFinite(v)||v<=0){alert('Enter the final price first.');return;}const description=String(document.getElementById('quotedItemsDescription')?.value||'').trim(),nextStatus=o.status==='new'?'quoted':o.status,quotedItemsDescription=description||null;const {error}=await sb.from('orders').update({price:v,price_range:false,status:nextStatus,quoted_items_description:quotedItemsDescription}).eq('id',id);if(error){alert('Could not save final price: '+error.message);return;}o.price=v;o.range=false;o.status=nextStatus;o.quotedItemsDescription=description;activeBucket=bucketOf(o);refreshView();openSheet(id);}
 async function archiveOrder(id){const o=ORDERS.find(x=>x.id===id),next=o.status==='deleted'?'new':'deleted';const {error}=await sb.from('orders').update({status:next}).eq('id',id);if(error){alert('Could not update archive: '+error.message);return;}o.status=next;activeBucket=bucketOf(o);closeSheet();refreshView();}

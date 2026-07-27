@@ -640,11 +640,22 @@
   .overview-card::before{top:0!important;bottom:0!important;left:0!important;width:6px!important;border-radius:11px 0 0 11px!important;
     background:color-mix(in srgb,var(--bucket-color) 78%,#fff)!important}
 
-  /* price matches .ocard: Instrument Sans, 21px, ink colour */
-  .overview-card-price{color:var(--ink)!important;font:700 21px/1.05 'Instrument Sans',system-ui,sans-serif!important;letter-spacing:-.02em!important;white-space:nowrap}
+  /* Overview hierarchy: pick-up first, action/payment next, price last. */
+  .overview-card-top{display:block}
+  .overview-card-name{font-size:13.5px;line-height:1.22}
+  .overview-pickup{margin-top:8px}
+  .overview-pickup-label{display:block;margin-bottom:2px;color:var(--ink-faint);font-size:7.5px;font-weight:850;letter-spacing:.09em;text-transform:uppercase}
+  .overview-pickup-line{display:flex;min-width:0;align-items:baseline;gap:4px;color:var(--ink);line-height:1.1}
+  .overview-pickup-line strong{font:800 17px/1.1 'Instrument Sans',system-ui,sans-serif;letter-spacing:-.015em}
+  .overview-pickup-line span{overflow:hidden;color:var(--ink-soft);font-size:11px;font-weight:700;text-overflow:ellipsis;white-space:nowrap}
+  .overview-pickup.today .overview-pickup-line strong{color:#277051}
+  .overview-pickup.tomorrow .overview-pickup-line strong{color:#A36D00}
+  .overview-pickup.overdue .overview-pickup-line strong{color:#A43745}
+  .overview-pickup-meta{display:block;margin-top:3px;color:var(--ink-faint);font-size:9px;font-weight:600}
+  .overview-card-price{margin-top:7px;color:var(--ink-soft)!important;font:700 11.5px/1.1 'Instrument Sans',system-ui,sans-serif!important;letter-spacing:0!important;white-space:nowrap}
+  .overview-card-price::before{content:"Total ";color:var(--ink-faint);font-size:8px;font-weight:750;letter-spacing:.06em;text-transform:uppercase}
 
-  /* faint dashed dividers instead of solid lines */
-  .overview-dates{border-top:1px dashed #E0E4E1!important;border-bottom:0!important}
+  /* faint dashed divider between information and status */
   .overview-badges{border-left:1px dashed #E0E4E1!important}
 
   /* narrower badges */
@@ -652,6 +663,7 @@
   .overview-badges > *{font-size:8.5px!important;min-height:22px!important;padding:2px 5px!important;border-radius:6px!important}
   @media(max-width:560px){
     .overview-card{grid-template-columns:minmax(0,1fr) 90px!important}
+    .overview-pickup-line strong{font-size:16px}
     .overview-badges > *{font-size:8px!important;min-height:20px!important}
   }
 
@@ -788,6 +800,169 @@
     .progress-step:first-child{padding-left:9px!important}
     .progress-step:last-child{padding-right:10px!important}
   }
+
+  /* ============================================================
+     NEW DASHBOARD UX — compact global header and contextual tools
+     ============================================================ */
+  header{padding-top:10px}
+  .htop{display:grid;grid-template-columns:minmax(0,1fr) auto minmax(0,1fr);align-items:center;gap:10px;margin-bottom:8px}
+  .brand{min-width:0}.brand img{height:34px;max-width:100%;object-fit:contain;object-position:left center}
+  .header-calendar{display:inline-flex;align-items:center;justify-content:center;gap:7px;min-height:36px;padding:0 10px;border:1px solid transparent;border-radius:10px;background:transparent;color:var(--ink);font:700 12px 'Instrument Sans',sans-serif;white-space:nowrap;cursor:pointer}
+  .header-calendar:hover{border-color:var(--line);background:rgba(255,255,255,.55)}
+  .header-calendar svg{width:16px;height:16px;fill:none;stroke:var(--accent);stroke-width:1.8;stroke-linecap:round;stroke-linejoin:round}
+  .header-actions{position:relative;justify-self:end;gap:7px}
+  .activity-btn{width:36px;height:36px;border-radius:50%}
+  .profile-wrap{position:relative}
+  .profile-btn{display:grid;place-items:center;width:36px;height:36px;padding:0;border:1px solid #D6C4CA;border-radius:50%;background:var(--accent);color:#fff;cursor:pointer;box-shadow:0 3px 9px rgba(115,8,44,.16)}
+  .profile-btn svg{width:18px;height:18px;fill:none;stroke:currentColor;stroke-width:1.8;stroke-linecap:round;stroke-linejoin:round}
+  .profile-menu{display:none;position:absolute;z-index:70;top:44px;right:0;width:218px;overflow:hidden;padding:6px;border:1px solid #D7DCD9;border-radius:14px;background:var(--card);box-shadow:0 18px 45px rgba(25,34,29,.2)}
+  .profile-menu.show{display:block;animation:profileMenuIn .14s ease-out}
+  @keyframes profileMenuIn{from{opacity:0;transform:translateY(-5px)}to{opacity:1;transform:none}}
+  .profile-menu button{display:flex;align-items:center;gap:10px;width:100%;min-height:38px;padding:8px 10px;border:0;border-radius:9px;background:transparent;color:var(--ink-soft);font:650 12.5px 'Instrument Sans',sans-serif;text-align:left;cursor:pointer}
+  .profile-menu button:hover,.profile-menu button.current{background:#F3EEEB;color:var(--accent)}
+  .profile-menu button svg{flex:0 0 auto;width:16px;height:16px;fill:none;stroke:currentColor;stroke-width:1.8;stroke-linecap:round;stroke-linejoin:round}
+  .profile-menu .signout{color:#9B3245}
+  .profile-divider{height:1px;margin:5px 6px;background:var(--line)}
+  .orders-heading-row,.page-heading-row{display:flex;align-items:center;justify-content:space-between;gap:12px;min-height:43px;border-top:1px solid rgba(214,219,216,.72)}
+  .orders-heading-row h1,.page-heading-row h1{margin:0;color:var(--ink);font:700 18px/1.2 'Instrument Sans',sans-serif;letter-spacing:-.015em}
+  .order-heading-tools{display:flex;align-items:center;gap:7px}
+  .order-sort-btn,.period-cycle-btn{display:inline-flex;align-items:center;justify-content:center;gap:6px;min-height:33px;padding:0 9px;border:1px solid #D1D7D3;border-radius:9px;background:var(--card);color:var(--ink-soft);font:750 10.5px 'Instrument Sans',sans-serif;cursor:pointer;white-space:nowrap}
+  .order-sort-btn svg,.period-cycle-btn svg{width:14px;height:14px;fill:none;stroke:currentColor;stroke-width:1.8;stroke-linecap:round;stroke-linejoin:round}
+  .order-sort-btn .sort-caret,.period-cycle-btn .sort-caret{font-size:10px;color:var(--ink-faint)}
+  .orders-heading-row .topnav-search-btn{align-self:auto;margin-left:0;width:33px;height:33px}
+  .search-drawer.open{margin-top:6px}
+  .ordersUI{padding-bottom:6px}
+  .flowcard{margin-top:6px}
+  .ftab{isolation:isolate;padding:8px 3px 9px}
+  .ftab .fnm{position:relative;z-index:2;font-size:10.5px}
+  .ftab .fnum{position:absolute;z-index:1;left:7px;top:50%;transform:translateY(-52%);color:var(--sc);font:850 30px/1 'Instrument Sans',sans-serif;opacity:.11;pointer-events:none}
+  .ftab .fct,.ftab .fdot{z-index:3}
+  #buckets.buckets::after{display:none!important}
+  .overview-card-price{font-size:13px}
+  .overview-toolbar{display:none}
+  .page-heading-row{margin:2px 0 13px;padding:0 2px;border-top:0;border-bottom:1px solid var(--line)}
+  .page-heading-row h1{padding:10px 0}
+  .stats-period{justify-content:center;margin:-4px 0 13px}
+  .stats-period .mo{font-size:14px}
+  .info-page-title{margin-bottom:12px}
+  @media(max-width:560px){
+    header{padding-top:8px}
+    .htop{gap:6px}
+    .brand img{height:29px}
+    .header-calendar{gap:5px;min-height:34px;padding:0 6px;font-size:10.5px}
+    .header-calendar svg{width:14px;height:14px}
+    .activity-btn,.profile-btn{width:34px;height:34px}
+    .profile-menu{position:fixed;top:52px;right:12px;width:min(218px,calc(100vw - 24px))}
+    .orders-heading-row h1,.page-heading-row h1{font-size:17px}
+    .order-sort-btn,.period-cycle-btn{padding:0 7px;font-size:10px}
+    .ftab .fnm{font-size:9.5px}
+    .ftab .fnum{left:5px;font-size:27px}
+  }
+
+  /* V75 — task-first dashboard */
+  .htop{grid-template-columns:minmax(0,1fr) auto minmax(0,1fr);margin-bottom:12px}
+  .header-date{justify-self:center;color:var(--ink-soft);font:400 12px/1.2 'Instrument Sans',sans-serif;letter-spacing:.01em;white-space:nowrap}
+  .menu-btn{display:inline-flex;align-items:center;justify-content:center;gap:7px;min-height:36px;padding:0 13px;border:1px solid #D6C4CA;border-radius:10px;background:rgba(255,255,255,.72);color:var(--ink);font:750 11.5px 'Instrument Sans',sans-serif;text-transform:uppercase;letter-spacing:.04em;cursor:pointer;box-shadow:0 3px 9px rgba(52,42,45,.06)}
+  .menu-btn .menu-caret{color:var(--accent);font-size:10px;transition:transform .15s ease}.menu-btn[aria-expanded="true"] .menu-caret{transform:rotate(180deg)}
+  .profile-menu .restart{color:var(--accent)}
+  .orders-heading-row{border-top:0;min-height:42px}
+  .orders-sort-heading{display:flex;min-width:0;align-items:center;gap:7px;padding:0;border:0;background:transparent;color:var(--ink);cursor:pointer;text-align:left}
+  .orders-sort-heading .orders-heading-title{font:750 18px/1.15 'Instrument Sans',sans-serif;letter-spacing:-.015em}
+  .orders-sort-heading .sort-mode{color:var(--ink-faint);font:650 9.5px/1.1 'Instrument Sans',sans-serif;white-space:nowrap}
+  .orders-sort-heading .sort-caret{color:#1E2421;font-size:10px}
+
+  .flowcard{gap:8px;padding:4px;border:1px solid #E8E1DC;border-radius:16px;background:rgba(255,255,255,.72);box-shadow:0 5px 15px rgba(48,40,36,.045)}
+  .ftab{min-height:86px;padding:13px 5px 10px!important;border:1px solid transparent;border-radius:13px!important;flex-direction:column;justify-content:space-between;gap:8px!important;box-shadow:none}
+  .ftab .fnum{display:none}.ftab .fnm{font-size:10.5px!important;font-weight:750;line-height:1.15}
+  .ftab .fct{position:static;display:block;width:auto;min-width:0;height:auto;padding:0;border-radius:0;background:transparent!important;color:var(--sc-ink);font:500 25px/1 'Instrument Sans',sans-serif}
+  .ftab .fdot{position:absolute;top:9px;right:9px;width:7px;height:7px;border-radius:50%;background:#D83B45;box-shadow:0 0 0 3px rgba(216,59,69,.11)}
+  .ftab:nth-child(1){background:#FCF0F2;border-color:#F4DDE2}.ftab:nth-child(2){background:#FFF7E7;border-color:#F4E6C7}.ftab:nth-child(3){background:#EEF7FA;border-color:#DCECF1}.ftab:nth-child(4){background:#EEF7F1;border-color:#DDECE2}
+  .ftab.on{color:var(--sc-ink)!important;border-color:color-mix(in srgb,var(--sc) 55%,#fff)!important;box-shadow:inset 0 0 0 1px color-mix(in srgb,var(--sc) 28%,#fff),0 5px 12px rgba(35,45,40,.06)}
+  .ftab::after{display:none!important}.archrow{margin-top:7px;padding-top:7px;border-top:1px solid #EEE7E2}.atab.on::after{height:1px!important}
+
+  .order-badge{display:inline-flex;box-sizing:border-box;align-items:center;justify-content:center;min-height:23px;padding:4px 9px;border:1px solid var(--badge-line,#D4DAD7);border-radius:999px;background:var(--badge-bg,#F3F5F4);color:var(--badge-ink,#4F5A55);font:800 8.5px/1.05 'Instrument Sans',sans-serif;text-align:center;white-space:nowrap}
+  .order-badge.action{--badge-bg:#F8EAEE;--badge-line:#E6C4CD;--badge-ink:#8A263D}.order-badge.sent{--badge-bg:#F4EEF8;--badge-line:#DCCDE7;--badge-ink:#6C467D}
+  .order-badge.due{--badge-bg:#FFF5DD;--badge-line:#EDD69C;--badge-ink:#8B6205}.order-badge.accepted{--badge-bg:#EAF5EE;--badge-line:#BDD9C7;--badge-ink:#276646}
+  .order-badge.received{--badge-bg:#EDF5F8;--badge-line:#C5DBE3;--badge-ink:#315E74}.order-badge.urgent{--badge-bg:#FFF0D8;--badge-line:#EDC77C;--badge-ink:#996100}
+  .order-badge.ready,.order-badge.paid{--badge-bg:#E6F3EA;--badge-line:#B7D5C1;--badge-ink:#236342}.order-badge.overdue{--badge-bg:#FCEAEC;--badge-line:#E5B7BE;--badge-ink:#A32D40}
+  .order-badge.closed{--badge-bg:#EFF1F0;--badge-line:#D5D9D7;--badge-ink:#68716D}
+  .overview-badges,.oc-side{gap:5px}.overview-badges .order-badge,.oc-side .order-badge{width:100%;max-width:none;border-radius:999px!important}
+  .ocard{overflow:visible}.ocard.unread::after{content:"NEW";position:absolute;z-index:3;top:-6px;right:10px;padding:3px 8px;border-radius:999px;background:#B4233A;color:#fff;font:850 8px/1 'Instrument Sans',sans-serif;letter-spacing:.07em;box-shadow:0 2px 7px rgba(180,35,58,.2)}
+
+  .overview-card{grid-template-columns:minmax(0,1fr) 112px!important;padding:0!important;overflow:visible!important}.overview-card::before{display:none}
+  .overview-card-main{display:grid;grid-template-columns:70px minmax(0,1fr);align-items:stretch}
+  .overview-date-tile{display:flex;min-height:92px;flex-direction:column;align-items:center;justify-content:center;border-right:1px solid #DDE6DF;border-radius:11px 0 0 11px;background:color-mix(in srgb,var(--bucket-color) 11%,#fff);color:color-mix(in srgb,var(--bucket-color) 78%,#1E2421);text-align:center}
+  .overview-date-tile small{font-size:7.5px;font-weight:850;letter-spacing:.06em;text-transform:uppercase}.overview-date-tile strong{margin:3px 0 1px;font:700 24px/1 'Instrument Sans',sans-serif}.overview-date-tile span{font-size:9px;font-weight:800;text-transform:uppercase}
+  .overview-card-copy{min-width:0;padding:11px 10px}.overview-card-name{font-size:13.5px}.overview-pickup{margin-top:6px}.overview-pickup-label{display:none}
+  .overview-pickup-line strong{font-size:12px!important;color:var(--ink)!important;text-transform:none}.overview-pickup-line span{font-size:10px}.overview-pickup-meta{font-size:9px}.overview-card-price{margin-top:6px}
+  .overview-badges{padding:9px 8px;border-left:1px dashed #E0E4E1!important}
+
+  .message-shortcuts{margin-top:8px;padding:8px 9px;border:1px solid #E1E5E2;border-radius:10px;background:rgba(255,255,255,.46)}
+  .message-shortcuts-label{display:block;margin-bottom:5px;color:var(--ink-faint);font-size:7.5px;font-weight:850;letter-spacing:.1em;text-transform:uppercase}
+  .message-shortcuts-row{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:5px}
+  .message-shortcut{position:relative;min-width:0;min-height:29px;padding:4px 6px;border:1px solid #DCE1DE;border-radius:8px;background:#F3F5F4;color:#929995;font:750 8.5px/1.1 'Instrument Sans',sans-serif;cursor:pointer}
+  .message-shortcut.current{border-color:#C594A2;background:#FBF2F4;color:var(--accent);box-shadow:0 2px 7px rgba(111,30,49,.07)}.message-shortcut.done{padding-right:19px;border-color:#C7D9CD;background:#F0F6F2;color:#397055}
+  .message-shortcut.done::after{content:"✓";position:absolute;right:6px;top:50%;transform:translateY(-50%);font-weight:900}
+
+  .bottom-actions{margin-top:14px;padding:10px;border:1px solid #E2E6E3;border-radius:13px;background:#F8F9F8}
+  .order-action-group+.order-action-group{margin-top:9px;padding-top:9px;border-top:1px solid #E3E7E4}.order-action-group-label{display:block;margin:0 0 6px 2px;color:var(--ink-faint);font-size:7.5px;font-weight:850;letter-spacing:.09em;text-transform:uppercase}
+  .order-action-grid{display:grid!important;grid-template-columns:repeat(3,minmax(0,1fr))!important;gap:6px!important}.order-action{min-height:38px!important;padding:7px 8px!important;border-radius:9px!important;background:#fff!important;box-shadow:none!important;font-size:9px!important;font-weight:700!important}
+  .order-action-group:nth-child(-n+2) .order-action-grid{grid-template-columns:repeat(2,minmax(0,1fr))!important}
+  .order-action svg{width:14px;height:14px}.order-action.delete,.order-action.cancel,.order-action.customer-cancel{background:#FFF9FA!important}
+
+  @media(max-width:560px){
+    .header-date{font-size:10.5px}.menu-btn{min-height:34px;padding:0 10px;font-size:10.5px}.flowcard{gap:5px}.ftab{min-height:78px;padding:11px 3px 9px!important}.ftab .fnm{font-size:9.5px!important}.ftab .fct{font-size:22px}
+    .orders-sort-heading{gap:5px}.orders-sort-heading .orders-heading-title{font-size:16px}.orders-sort-heading .sort-mode{font-size:8.5px}
+    .overview-card{grid-template-columns:minmax(0,1fr) 96px!important}.overview-card-main{grid-template-columns:61px minmax(0,1fr)}.overview-date-tile{min-height:88px}.overview-date-tile strong{font-size:21px}.overview-card-copy{padding:10px 8px}.overview-badges{padding:7px 6px}.order-badge{padding:3px 6px;font-size:7.5px}
+    .order-action-grid{grid-template-columns:repeat(2,minmax(0,1fr))!important}
+  }
+
+  /* V76 — reference-led main screen */
+  .htop{grid-template-columns:minmax(0,1fr) auto;margin-bottom:0;padding-bottom:12px}
+  .brand img{height:43px}
+  .dashboard-intro{padding:18px 2px 12px}
+  .dashboard-intro h1{margin:0;color:var(--ink);font:700 23px/1.15 'Cormorant Garamond',Georgia,serif;letter-spacing:-.015em}
+  .dashboard-intro p{margin:3px 0 0;color:var(--ink-soft);font-size:12.5px;line-height:1.35}
+  .ordersUI{display:flex;flex-direction:column}
+  #buckets{order:2}.orders-heading-row{order:4;margin-top:11px;padding-top:11px;border-top:1px solid #E6DFDA}.search-drawer{order:5}
+  .dashboard-intro{order:1}
+  .orders-sort-heading .sort-mode{display:none}
+  .orders-sort-heading .orders-heading-title{font-size:18px}
+  .calendar-link{display:inline-flex;align-items:center;gap:5px;padding:7px 0;border:0;background:transparent;color:var(--accent);font:750 10.5px 'Instrument Sans',sans-serif;cursor:pointer}
+  .calendar-link span{font-size:15px;line-height:1}
+
+  .archrow{display:grid!important;grid-template-columns:repeat(5,minmax(0,1fr));gap:0;margin-top:6px;padding:0;border-top:1px solid #EEE7E2;border-bottom:1px solid #EEE7E2}
+  .archrow .atab{position:relative;display:flex;min-width:0;min-height:38px;align-items:center;justify-content:center;gap:3px;padding:0 2px;color:var(--ink-faint);font-size:9.5px;text-align:center;cursor:pointer}
+  .archrow .atab.on{color:var(--ink);font-weight:750}
+  .archrow .atab.on::after{content:"";position:absolute;left:22%;right:22%;bottom:-1px;height:2px!important;border-radius:2px;background:var(--accent)}
+  .archrow .act{font-size:8.5px}
+
+  .overview-grid{grid-template-columns:1fr!important;gap:10px}
+  .overview-card{grid-template-columns:minmax(0,1fr) 128px!important;min-height:112px;border-radius:14px;box-shadow:0 3px 11px rgba(42,48,45,.06)}
+  .overview-card-main{grid-template-columns:78px minmax(0,1fr)}
+  .overview-date-tile{min-height:110px;border-radius:13px 0 0 13px}
+  .overview-date-tile small{font-size:8.5px}.overview-date-tile strong{font-size:28px}.overview-date-tile span{font-size:10px}
+  .overview-card-copy{display:flex;min-width:0;flex-direction:column;justify-content:center;padding:12px 15px}
+  .overview-card-name{font-size:16px;line-height:1.2}
+  .overview-pickup{margin-top:5px}.overview-pickup-line strong{font-size:13px!important;font-weight:650!important}.overview-pickup-meta{display:none}
+  .overview-card-price{margin-top:9px;color:var(--ink-soft)!important;font-size:11.5px!important;font-weight:600!important}
+  .overview-card-price::before{display:none!important}
+  .overview-card-side{display:grid;grid-template-columns:minmax(0,1fr) 18px;align-items:center;gap:5px;padding:12px 10px 12px 4px}
+  .overview-card-side .order-badge{width:100%;min-height:30px;padding:6px 8px;font-size:9.5px}
+  .overview-chevron{color:var(--ink-soft);font:400 26px/1 'Instrument Sans',sans-serif}
+
+  .order-action-group:last-child .order-action{opacity:1!important;border-color:#D8A9B3!important;background:#FFF1F4!important;color:#92273B!important;font-weight:800!important}
+  .order-action-group:last-child .order-action:hover{background:#FBE5EA!important;border-color:#C98291!important}
+  .order-action-group:last-child .order-action svg{stroke:#92273B!important}
+
+  @media(max-width:560px){
+    .brand img{height:38px}.dashboard-intro{padding:16px 0 10px}.dashboard-intro h1{font-size:22px}.dashboard-intro p{font-size:11.5px}
+    .archrow .atab{font-size:8.5px}.archrow .act{font-size:8px}
+    .overview-card{grid-template-columns:minmax(0,1fr) 103px!important;min-height:104px}
+    .overview-card-main{grid-template-columns:66px minmax(0,1fr)}.overview-date-tile{min-height:102px}.overview-date-tile strong{font-size:24px}
+    .overview-card-copy{padding:10px}.overview-card-name{font-size:14px}.overview-pickup-line strong{font-size:11.5px!important}.overview-card-price{font-size:10px!important}
+    .overview-card-side{grid-template-columns:minmax(0,1fr) 14px;padding:8px 7px 8px 3px}.overview-card-side .order-badge{min-height:27px;padding:5px 5px;font-size:8px}.overview-chevron{font-size:22px}
+  }
 </style>
 </head>
 <body>
@@ -806,29 +981,47 @@
 <div id="app">
   <header>
     <div class="htop">
-      <div class="brand"><button class="brand-restart" type="button" onclick="hardRestartDashboard()" aria-label="Restart dashboard" title="Restart dashboard"><img src="https://ivnybivjjydihltknlmo.supabase.co/storage/v1/object/public/references/images/byAmandaSoyer_Logo_NoBackground.png" alt="by Amanda Soyer"></button><span class="dt" id="todayLbl"></span></div>
+      <div class="brand"><button class="brand-restart" type="button" onclick="openOrdersOverview()" aria-label="Return to orders" title="Return to orders"><img src="https://ivnybivjjydihltknlmo.supabase.co/storage/v1/object/public/references/images/byAmandaSoyer_Logo_NoBackground.png" alt="by Amanda Soyer"></button></div>
       <div class="header-actions">
         <button class="activity-btn" onclick="toggleActivity()" aria-label="Notifications" title="Notifications">
           <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M18 8a6 6 0 0 0-12 0c0 7-3 7-3 9h18c0-2-3-2-3-9"/><path d="M10 21h4"/></svg>
           <span class="activity-badge" id="activityBadge"></span>
         </button>
-        <button class="logout" onclick="logout()">Sign out</button>
+        <div class="profile-wrap">
+          <button class="menu-btn" id="profileButton" type="button" onclick="toggleProfileMenu(event)" aria-label="Open menu" aria-expanded="false"><span>Menu</span><span class="menu-caret">▼</span></button>
+          <div class="profile-menu" id="profileMenu">
+            <button type="button" data-destination="info" onclick="openProfileDestination('info')"><svg viewBox="0 0 24 24"><circle cx="12" cy="8" r="3"></circle><path d="M5 20c.8-4 3.1-6 7-6s6.2 2 7 6"></path></svg><span>My Info</span></button>
+            <button type="button" data-destination="cake-stats" onclick="openProfileDestination('cake-stats')"><svg viewBox="0 0 24 24"><path d="M4 20h16M6 20v-8h12v8M8 12V8h8v4M10 8V5h4v3"></path></svg><span>Cake Stats</span></button>
+            <button type="button" data-destination="web-stats" onclick="openProfileDestination('web-stats')"><svg viewBox="0 0 24 24"><path d="M4 19V9m5 10V5m5 14v-7m5 7V3"></path></svg><span>Web Stats</span></button>
+            <div class="profile-divider"></div>
+            <button type="button" data-destination="blacklist" onclick="openProfileDestination('blacklist')"><svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="9"></circle><path d="m6 18 12-12"></path></svg><span>Blacklist</span></button>
+            <button type="button" data-destination="customers" onclick="openProfileDestination('customers')"><svg viewBox="0 0 24 24"><circle cx="9" cy="8" r="3"></circle><circle cx="17" cy="10" r="2"></circle><path d="M3 20c.7-4 2.7-6 6-6s5.3 2 6 6M15 15c3 0 4.7 1.7 5 5"></path></svg><span>Customers</span></button>
+            <button type="button" data-destination="settings" onclick="openProfileDestination('settings')"><svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="3"></circle><path d="M19 12a7 7 0 0 0-.1-1l2-1.5-2-3.4-2.4 1A7 7 0 0 0 15 6l-.3-2.6h-4L10.4 6A7 7 0 0 0 8.8 7L6.4 6l-2 3.4 2 1.5a7 7 0 0 0 0 2L4.4 14.5l2 3.4 2.4-1A7 7 0 0 0 10.4 18l.3 2.6h4L15 18a7 7 0 0 0 1.6-1.1l2.4 1 2-3.4-2-1.5a7 7 0 0 0 .1-1Z"></path></svg><span>Settings</span></button>
+            <div class="profile-divider"></div>
+            <button type="button" class="restart" onclick="hardRestartDashboard()"><svg viewBox="0 0 24 24"><path d="M4 8V4h4M4.8 5.2A9 9 0 1 1 3 14"></path></svg><span>Restart</span></button>
+          </div>
+        </div>
       </div>
     </div>
-    <nav class="topnav" id="topnav">
-      <a class="topnav-a on" data-v="orders" onclick="openOrdersOverview()">Orders</a>
-      <a class="topnav-a" data-v="calendar" onclick="setView('calendar')">Calendar</a>
-      <a class="topnav-a" data-v="stats" onclick="setView('stats')">Stats</a>
-      <a class="topnav-a" data-v="info" onclick="setView('info')">My info</a>
-      <button class="topnav-search-btn" id="searchToggle" onclick="toggleSearchBar()" aria-label="Search orders" title="Search"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><circle cx="11" cy="11" r="7"></circle><path d="m20 20-3.5-3.5"></path></svg></button>
-      <span class="topnav-ink" id="topnavInk"></span>
-    </nav>
-    <div class="search-drawer" id="searchDrawer">
-      <input class="search" id="search" placeholder="Search name, flavour, WhatsApp…" oninput="renderList()">
-    </div>
     <div class="ordersUI" id="ordersUI">
+      <div class="dashboard-intro">
+        <h1 id="dashboardGreeting">Good morning, Amanda!</h1>
+        <p>Here’s what needs your attention today</p>
+      </div>
       <div class="buckets" id="buckets"></div>
       <div class="statusrow" id="statusrow"></div>
+      <div class="orders-heading-row">
+        <button class="orders-sort-heading" id="orderSortButton" type="button" onclick="cycleOverviewSort()" aria-label="Change order sorting">
+          <span class="orders-heading-title" id="ordersHeadingTitle">Upcoming Orders</span>
+          <span class="sort-caret">▼</span>
+        </button>
+        <div class="order-heading-tools">
+          <button class="calendar-link" type="button" onclick="openCalendarFromHeader()">View calendar <span>›</span></button>
+        </div>
+      </div>
+      <div class="search-drawer" id="searchDrawer">
+        <input class="search" id="search" placeholder="Search name, flavour, WhatsApp…" oninput="renderList()">
+      </div>
     </div>
   </header>
   <div id="main"></div>
@@ -886,7 +1079,7 @@ const STATUSES=[
   {id:"quoted",label:"Quoted",color:"var(--quoted)"},
   {id:"awaiting_payment",label:"Awaiting Payment",color:"var(--awaiting)"},
   {id:"confirmed",label:"Paid",color:"var(--confirmed)"},
-  {id:"delivered",label:"Cake Delivered",color:"var(--delivered)"},
+  {id:"delivered",label:"Ready for Collection",color:"var(--delivered)"},
   {id:"done",label:"Done",color:"var(--done)"},
   {id:"cancelled",label:"Cancelled",color:"var(--cancel)"},
   {id:"deleted",label:"Archived",color:"var(--deleted)"},
@@ -1050,6 +1243,7 @@ function pickupMoment(o){
   const date=new Date(`${o.pdate}T${String(match[1]).padStart(2,'0')}:${match[2]}:00`);
   return Number.isNaN(date.getTime())?null:date;
 }
+function pickupDeltaMs(o){const moment=pickupMoment(o);return moment?moment.getTime()-Date.now():null;}
 async function syncAutoDelivered(){
   if(!sb||!autoDeliveryEnabled)return;
   const now=Date.now(),due=ORDERS.filter(o=>o.status==='confirmed'&&pickupMoment(o)&&pickupMoment(o).getTime()<=now);
@@ -1060,22 +1254,23 @@ async function syncAutoDelivered(){
 }
 function bucketOf(o){
   if(o.status==='done'||o.status==='cancelled'||o.status==='deleted')return o.status;
+  if(o.status==='delivered')return 'cake_delivered';
+  if(o.status==='confirmed'){const delta=pickupDeltaMs(o);if(delta!==null&&delta<=3600000)return 'cake_delivered';}
   const stage=workflowStage(o);
   if(stage===1||stage===2)return 'new_orders';
   if(stage===3)return 'waiting_customer';
   if(stage===4||stage===5)return 'deposit_paid';
-  if(stage===6)return 'cake_delivered';
   return 'new_orders';
 }
 const BUCKETS=[
-  {id:"new_orders",label:"New<br>Orders"},{id:"waiting_customer",label:"Waiting<br>Customer"},{id:"deposit_paid",label:"Deposit<br>Paid"},{id:"cake_delivered",label:"Cake<br>Delivered"},
+  {id:"new_orders",label:"New<br>Orders"},{id:"waiting_customer",label:"Waiting<br>Customer"},{id:"deposit_paid",label:"Deposit<br>Due"},{id:"cake_delivered",label:"Ready for<br>Collection"},
   {id:"done",label:"Done"},{id:"cancelled",label:"Cancelled"},{id:"deleted",label:"Archived"}
 ];
 const BUCKET_COLORS={new_orders:'#B4233A',waiting_customer:'#C6971C',deposit_paid:'#315E74',cake_delivered:'#34745A',done:'#9A8C93',cancelled:'#B26B6B',deleted:'#756B70'};
 const BUCKET_INK={new_orders:'#7E1526',waiting_customer:'#7E5D08',deposit_paid:'#1E3E4E',cake_delivered:'#1E4A38'};
 function bucketInk(id){return BUCKET_INK[id]||'#43423E';}
 function bucketColor(id){return BUCKET_COLORS[id]||'#9A8C93';}
-let activeBucket="new_orders", ordersOverview=true, overviewSort='none', statusSet=new Set(), view="orders", calMonth=new Date(today.getFullYear(),today.getMonth(),1), calSel=null, statsMonth=new Date(today.getFullYear(),today.getMonth(),1), statsScope='month', statsBreakdown='size', statsTab='web', infoTab='info', customerOpenKey='', customerMenuKey='', analyticsDays=30, analyticsToken=0;
+let activeBucket="new_orders", ordersOverview=true, overviewMode='all', overviewSort='pickup', statusSet=new Set(), view="orders", calMonth=new Date(today.getFullYear(),today.getMonth(),1), calSel=null, statsMonth=new Date(today.getFullYear(),today.getMonth(),1), statsScope='month', statsBreakdown='size', statsTab='web', infoTab='info', customerOpenKey='', customerMenuKey='', analyticsDays=30, analyticsToken=0;
 
 const MO=["January","February","March","April","May","June","July","August","September","October","November","December"];
 const MOS=["Jan","Feb","Mar","Apr","May","Jun","Jul","Aug","Sep","Oct","Nov","Dec"];
@@ -1094,6 +1289,33 @@ function moveTopnavInk(){
   const nav=document.getElementById('topnav'),on=nav&&nav.querySelector('.topnav-a.on'),ink=document.getElementById('topnavInk');
   if(nav&&on&&ink){ink.style.width=on.offsetWidth+'px';ink.style.transform=`translateX(${on.offsetLeft}px)`;}
 }
+function updateHeaderDate(){
+  const now=new Date(),label=document.getElementById('todayLbl');
+  if(label)label.textContent=`${WD[now.getDay()]} · ${now.getDate()} ${MOS[now.getMonth()]}`;
+  const greeting=document.getElementById('dashboardGreeting'),hour=now.getHours(),period=hour<12?'morning':hour<18?'afternoon':'evening';
+  if(greeting)greeting.textContent=`Good ${period}, Amanda!`;
+}
+function closeProfileMenu(){
+  const menu=document.getElementById('profileMenu'),button=document.getElementById('profileButton');
+  if(menu)menu.classList.remove('show');if(button)button.setAttribute('aria-expanded','false');
+}
+function toggleProfileMenu(event){
+  if(event)event.stopPropagation();const menu=document.getElementById('profileMenu'),button=document.getElementById('profileButton');if(!menu)return;
+  const open=menu.classList.toggle('show');if(button)button.setAttribute('aria-expanded',open?'true':'false');
+}
+function updateProfileCurrent(){
+  let destination='';
+  if(view==='stats')destination=statsTab==='cake'?'cake-stats':'web-stats';
+  else if(view==='info')destination=infoTab;
+  document.querySelectorAll('#profileMenu [data-destination]').forEach(button=>button.classList.toggle('current',button.dataset.destination===destination));
+}
+function openProfileDestination(destination){
+  closeProfileMenu();
+  if(destination==='web-stats'||destination==='cake-stats'){statsTab=destination==='cake-stats'?'cake':'web';setView('stats');return;}
+  infoTab=destination;setView('info');
+}
+function openCalendarFromHeader(){closeProfileMenu();setView('calendar');}
+function logoutFromProfile(){closeProfileMenu();logout();}
 function toggleSearchBar(){
   const d=document.getElementById('searchDrawer'),btn=document.getElementById('searchToggle');
   const open=d.classList.toggle('open');
@@ -1109,7 +1331,7 @@ function moveSubnavInk(navId){
 function setView(v){
   view=v;
   document.querySelectorAll('.topnav-a').forEach(t=>t.classList.toggle('on',t.dataset.v===v));
-  requestAnimationFrame(moveTopnavInk);
+  updateHeaderDate();updateProfileCurrent();
   const _sd=document.getElementById('searchDrawer'),_sb=document.getElementById('searchToggle');
   if(v!=='orders'&&_sd){_sd.classList.remove('open');if(_sb)_sb.classList.remove('on');const _si=document.getElementById('search');if(_si)_si.value='';}
   document.getElementById('ordersUI').style.display=(v==='orders')?'block':'none';
@@ -1118,36 +1340,38 @@ function setView(v){
   else if(v==='stats')renderStats();
   else if(v==='info')renderInfo();
 }
-function openOrdersOverview(){ordersOverview=true;setView('orders');}
+function openOrdersOverview(){ordersOverview=true;overviewMode='all';setView('orders');}
+function orderNeedsAction(o){const stage=workflowStage(o),delta=pickupDeltaMs(o);return stage===1||stage===2||stage===4||stage===6||(bucketOf(o)==='cake_delivered'&&o.paid<o.price&&delta!==null&&delta<=0);}
+function setOverviewMode(mode){ordersOverview=true;overviewMode=mode;renderTop();renderList();}
 
 /* ---------- orders ---------- */
 function renderTop(){
-  const now=new Date();
-  document.getElementById('todayLbl').textContent=`${WD[now.getDay()]} ${now.getDate()} ${MOS[now.getMonth()]}`;
+  updateHeaderDate();updateOrderSortButton();
   const counts={};BUCKETS.forEach(b=>counts[b.id]=0);
   ORDERS.forEach(o=>counts[bucketOf(o)]=(counts[bucketOf(o)]||0)+1);
   const flowIds=['new_orders','waiting_customer','deposit_paid','cake_delivered'];
-  const archIds=['done','cancelled','deleted'];
   let flow='';
-  flowIds.forEach(id=>{
+  flowIds.forEach((id,index)=>{
     const b=BUCKETS.find(x=>x.id===id);if(!b)return;
     const on=!ordersOverview&&activeBucket===id;
     const unread=id==='new_orders'?ORDERS.filter(o=>bucketOf(o)==='new_orders'&&!o.read).length:0;
-    const badge=unread?`<span class="fdot"></span>`:`<span class="fct">${counts[id]||0}</span>`;
-    flow+=`<button class="ftab ${on?'on':''}" style="--sc:${bucketColor(id)};--sc-ink:${bucketInk(id)}" onclick="setBucket('${id}')"><span class="fnm">${b.label}</span>${badge}</button>`;
+    const badge=`<span class="fct">${counts[id]||0}</span>${unread?'<span class="fdot"></span>':''}`;
+    flow+=`<button class="ftab ${on?'on':''}" style="--sc:${bucketColor(id)};--sc-ink:${bucketInk(id)}" onclick="setBucket('${id}')"><span class="fnum" aria-hidden="true">${index+1}</span><span class="fnm">${b.label}</span>${badge}</button>`;
   });
-  let arch='';
-  archIds.forEach(id=>{
-    const b=BUCKETS.find(x=>x.id===id);if(!b)return;
-    const on=!ordersOverview&&activeBucket===id;
-    const ct=id==='deleted'?'':`<span class="act">${counts[id]||0}</span>`;
-    arch+=`<a class="atab ${on?'on':''}" onclick="setBucket('${id}')"><span class="anm">${b.label}</span>${ct}</a>`;
-  });
+  const activeOrders=ORDERS.filter(o=>!['done','cancelled','deleted'].includes(o.status)),toDo=activeOrders.filter(orderNeedsAction).length;
+  const filters=[
+    {id:'all',label:'All',count:activeOrders.length,action:"setOverviewMode('all')",on:ordersOverview&&overviewMode==='all'},
+    {id:'todo',label:'To Do',count:toDo,action:"setOverviewMode('todo')",on:ordersOverview&&overviewMode==='todo'},
+    {id:'done',label:'Completed',count:counts.done||0,action:"setBucket('done')",on:!ordersOverview&&activeBucket==='done'},
+    {id:'cancelled',label:'Cancelled',count:counts.cancelled||0,action:"setBucket('cancelled')",on:!ordersOverview&&activeBucket==='cancelled'},
+    {id:'deleted',label:'Archived',count:counts.deleted||0,action:"setBucket('deleted')",on:!ordersOverview&&activeBucket==='deleted'}
+  ];
+  const arch=filters.map(f=>`<a class="atab ${f.on?'on':''}" onclick="${f.action}"><span class="anm">${f.label}</span><span class="act">(${f.count})</span></a>`).join('');
   document.getElementById('buckets').innerHTML=
     `<div class="flowcard">${flow}</div><div class="archrow">${arch}</div>`;
   document.getElementById('statusrow').innerHTML='';
 }
-function setBucket(b){ordersOverview=false;activeBucket=b;renderTop();renderList();}
+function setBucket(b){ordersOverview=false;overviewMode='all';activeBucket=b;renderTop();renderList();}
 function setStatus(s){if(statusSet.has(s))statusSet.delete(s);else statusSet.add(s);renderTop();renderList();}
 function matchSearch(o,q){if(!q)return true;q=q.toLowerCase();return [o.name,o.flavor,o.wnum,o.instagram,o.type,o.size].join(' ').toLowerCase().includes(q);}
 /* Orders are operational records: newest submission first. */
@@ -1226,6 +1450,9 @@ function statsEntries(orders,getValue){
 function statsSetScope(scope){statsScope=scope;renderStats();}
 function statsOpenBreakdown(key){statsBreakdown=key;renderStats();requestAnimationFrame(()=>document.getElementById('statsBreakdown')?.scrollIntoView({behavior:'smooth',block:'nearest'}));}
 function analyticsSetDays(days){analyticsDays=days;renderStats();}
+function cycleAnalyticsDays(){const values=[7,30,90],index=values.indexOf(analyticsDays);analyticsDays=values[(index+1)%values.length];renderStats();}
+function cycleStatsScope(){statsScope=statsScope==='month'?'year':'month';renderStats();}
+function statsCycleIcon(){return '<svg viewBox="0 0 24 24" aria-hidden="true"><path d="M8 7h11M8 12h8M8 17h5M4 5v14m0 0-2.5-2.5M4 19l2.5-2.5"></path></svg>';}
 function analyticsDateISO(date){const y=date.getFullYear(),m=String(date.getMonth()+1).padStart(2,'0'),d=String(date.getDate()).padStart(2,'0');return `${y}-${m}-${d}`;}
 function analyticsDuration(seconds){seconds=Math.max(0,Number(seconds)||0);if(seconds<60)return `${Math.round(seconds)}s`;const minutes=Math.round(seconds/60);if(minutes<60)return `${minutes}m`;return `${Math.floor(minutes/60)}h ${minutes%60}m`;}
 function analyticsPercent(value,total){return total?Math.round(Number(value||0)/total*100):0;}
@@ -1270,12 +1497,12 @@ function renderStats(){
   const topFlavour=distributions.flavour[0]?.[0]||'No data',topDay=distributions.pickup[0]?.[0]||'No data';
   const label=statsScope==='year'?String(year):`${MO[month]} ${year}`;
   const compactList=(entries,total)=>entries.slice(0,4).map(([name,count])=>`<div class="report-row"><span>${escHtml(name)}</span><b>${count} · ${total?Math.round(count/total*100):0}%</b></div>`).join('')||'<div class="report-row"><span>No orders yet</span><b>—</b></div>';
-  const webHtml=`<div class="stats-toolbar"><div class="analytics-range"><button class="${analyticsDays===7?'active':''}" onclick="analyticsSetDays(7)">7 days</button><button class="${analyticsDays===30?'active':''}" onclick="analyticsSetDays(30)">30 days</button><button class="${analyticsDays===90?'active':''}" onclick="analyticsSetDays(90)">90 days</button></div></div><div id="websiteInsights" class="analytics-loading">Loading website insights…</div>`;
-  const cakeHtml=`<div class="stats-toolbar"><div class="stats-scope"><button class="${statsScope==='month'?'active':''}" onclick="statsSetScope('month')">Monthly</button><button class="${statsScope==='year'?'active':''}" onclick="statsSetScope('year')">Yearly</button></div><div class="stats-period"><button class="calnav" onclick="statsShift(-1)">‹</button><div class="mo">${label}</div><button class="calnav" onclick="statsShift(1)">›</button></div></div>
+  const webHtml=`<div id="websiteInsights" class="analytics-loading">Loading website insights…</div>`;
+  const cakeHtml=`<div class="stats-period"><button class="calnav" onclick="statsShift(-1)">‹</button><div class="mo">${label}</div><button class="calnav" onclick="statsShift(1)">›</button></div>
     <div class="stats-report"><section class="report-card"><div class="report-kicker">Cake business</div><h2>${active.length} order${active.length===1?'':'s'} in ${label}</h2><p>${active.length?`The order value is <b>${money(revenue)}</b>, with <b>${money(collected)}</b> collected and <b>${money(outstanding)}</b> still outstanding. The average quote is ${money(average)}.`:'There are no active orders with a pick-up date in this period.'}</p><p>${active.length?`The most ordered flavour is <b>${escHtml(topFlavour)}</b>, and <b>${escHtml(topDay)}</b> is the busiest pick-up day. ${cancelled?`${cancelled} order${cancelled===1?' was':'s were'} cancelled.`:'There were no cancellations.'}`:''}</p><div class="report-metrics"><div class="report-metric"><strong>${active.length}</strong><span>Orders</span></div><div class="report-metric"><strong>${money(revenue)}</strong><span>Order value</span></div><div class="report-metric"><strong>${money(average)}</strong><span>Average quote</span></div><div class="report-metric"><strong>${money(collected)}</strong><span>Collected</span></div><div class="report-metric"><strong>${money(outstanding)}</strong><span>Outstanding</span></div><div class="report-metric"><strong>${cancelled}</strong><span>Cancelled</span></div></div></section>
     <div class="report-columns"><section class="report-card"><div class="report-kicker">Customer choices</div><h2>What people order</h2><p>The lists show the most common choices for this period.</p><div class="report-list"><div class="report-row"><span><b>Top sizes</b></span><b>Orders</b></div>${compactList(distributions.size,active.length)}</div><div class="report-list"><div class="report-row"><span><b>Top flavours</b></span><b>Orders</b></div>${compactList(distributions.flavour,active.length)}</div></section><section class="report-card"><div class="report-kicker">Operations</div><h2>Payments & pick-up</h2><p>${paidFull} order${paidFull===1?' is':'s are'} paid in full and ${deposits} currently have a deposit recorded.</p><div class="report-list"><div class="report-row"><span><b>Popular shapes</b></span><b>Orders</b></div>${compactList(distributions.shape,active.length)}</div><div class="report-list"><div class="report-row"><span><b>Pick-up days</b></span><b>Orders</b></div>${compactList(distributions.pickup,active.length)}</div></section></div><p class="report-note">Cake statistics use the pick-up date. Cancelled orders are counted separately and excluded from revenue and customer preferences.</p></div>`;
-  document.getElementById('main').innerHTML=`<nav class="subnav" id="statsSub"><a class="subnav-a ${statsTab==='web'?'on':''}" onclick="statsSetTab('web')">Web Stats</a><a class="subnav-a ${statsTab==='cake'?'on':''}" onclick="statsSetTab('cake')">Cake Stats</a><span class="subnav-ink"></span></nav>${statsTab==='web'?webHtml:cakeHtml}`;
-  requestAnimationFrame(()=>moveSubnavInk('statsSub'));
+  const title=statsTab==='web'?'Web Stats':'Cake Stats',control=statsTab==='web'?`${analyticsDays} days`:(statsScope==='month'?'Monthly':'Yearly'),action=statsTab==='web'?'cycleAnalyticsDays()':'cycleStatsScope()';
+  document.getElementById('main').innerHTML=`<div class="page-heading-row"><h1>${title}</h1><button class="period-cycle-btn" onclick="${action}">${statsCycleIcon()}<span>${control}</span><span class="sort-caret">⌄</span></button></div>${statsTab==='web'?webHtml:cakeHtml}`;
   if(statsTab==='web')renderWebsiteInsights();
 }
 function statsSetTab(tab){statsTab=tab;renderStats();}
@@ -1298,8 +1525,8 @@ function renderInfo(){
     ${row('hours','Pick-up hours',BIZ.hours,true)}
     <p class="infonote">Changes save to Supabase and are used automatically on new customer quote pages.</p>`;
   const blacklistHtml=`<div class="ghead"><span>🚫 Blacklist</span><span class="ln"></span></div>${bl}`;
-  document.getElementById('main').innerHTML=`<nav class="subnav" id="infoSub"><a class="subnav-a ${infoTab==='info'?'on':''}" onclick="infoSetTab('info')">Info</a><a class="subnav-a ${infoTab==='blacklist'?'on':''}" onclick="infoSetTab('blacklist')">Blacklist</a><a class="subnav-a ${infoTab==='customers'?'on':''}" onclick="infoSetTab('customers')">Customers</a><a class="subnav-a subnav-icon ${infoTab==='settings'?'on':''}" onclick="infoSetTab('settings')" aria-label="Settings" title="Settings"><svg viewBox="0 0 24 24" fill="none" stroke-width="1.8"><circle cx="12" cy="12" r="3"></circle><path d="M19.4 15a1.7 1.7 0 0 0 .34 1.88l.06.06-2.83 2.83-.06-.06A1.7 1.7 0 0 0 15 19.4a1.7 1.7 0 0 0-1 .6 1.7 1.7 0 0 0-.4 1.1V21h-4v-.1A1.7 1.7 0 0 0 8.6 19.4a1.7 1.7 0 0 0-1.88.34l-.06.06-2.83-2.83.06-.06A1.7 1.7 0 0 0 4.6 15a1.7 1.7 0 0 0-.6-1 1.7 1.7 0 0 0-1.1-.4H3v-4h.1A1.7 1.7 0 0 0 4.6 8.6a1.7 1.7 0 0 0-.34-1.88l-.06-.06 2.83-2.83.06.06A1.7 1.7 0 0 0 9 4.6a1.7 1.7 0 0 0 1-.6 1.7 1.7 0 0 0 .4-1.1V3h4v.1A1.7 1.7 0 0 0 15.4 4.6a1.7 1.7 0 0 0 1.88-.34l.06-.06 2.83 2.83-.06.06A1.7 1.7 0 0 0 19.4 9c.12.38.34.72.64.98.3.25.67.4 1.06.42h.1v4h-.1a1.7 1.7 0 0 0-1.7.6Z"></path></svg></a><span class="subnav-ink"></span></nav>${infoTab==='info'?infoHtml:infoTab==='blacklist'?blacklistHtml:infoTab==='customers'?renderCustomersPanel():renderSettingsPanel()}`;
-  requestAnimationFrame(()=>moveSubnavInk('infoSub'));
+  const title={info:'My Info',blacklist:'Blacklist',customers:'Customers',settings:'Settings'}[infoTab]||'My Info';
+  document.getElementById('main').innerHTML=`<div class="page-heading-row info-page-title"><h1>${title}</h1></div>${infoTab==='info'?infoHtml:infoTab==='blacklist'?blacklistHtml:infoTab==='customers'?renderCustomersPanel():renderSettingsPanel()}`;
   if(infoTab==='info')document.querySelectorAll('#main [data-k]').forEach(el=>el.oninput=e=>{BIZ[e.target.dataset.k]=e.target.value;saveBiz();});
 }
 function infoSetTab(tab){infoTab=tab;renderInfo();}
@@ -1575,12 +1802,12 @@ function copyMessage(key){const o=ORDERS.find(x=>x.id===openId);if(key==='quote'
 async function markMessage(id,key,complete){const map={quote:'message_quote_sent_at',confirmed:'message_confirmed_sent_at',feedback:'message_feedback_sent_at'};const field=map[key];const value=complete?new Date().toISOString():null;const {error}=await sb.from('orders').update({[field]:value}).eq('id',id);if(error){alert('Could not save this step: '+error.message);return;}const o=ORDERS.find(x=>x.id===id);o[key+'SentAt']=value;openContactPanel();}
 async function generatePortal(id){const o=ORDERS.find(x=>x.id===id),canCreate=o&&['quoted','awaiting_payment'].includes(o.status);if(!canCreate||!(o.price>0)){alert('Save the final price before creating a customer link.');return;}const {data,error}=await sb.rpc('create_order_portal',{p_order_id:id});if(error){alert('Customer links are not installed in Supabase yet. Apply the supplied SQL migration first.\n\n'+error.message);return;}const result=typeof data==='string'?JSON.parse(data):data;o.portalToken=result.token;o.portalExpires=result.expires_at;const portalBase=result.url||`https://byamandasoyer.pt/order/${result.token}`;o.portalUrl=portalBase+(portalBase.includes('?')?'&':'?')+'lang='+orderLanguage(o);o.quoteSentAt='';const reset=await sb.from('orders').update({message_quote_sent_at:null}).eq('id',id);if(reset.error)console.error('Could not reset quote message state',reset.error);openMessagePanel('quote');}
 function closeSheet(){delArmed=null;detailEdit=null;detailFocusSection='';closeContactPanel();closeQuotePreview();document.getElementById('overlay').classList.remove('show');document.getElementById('sheet').classList.remove('show');openId=null;}
-async function savePaymentAmount(id,nextPaid){const o=ORDERS.find(x=>x.id===id);if(!o)return;const stageBefore=workflowStage(o),paid=Math.max(0,Number(nextPaid)||0),patch={paid};let nextStatus=o.status;if(stageBefore===3&&paid>0){nextStatus='confirmed';patch.status='confirmed';}else if(stageBefore===5&&o.price>0&&paid>=o.price){nextStatus='delivered';patch.status='delivered';}const {error}=await sb.from('orders').update(patch).eq('id',id);if(error){alert('Could not save payment: '+error.message);return;}o.paid=paid;o.status=nextStatus;activeBucket=bucketOf(o);refreshView();openSheet(id);}
+async function savePaymentAmount(id,nextPaid){const o=ORDERS.find(x=>x.id===id);if(!o)return;const stageBefore=workflowStage(o),paid=Math.max(0,Number(nextPaid)||0),patch={paid};let nextStatus=o.status;if(stageBefore===3&&paid>0){nextStatus='confirmed';patch.status='confirmed';}const {error}=await sb.from('orders').update(patch).eq('id',id);if(error){alert('Could not save payment: '+error.message);return;}o.paid=paid;o.status=nextStatus;activeBucket=bucketOf(o);refreshView();openSheet(id);}
 async function addPayment(id){const o=ORDERS.find(x=>x.id===id),input=document.getElementById('payAmt'),v=Number(input&&input.value);if(!o||!Number.isFinite(v)||v<=0)return;await savePaymentAmount(id,o.paid+v);}
 async function setPayment(id,amt){await savePaymentAmount(id,amt);}
 
 /* ---------- compact workspace v2 ---------- */
-const LIST_TITLES={new_orders:'New Orders',waiting_customer:'Waiting Customer',deposit_paid:'Deposit Paid',cake_delivered:'Cake Delivered',done:'Done',cancelled:'Cancelled',deleted:'Archived'};
+const LIST_TITLES={new_orders:'New Orders',waiting_customer:'Waiting Customer',deposit_paid:'Deposit Due',cake_delivered:'Ready for Collection',done:'Completed',cancelled:'Cancelled',deleted:'Archived'};
 function renderList(){
   const q=document.getElementById('search').value.trim();const el=document.getElementById('main');
   if(ordersOverview){renderOrdersOverview(q,el);return;}
@@ -1588,36 +1815,60 @@ function renderList(){
   if(!items.length){el.innerHTML=`<div class="empty">No orders here.</div>`;return;}
   let html='';
   if(activeBucket==='new_orders'){
-    const fresh=sortCreated(items.filter(o=>!o.read)),opened=sortCreated(items.filter(o=>o.read));
+    const fresh=sortOverviewOrders(items.filter(o=>!o.read)),opened=sortOverviewOrders(items.filter(o=>o.read));
     if(fresh.length){html+=`<div class="ghead"><span>Incoming Orders - New</span><span class="ln"></span><span>${fresh.length}</span></div>`;fresh.forEach(o=>html+=cardHTML(o));}
     if(opened.length){html+=`<div class="ghead"><span>Incoming Orders</span><span class="ln"></span><span>${opened.length}</span></div>`;opened.forEach(o=>html+=cardHTML(o));}
-  }else{html+=`<div class="ghead"><span>${LIST_TITLES[activeBucket]||stLabel(activeBucket)}</span><span class="ln"></span><span>${items.length}</span></div>`;sortCreated(items).forEach(o=>html+=cardHTML(o));}
+  }else{html+=`<div class="ghead"><span>${LIST_TITLES[activeBucket]||stLabel(activeBucket)}</span><span class="ln"></span><span>${items.length}</span></div>`;sortOverviewOrders(items).forEach(o=>html+=cardHTML(o));}
   el.innerHTML=html;
 }
-const OVERVIEW_SORT_LABELS={none:'Sort',order:'Order date',pickup:'Nearest pick-up',progress:'Progress',alpha:'A–Z'};
-function cycleOverviewSort(){const modes=['order','pickup','progress','alpha'],index=modes.indexOf(overviewSort);overviewSort=modes[(index+1)%modes.length];renderList();}
+const OVERVIEW_SORT_LABELS={pickup:'Upcoming Collections',order:'Newest Orders',progress:'Progress Order',alpha:'Customer A–Z'};
+function updateOrderSortButton(){const label=document.getElementById('ordersHeadingTitle');if(label)label.textContent=OVERVIEW_SORT_LABELS[overviewSort]||OVERVIEW_SORT_LABELS.pickup;}
+function cycleOverviewSort(){const modes=['pickup','order','progress','alpha'],index=modes.indexOf(overviewSort);overviewSort=modes[(index+1)%modes.length];updateOrderSortButton();renderList();}
 function overviewDate(value,dateOnly=false){if(!value)return 'Not set';const d=new Date(dateOnly?value+'T00:00:00':value);if(Number.isNaN(d.getTime()))return 'Not set';const pad=n=>String(n).padStart(2,'0');return `${pad(d.getDate())}-${pad(d.getMonth()+1)}-${String(d.getFullYear()).slice(-2)}`;}
 function overviewDayDistance(value,dateOnly=false){if(!value)return '';const d=new Date(dateOnly?value+'T00:00:00':value);if(Number.isNaN(d.getTime()))return '';d.setHours(0,0,0,0);const n=Math.round((d-today)/86400000);if(n===0)return 'today';if(n===1)return 'in 1 day';if(n>1)return `in ${n} days`;if(n===-1)return '1 day ago';return `${-n} days ago`;}
+function overviewPickupInfo(o){if(!o.pdate)return {primary:'Date not set',time:'',meta:'Pick-up date required',tone:'overdue'};const d=new Date(o.pdate+'T00:00:00');if(Number.isNaN(d.getTime()))return {primary:'Date not set',time:'',meta:'Pick-up date required',tone:'overdue'};d.setHours(0,0,0,0);const n=Math.round((d-today)/86400000),dateLabel=`${d.getDate()} ${MO[d.getMonth()]}`;if(n===0)return {primary:'Today',time:o.ptime||'',meta:dateLabel,tone:'today'};if(n===1)return {primary:'Tomorrow',time:o.ptime||'',meta:dateLabel,tone:'tomorrow'};if(n<0)return {primary:dateLabel,time:o.ptime||'',meta:n===-1?'1 day overdue':`${-n} days overdue`,tone:'overdue'};return {primary:dateLabel,time:o.ptime||'',meta:`in ${n} days`,tone:n<=3?'tomorrow':'scheduled'};}
 function sortOverviewOrders(items){const list=[...items];if(overviewSort==='order')return list.sort((a,b)=>new Date(b.createdAt||0)-new Date(a.createdAt||0));if(overviewSort==='pickup')return list.sort((a,b)=>(a.pdate?new Date(a.pdate+'T00:00:00').getTime():Infinity)-(b.pdate?new Date(b.pdate+'T00:00:00').getTime():Infinity));if(overviewSort==='progress')return list.sort((a,b)=>workflowStage(a)-workflowStage(b)||((a.pdate?new Date(a.pdate+'T00:00:00').getTime():Infinity)-(b.pdate?new Date(b.pdate+'T00:00:00').getTime():Infinity)));if(overviewSort==='alpha')return list.sort((a,b)=>String(a.name||'').localeCompare(String(b.name||''),undefined,{sensitivity:'base'}));return list;}
-function overviewCardHTML(o){const ps=o.paid>=o.price&&o.price>0?'paid':(o.paid>0?'deposit':null),progress=cardProgressLabel(o),accepted=workflowStage(o)===3&&o.customerDecision==='accepted',price=(o.range?'~':'')+money(o.price),bucket=bucketOf(o);return `<article class="overview-card ${o.read?'':'unread'}" style="--bucket-color:${bucketColor(bucket)}" onclick="openSheet(${o.id})"><div class="overview-card-main"><div class="overview-card-top"><div class="overview-card-name">${escHtml(o.name)}${isBlacklisted(o)?'<span class="blchip">Blacklisted</span>':''}</div><div class="overview-card-price">${price}</div></div><div class="overview-dates"><div><span>Ordered</span><p><b>${escHtml(overviewDate(o.createdAt))}</b><em> - ${escHtml(overviewDayDistance(o.createdAt))}</em></p></div><div><span>Pick-up</span><p><b>${escHtml(overviewDate(o.pdate,true))}</b><em> ${escHtml(overviewDayDistance(o.pdate,true))}</em></p></div></div></div><div class="overview-badges">${ps?`<span class="paychip" style="color:${payColor[ps]};border-color:${payColor[ps]}">${ps==='paid'?'Paid in full':'Deposit'}</span>`:''}${accepted?'<span class="customer-accepted-chip">Customer Accepted</span>':''}<span class="order-progress-chip ${progress.kind||''}">${progress.lines.map(line=>`<span>${escHtml(line)}</span>`).join('')}</span></div></article>`;}
-function renderOrdersOverview(q,el){let items=ORDERS.filter(o=>!['done','cancelled','deleted'].includes(o.status)&&matchSearch(o,q));items=sortOverviewOrders(items);const sortIcon='<svg viewBox="0 0 24 24" aria-hidden="true"><path d="M8 7h11M8 12h8M8 17h5M4 5v14m0 0-2.5-2.5M4 19l2.5-2.5"/></svg>';if(!items.length){el.innerHTML='<div class="overview-toolbar"><div><b>Active orders</b><span>Everything currently in progress</span></div><button onclick="cycleOverviewSort()">'+sortIcon+'<span>'+OVERVIEW_SORT_LABELS[overviewSort]+'</span></button></div><div class="empty">No active orders.</div>';return;}el.innerHTML=`<div class="overview-toolbar"><div><b>Active orders</b><span>${items.length} order${items.length===1?'':'s'} currently in progress</span></div><button onclick="cycleOverviewSort()">${sortIcon}<span>${OVERVIEW_SORT_LABELS[overviewSort]}</span></button></div><div class="overview-grid">${items.map(overviewCardHTML).join('')}</div>`;}
+function orderBadgeData(o){
+  if(o.status==='cancelled')return [{label:'Cancelled',kind:'closed'}];
+  if(o.status==='deleted')return [{label:'Archived',kind:'closed'}];
+  if(o.status==='done')return [{label:'Completed',kind:'closed'}];
+  const stage=workflowStage(o),bucket=bucketOf(o),delta=pickupDeltaMs(o),badges=[];
+  if(stage===1)badges.push({label:'Set Price',kind:'action'});
+  else if(stage===2)badges.push({label:'Send Confirmation',kind:'sent'});
+  else if(stage===3){badges.push({label:'Deposit Due',kind:'due'});if(o.customerDecision==='accepted')badges.push({label:'Quote Accepted',kind:'accepted'});}
+  else if(bucket==='deposit_paid'){badges.push({label:'Deposit Received',kind:'received'});if(delta!==null&&delta>3600000&&delta<=86400000)badges.push({label:'Last 24 Hours',kind:'urgent'});}
+  else if(bucket==='cake_delivered'){
+    const lastHour=delta!==null&&delta>0&&delta<=3600000;if(lastHour)badges.push({label:'Last 1 Hour',kind:'urgent'});
+    if(o.price>0&&o.paid>=o.price)badges.push({label:'Paid in Full',kind:'paid'});
+    else if(delta!==null&&delta<=0)badges.push({label:'Due Full Payment',kind:'overdue'});
+    else if(!lastHour)badges.push({label:'Ready for Collection',kind:'ready'});
+  }
+  return badges.length?badges:[{label:'Review Order',kind:'closed'}];
+}
+function orderBadgesHTML(o){return orderBadgeData(o).map(b=>`<span class="order-badge ${b.kind}">${escHtml(b.label)}</span>`).join('');}
+function overviewDateTileHTML(o){if(!o.pdate)return '<div class="overview-date-tile"><small>Pick-up</small><strong>—</strong><span>Unset</span></div>';const d=new Date(o.pdate+'T00:00:00'),dayDelta=Math.round((d-today)/86400000),top=dayDelta===0?'Today':dayDelta===1?'Tomorrow':WD[d.getDay()];return `<div class="overview-date-tile"><small>${escHtml(top)}</small><strong>${d.getDate()}</strong><span>${MOS[d.getMonth()]}</span></div>`;}
+function cardDisplayPrice(o){if(['cancelled','deleted'].includes(o.status))return '—';if(bucketOf(o)==='cake_delivered'&&o.paid>0&&o.paid<o.price)return `${money(o.paid)} / ${money(o.price)}`;return (o.range?'~':'')+money(o.price);}
+function overviewPickupLine(o){const info=overviewPickupInfo(o),d=o.pdate?new Date(o.pdate+'T00:00:00'):null;if(!d||Number.isNaN(d.getTime()))return 'Pick-up date not set';d.setHours(0,0,0,0);const n=Math.round((d-today)/86400000);if(n===0||n===1)return `Pick-up at ${o.ptime||'time not set'}`;if(n>1)return `Pick-up in ${n} days`;if(n===-1)return 'Pick-up was yesterday';return `Pick-up ${-n} days overdue`;}
+function overviewPaymentMeta(o){if(o.price>0&&o.paid>=o.price)return 'Paid in full';if(o.paid>0)return 'Deposit received';if(o.customerDecision==='accepted')return 'Quote accepted';const stage=workflowStage(o);if(stage===1)return 'Price not set';if(stage===2)return 'Confirmation not sent';return 'Payment pending';}
+function overviewPrimaryBadge(o){const stage=workflowStage(o),bucket=bucketOf(o),delta=pickupDeltaMs(o);if(bucket==='cake_delivered'){if(o.paid<o.price&&delta!==null&&delta<=0)return {label:'Payment Due',kind:'overdue'};return {label:'Ready',kind:'ready'};}if(stage===1)return {label:'Set Price',kind:'action'};if(stage===2)return {label:'Send Confirmation',kind:'sent'};if(stage===3)return {label:'Deposit Due',kind:'due'};if(bucket==='deposit_paid')return o.paid>=o.price&&o.price>0?{label:'All Set',kind:'paid'}:{label:'Deposit Due',kind:'due'};return {label:'Review',kind:'closed'};}
+function overviewCardHTML(o){const bucket=bucketOf(o),badge=overviewPrimaryBadge(o),meta=`${(o.range?'~':'')+money(o.price)} • ${overviewPaymentMeta(o)}`;return `<article class="overview-card ${o.read?'':'unread'}" style="--bucket-color:${bucketColor(bucket)}" onclick="openSheet(${o.id})"><div class="overview-card-main">${overviewDateTileHTML(o)}<div class="overview-card-copy"><div class="overview-card-name">${escHtml(o.name)}${isBlacklisted(o)?'<span class="blchip">Blacklisted</span>':''}</div><div class="overview-pickup"><div class="overview-pickup-line"><strong>${escHtml(overviewPickupLine(o))}</strong></div></div><div class="overview-card-price">${escHtml(meta)}</div></div></div><div class="overview-card-side"><span class="order-badge ${badge.kind}">${escHtml(badge.label)}</span><span class="overview-chevron">›</span></div></article>`;}
+function renderOrdersOverview(q,el){let items=ORDERS.filter(o=>!['done','cancelled','deleted'].includes(o.status)&&matchSearch(o,q));if(overviewMode==='todo')items=items.filter(orderNeedsAction);items=sortOverviewOrders(items);if(!items.length){el.innerHTML='<div class="empty">No active orders.</div>';return;}el.innerHTML=`<div class="overview-grid">${items.map(overviewCardHTML).join('')}</div>`;}
 function cardPickupDate(o){if(!o.pdate)return 'Date not set';const d=new Date(o.pdate+'T00:00:00');return `${WD[d.getDay()]} - ${MO[d.getMonth()]} ${d.getDate()} - ${o.ptime||'—'}`;}
 function pickupDistance(iso){if(!iso)return '';const d=new Date(iso+'T00:00:00');d.setHours(0,0,0,0);const n=Math.round((d-today)/86400000);if(n===0)return 'today';if(n===1)return 'in 1 day';if(n>1)return `in ${n} days`;if(n===-1)return '1 day ago';return `${-n} days ago`;}
-function cardProgressLabel(o){if(o.status==='cancelled')return {lines:['Cancelled'],kind:'closed'};if(o.status==='deleted')return {lines:['Archived'],kind:'closed'};if(o.status==='done')return {lines:['Cake Delivered'],kind:'closed'};const stage=workflowStage(o);if(stage===1)return {lines:['Set the Quote']};if(stage===2)return {lines:['Send Quoted Link']};if(stage===3)return {lines:['Wait for customer']};if(stage===4)return {lines:['Deposit Paid -','Send Info']};if(stage===5)return {lines:['Delivery Date','incoming']};if(stage===6)return {lines:['Cake Delivered']};return {lines:[stLabel(o.status)],kind:'closed'};}
-function cardHTML(o){const ps=o.paid>=o.price&&o.price>0?'paid':(o.paid>0?'deposit':null),progress=cardProgressLabel(o),accepted=workflowStage(o)===3&&o.customerDecision==='accepted',price=['cancelled','deleted'].includes(o.status)?'—':((o.range?'~':'')+money(o.price)),cakeLine=[o.type,shortSize(o.size)].filter(Boolean).join(' ')+' - '+(o.shape||'—');return `<div class="ocard ${o.read?'':'unread'}" style="--st:${bucketColor(bucketOf(o))}" onclick="openSheet(${o.id})"><div class="oc-top"><div class="oc-copy"><div class="oc-name">${escHtml(o.name)}${isBlacklisted(o)?'<span class="blchip">Blacklisted</span>':''}</div><div class="oc-cake">${escHtml(cakeLine)}</div><div class="oc-flavour">${escHtml(o.flavor||'—')}</div><div class="oc-ordered">Ordered: ${escHtml(o.created)}</div><div class="oc-pickup">Pick-up: <b>${escHtml(cardPickupDate(o))}</b> <span>(${escHtml(pickupDistance(o.pdate))})</span></div></div><div class="oc-side"><div class="oc-price">${price}</div>${ps?`<span class="paychip" style="color:${payColor[ps]};border-color:${payColor[ps]}">${ps==='paid'?'Paid in full':'Deposit'}</span>`:''}${accepted?'<span class="customer-accepted-chip">Customer Accepted</span>':''}<span class="order-progress-chip ${progress.kind||''}">${progress.lines.map(line=>`<span>${escHtml(line)}</span>`).join('')}</span></div></div></div>`;}
+function cardProgressLabel(o){const first=orderBadgeData(o)[0]||{label:'Review Order',kind:'closed'};return {lines:[first.label],kind:first.kind};}
+function cardHTML(o){const price=cardDisplayPrice(o),cakeLine=[o.type,shortSize(o.size)].filter(Boolean).join(' ')+' - '+(o.shape||'—');return `<div class="ocard ${o.read?'':'unread'}" style="--st:${bucketColor(bucketOf(o))}" onclick="openSheet(${o.id})"><div class="oc-top"><div class="oc-copy"><div class="oc-name">${escHtml(o.name)}${isBlacklisted(o)?'<span class="blchip">Blacklisted</span>':''}</div><div class="oc-cake">${escHtml(cakeLine)}</div><div class="oc-flavour">${escHtml(o.flavor||'—')}</div><div class="oc-ordered">Ordered: ${escHtml(o.created)}</div><div class="oc-pickup">Pick-up: <b>${escHtml(cardPickupDate(o))}</b> <span>(${escHtml(pickupDistance(o.pdate))})</span></div></div><div class="oc-side"><div class="oc-price">${escHtml(price)}</div>${orderBadgesHTML(o)}</div></div></div>`;}
 function shortSize(v){return String(v||'').replace(/\s*\([^)]*\)/g,'').trim();}
-const WORKFLOW_STEPS=[['Send the','Quote'],['Wait for','Customer'],['Deposit','Paid'],['Before','Delivery'],['Cake is','Delivered']];
-const WORKFLOW_HEADINGS={1:'New Order! Set the quote',2:'Send the quote',3:'Waiting for the Deposit Payment',4:'Deposit Paid - Send Message',5:'Prepare the cake',6:'Send a Feedback Request'};
+const WORKFLOW_STEPS=[['Send','Confirmation'],['Deposit','Due'],['Deposit','Received'],['Ready for','Collection'],['Order','Completed']];
 function progressHTML(o){
   if(o.status==='cancelled'&&o.cancelledBy==='customer')return '<div class="customer-cancelled-progress">Cancelled by the Customer at the order confirmation process</div>';
-  const history=['done','deleted'].includes(o.status),stage=workflowStage(o),activeIndex=history?WORKFLOW_STEPS.length:stage>=2?stage-2:-1,accepted=stage===3&&o.customerDecision==='accepted',heading=o.status==='done'?'Done! Move to Archive':o.status==='deleted'?'Archived':(WORKFLOW_HEADINGS[stage]||'Review this order');
-  return `<div class="workflow-heading"><b>ORDER PROGRESS:</b><span>${escHtml(heading)}</span></div><div class="progress-wrap"><div class="progress">${WORKFLOW_STEPS.map((lines,i)=>`<div class="progress-step ${i<activeIndex?'workflow-complete':''} ${!history&&i===activeIndex?'workflow-active':''} ${accepted&&i===2?'customer-accepted':''}"><span class="step-line">${lines[0]}</span><span class="step-line">${lines[1]}</span></div>`).join('')}</div></div>`;
+  const history=['done','deleted'].includes(o.status),stage=workflowStage(o),activeIndex=history?WORKFLOW_STEPS.length:stage>=2?stage-2:-1,accepted=stage===3&&o.customerDecision==='accepted';
+  return `<div class="progress-wrap" aria-label="Order progress"><div class="progress">${WORKFLOW_STEPS.map((lines,i)=>`<div class="progress-step ${i<activeIndex?'workflow-complete':''} ${!history&&i===activeIndex?'workflow-active':''} ${accepted&&i===1?'customer-accepted':''}"><span class="step-line">${lines[0]}</span><span class="step-line">${lines[1]}</span></div>`).join('')}</div></div>`;
 }
 function quoteTimeLeft(expires){const seconds=Math.max(0,Math.ceil((new Date(expires).getTime()-Date.now())/1000)),hours=Math.floor(seconds/3600),minutes=Math.floor(seconds%3600/60),secs=seconds%60,pad=n=>String(n).padStart(2,'0');return `${pad(hours)}:${pad(minutes)}:${pad(secs)}`;}
 function quoteAcceptedHTML(o){return o&&o.customerDecision==='accepted'?'<span class="quote-accepted">accepted ✅</span><span>-</span>':'';}
-function expiredQuoteInner(id){const o=ORDERS.find(x=>x.id===id);return `Open <button type="button" onclick="openQuoteMessage(${id})">quote message</button> <span>-</span> ${quoteAcceptedHTML(o)}<strong>Link Expired</strong>`;}
-function quoteStatusHTML(o){if(!o.quoteSentAt||!o.portalUrl||!o.portalExpires||!['quoted','awaiting_payment'].includes(o.status))return '';const expired=new Date(o.portalExpires).getTime()<=Date.now();return `<div class="quote-status-row ${expired?'expired':''}" data-quote-order="${o.id}">${expired?expiredQuoteInner(o.id):`<span>Customer</span> <button type="button" onclick="openQuoteMessage(${o.id})">link</button> <span>has been sent -</span> ${quoteAcceptedHTML(o)}<button type="button" class="quote-countdown" data-quote-expires="${escAttr(o.portalExpires)}" onclick="openQuotePreview(${o.id})" aria-label="Open customer quote preview">${quoteTimeLeft(o.portalExpires)}</button>`}</div>`;}
-function updateQuoteCountdowns(){document.querySelectorAll('[data-quote-expires]').forEach(el=>{const remaining=new Date(el.dataset.quoteExpires).getTime()-Date.now();if(remaining>0){el.textContent=quoteTimeLeft(el.dataset.quoteExpires);return;}const row=el.closest('.quote-status-row'),id=Number(row&&row.dataset.quoteOrder);if(row&&id){row.classList.add('expired');row.innerHTML=expiredQuoteInner(id);}});}
+function expiredQuoteInner(id){const o=ORDERS.find(x=>x.id===id);return `Open <button type="button" onclick="openQuoteMessage(${id})">message</button> <span>-</span> ${quoteAcceptedHTML(o)}<strong>Link Expired</strong>`;}
+function quoteStatusHTML(o){if(!o.quoteSentAt||!o.portalUrl||!o.portalExpires||!['quoted','awaiting_payment'].includes(o.status))return '';const expired=new Date(o.portalExpires).getTime()<=Date.now();return `<div class="quote-status-row ${expired?'expired':''}" data-quote-order="${o.id}">${expired?expiredQuoteInner(o.id):`<span>Customer</span> <button type="button" onclick="openQuoteMessage(${o.id})">message</button> <span>has been sent -</span> ${quoteAcceptedHTML(o)}<button type="button" class="quote-countdown" data-quote-expires="${escAttr(o.portalExpires)}" onclick="openQuotePreview(${o.id})" aria-label="Open confirmation form">Confirmation form › ${quoteTimeLeft(o.portalExpires)}</button>`}</div>`;}
+function updateQuoteCountdowns(){document.querySelectorAll('[data-quote-expires]').forEach(el=>{const remaining=new Date(el.dataset.quoteExpires).getTime()-Date.now();if(remaining>0){el.textContent='Confirmation form › '+quoteTimeLeft(el.dataset.quoteExpires);return;}const row=el.closest('.quote-status-row'),id=Number(row&&row.dataset.quoteOrder);if(row&&id){row.classList.add('expired');row.innerHTML=expiredQuoteInner(id);}});}
 window.setInterval(updateQuoteCountdowns,1000);
 function openQuotePreview(id){const o=ORDERS.find(x=>x.id===id);if(!o||!o.portalUrl)return;document.getElementById('quotePreviewFrame').src=o.portalUrl;document.getElementById('quotePreviewExternal').href=o.portalUrl;document.getElementById('quotePreview').classList.add('show');}
 function closeQuotePreview(){document.getElementById('quotePreview').classList.remove('show');document.getElementById('quotePreviewFrame').src='about:blank';}
@@ -1641,6 +1892,7 @@ function doNextConfig(o){
   return {text:'Review this order before taking the next action.',action:'none'};
 }
 function doNextHTML(o){const n=doNextConfig(o),conditional=!!n.when,copy=conditional?`<div class="do-next-rule"><span class="do-next-label">WHEN:</span><span class="do-next-text">${escHtml(n.when)}</span></div><div class="do-next-rule"><span class="do-next-label">DO NEXT:</span><span class="do-next-text">${n.nextHtml||escHtml(n.next)}</span></div>`:`<span class="do-next-label">DO NEXT:</span><span class="do-next-text">${n.html||escHtml(n.text)}</span>`;return `<div class="do-next ${conditional?'conditional':''}"><div class="do-next-copy">${copy}</div><button type="button" class="do-next-action" onclick="runDoNext(${o.id},'${n.action}')" aria-label="Go to the next action" title="Go to the next action">GO</button></div>`;}
+function messageShortcutsHTML(o){const stage=workflowStage(o),items=[{key:'quote',label:'Send Link',due:stage===2,done:!!o.quoteSentAt},{key:'confirmed',label:'Info Confirm',due:stage===4,done:!!o.confirmedSentAt},{key:'feedback',label:'Feedback',due:stage===6,done:!!o.feedbackSentAt}];return `<div class="message-shortcuts"><span class="message-shortcuts-label">Messages</span><div class="message-shortcuts-row">${items.map(item=>`<button type="button" class="message-shortcut ${item.done?'done':item.due?'current':'future'}" onclick="openMessagePanel('${item.key}')">${escHtml(item.label)}</button>`).join('')}</div></div>`;}
 function paymentWorkspaceHTML(o){const deposit=o.price/2,remaining=Math.max(0,o.price-o.paid);return `<details class="payment-accordion" id="paymentDetails"><summary>Payment <span>${money(o.paid)} / ${money(o.price)}</span></summary><div class="payment-workspace" id="paymentWorkspace"><div class="payment-top"><div class="payment-total">${money(o.paid)} <small>of ${money(o.price)}</small></div><div class="payment-left">${remaining===0?'Fully paid ✓':money(remaining)+' left'}</div></div><div class="payment-entry"><input id="payAmt" type="number" min="0" step="0.5" placeholder="Amount received (€)"><button class="add" onclick="addPayment(${o.id})">Add</button><button class="reset" onclick="setPayment(${o.id},0)">Reset</button></div><div class="payment-quick"><button onclick="setPayment(${o.id},${deposit})">Deposit ${money(deposit)}</button><button onclick="setPayment(${o.id},${o.price})">Paid in full</button></div></div></details>`;}
 function messageStepFor(o){const stage=workflowStage(o);if(stage===2)return 'quote';if(stage===4)return 'confirmed';if(stage===6)return 'feedback';return '';}
 function runDoNext(id,action){if(action==='quote')focusFinalQuote();else if(action==='payment')focusPayment();else if(action==='message1')openMessagePanel('quote');else if(action==='message2')openMessagePanel('confirmed');else if(action==='message3')openMessagePanel('feedback');else if(action==='archive')focusArchiveAction();}
@@ -1649,9 +1901,9 @@ function focusFinalQuote(){const el=document.getElementById('finalQuoteSection')
 function focusPayment(){const details=document.getElementById('paymentDetails');if(!details)return;details.open=true;details.scrollIntoView({behavior:'smooth',block:'center'});details.classList.remove('payment-attention');void details.offsetWidth;details.classList.add('payment-attention');setTimeout(()=>{const input=document.getElementById('payAmt');if(input)input.focus();},450);}
 function historyRow(k,v){return `<div class="history-row"><span class="k">${escHtml(k)}</span><span class="v">${v||'—'}</span></div>`;}
 function historySection(title,rows){return `<div class="history-section-title">${escHtml(title)}</div>${rows.join('')}`;}
-function renderHistoryDetail(o){const decor=(o.decor||[]).filter(d=>d!=='No decoration'),note=cleanNotes(o),addonsList=[].concat((o.cupcakes&&!/^(no cupcakes|none|nenhuma|—)?$/i.test(String(o.cupcakes)))?[o.cupcakes]:[]).concat(decor),addons=addonsList.length?addonsList.join(', '):'No add-ons',colourNames=(o.colors||[]).map(c=>c[0]).join(', ')||'—',allergy=o.allergies&&!['none','nenhuma'].includes(String(o.allergies).toLowerCase())?`⚠ ${escHtml(o.allergies)}`:'None';return `<div class="history-order-view"><div class="sec history-progress">${progressHTML(o)}${o.status==='done'?doNextHTML(o):''}</div><div class="history-list">${historySection('Customer',[historyRow('Name',escHtml(o.name)),historyRow('WhatsApp',escHtml(o.wcode+' '+o.wnum)),historyRow('Instagram',o.instagram?'@'+escHtml(o.instagram):'—'),historyRow('Email',escHtml(o.email||'—')),historyRow('Form language',escHtml(o.lang||'—')),historyRow('Found us via',escHtml((o.heard||'—')+(o.referredBy?' · '+o.referredBy:''))),historyRow('Form feedback',o.feedback?escHtml(o.feedback):'Not submitted')])}${historySection('Pickup',[historyRow('Order Date',escHtml(fmtOrderedAt(o.createdAt))),historyRow('Delivery Date',escHtml(fmtPickupAt(o))),historyRow('Total time',escHtml(orderElapsedDays(o))),historyRow('Time',escHtml(o.ptime||'—')),historyRow('Collection',o.courier?'Uber/Bolt courier collection':'Customer collection')])}${historySection('The Cake',[historyRow('Type & size',escHtml(o.type+' · '+shortSize(o.size))),historyRow('Shape',escHtml(o.shape)),historyRow('Flavour',escHtml(o.flavor)),historyRow('Colours',escHtml(colourNames)),historyRow('Writing',o.writing?`“${escHtml(o.writing)}” · ${escHtml(o.writingColor)}`:'—'),historyRow('Add-ons',escHtml(addons)),...(o.pigment&&o.pigment.length?[historyRow('High-pigment',escHtml(o.pigment.join(', ')))]:[]),historyRow('Candles',escHtml(o.candles||'—')),historyRow('Allergies',allergy),historyRow('Customer notes',note?escHtml(note):'—')])}<div class="history-section-title">Reference photos</div><div class="history-reference">${photoGrid(o)}${o.photoNote?`<div class="notebox" style="margin-top:9px">${escHtml(o.photoNote)}</div>`:''}</div></div>${orderActionsHTML(o)}</div>`;}
+function renderHistoryDetail(o){const decor=(o.decor||[]).filter(d=>d!=='No decoration'),note=cleanNotes(o),addonsList=[].concat((o.cupcakes&&!/^(no cupcakes|none|nenhuma|—)?$/i.test(String(o.cupcakes)))?[o.cupcakes]:[]).concat(decor),addons=addonsList.length?addonsList.join(', '):'No add-ons',colourNames=(o.colors||[]).map(c=>c[0]).join(', ')||'—',allergy=o.allergies&&!['none','nenhuma'].includes(String(o.allergies).toLowerCase())?`⚠ ${escHtml(o.allergies)}`:'None';return `<div class="history-order-view"><div class="sec history-progress">${progressHTML(o)}${o.status==='done'?doNextHTML(o):''}${messageShortcutsHTML(o)}</div><div class="history-list">${historySection('Customer',[historyRow('Name',escHtml(o.name)),historyRow('WhatsApp',escHtml(o.wcode+' '+o.wnum)),historyRow('Instagram',o.instagram?'@'+escHtml(o.instagram):'—'),historyRow('Email',escHtml(o.email||'—')),historyRow('Form language',escHtml(o.lang||'—')),historyRow('Found us via',escHtml((o.heard||'—')+(o.referredBy?' · '+o.referredBy:''))),historyRow('Form feedback',o.feedback?escHtml(o.feedback):'Not submitted')])}${historySection('Pickup',[historyRow('Order Date',escHtml(fmtOrderedAt(o.createdAt))),historyRow('Delivery Date',escHtml(fmtPickupAt(o))),historyRow('Total time',escHtml(orderElapsedDays(o))),historyRow('Time',escHtml(o.ptime||'—')),historyRow('Collection',o.courier?'Uber/Bolt courier collection':'Customer collection')])}${historySection('The Cake',[historyRow('Type & size',escHtml(o.type+' · '+shortSize(o.size))),historyRow('Shape',escHtml(o.shape)),historyRow('Flavour',escHtml(o.flavor)),historyRow('Colours',escHtml(colourNames)),historyRow('Writing',o.writing?`“${escHtml(o.writing)}” · ${escHtml(o.writingColor)}`:'—'),historyRow('Add-ons',escHtml(addons)),...(o.pigment&&o.pigment.length?[historyRow('High-pigment',escHtml(o.pigment.join(', ')))]:[]),historyRow('Candles',escHtml(o.candles||'—')),historyRow('Allergies',allergy),historyRow('Customer notes',note?escHtml(note):'—')])}<div class="history-section-title">Reference photos</div><div class="history-reference">${photoGrid(o)}${o.photoNote?`<div class="notebox" style="margin-top:9px">${escHtml(o.photoNote)}</div>`:''}</div></div>${orderActionsHTML(o)}</div>`;}
 function orderActionIcon(kind){const paths={bad:'<circle cx="9" cy="8" r="3"/><path d="M3.5 19c.7-3.2 2.5-5 5.5-5 1.2 0 2.2.3 3.1.8M16 15l5 5m0-5-5 5"/>',archive:'<path d="M4 7h16v13H4zM3 3h18v4H3zm6 9h6"/>',trash:'<path d="M4 7h16M9 7V4h6v3m3 0-1 13H7L6 7m4 4v5m4-5v5"/>',cancel:'<circle cx="12" cy="12" r="9"/><path d="m9 9 6 6m0-6-6 6"/>',customer:'<circle cx="8.5" cy="8" r="3"/><path d="M3 19c.6-3.2 2.5-5 5.5-5 1.4 0 2.6.4 3.5 1.1M16 9l5 5m0-5-5 5"/>',reset:'<path d="M4 8V4h4M4.8 5.2A9 9 0 1 1 3 14"/><path d="M12 8v4l3 2"/>',whatsapp:'<path d="M20 11.5a8 8 0 0 1-11.8 7L4 20l1.5-4.1A8 8 0 1 1 20 11.5Z"/><path d="M9 8.5c.4 2.5 2 4.1 4.5 4.9l1.2-1.1 1.8.9"/>'};return `<svg viewBox="0 0 24 24" aria-hidden="true">${paths[kind]||''}</svg>`;}
-function orderActionsHTML(o){const canCancel=!['done','deleted','cancelled'].includes(o.status);return `<div class="bottom-actions"><div class="order-action-grid"><button class="order-action bad ${isBlacklisted(o)?'on':''}" onclick="toggleBlacklist(${o.id})">${orderActionIcon('bad')}<span>${isBlacklisted(o)?'Remove Bad Customer':'Mark as Bad Customer'}</span></button><button class="order-action archive" id="archiveAction" onclick="archiveOrder(${o.id})">${orderActionIcon('archive')}<span>${o.status==='deleted'?'Restore to Orders':'Move to Archived'}</span></button><button class="order-action delete" id="trashBtn" title="Tap twice to permanently delete" onclick="permanentDeleteTap(${o.id},this)">${orderActionIcon('trash')}<span>Delete the Order</span></button>${canCancel?`<button class="order-action cancel" onclick="cancelOrder(${o.id},'owner')">${orderActionIcon('cancel')}<span>Cancel the Order</span></button><button class="order-action customer-cancel" onclick="cancelOrder(${o.id},'customer')">${orderActionIcon('customer')}<span>Cancelled by Customer</span></button>`:''}<button class="order-action reset-progress" onclick="resetAllProgress(${o.id})">${orderActionIcon('reset')}<span>Reset All Progress</span></button><a class="order-action whatsapp" href="${whatsappUrl(o)}" target="_blank" rel="noopener">${orderActionIcon('whatsapp')}<span>Open WhatsApp Chat</span></a></div></div>`;}
+function orderActionsHTML(o){const canCancel=!['done','deleted','cancelled'].includes(o.status),customerActions=`<button class="order-action bad ${isBlacklisted(o)?'on':''}" onclick="toggleBlacklist(${o.id})">${orderActionIcon('bad')}<span>${isBlacklisted(o)?'Remove Bad Customer':'Mark as Bad Customer'}</span></button><a class="order-action whatsapp" href="${whatsappUrl(o)}" target="_blank" rel="noopener">${orderActionIcon('whatsapp')}<span>Open WhatsApp Chat</span></a>`,manageActions=`<button class="order-action archive" id="archiveAction" onclick="archiveOrder(${o.id})">${orderActionIcon('archive')}<span>${o.status==='deleted'?'Restore to Orders':'Move to Archived'}</span></button><button class="order-action reset-progress" onclick="resetAllProgress(${o.id})">${orderActionIcon('reset')}<span>Reset All Progress</span></button>`,dangerActions=`${canCancel?`<button class="order-action cancel" onclick="cancelOrder(${o.id},'owner')">${orderActionIcon('cancel')}<span>Cancel the Order</span></button><button class="order-action customer-cancel" onclick="cancelOrder(${o.id},'customer')">${orderActionIcon('customer')}<span>Cancelled by Customer</span></button>`:''}<button class="order-action delete" id="trashBtn" title="Tap twice to permanently delete" onclick="permanentDeleteTap(${o.id},this)">${orderActionIcon('trash')}<span>Delete the Order</span></button>`;return `<div class="bottom-actions"><div class="order-action-group"><span class="order-action-group-label">Customer</span><div class="order-action-grid">${customerActions}</div></div><div class="order-action-group"><span class="order-action-group-label">Order Management</span><div class="order-action-grid">${manageActions}</div></div><div class="order-action-group"><span class="order-action-group-label">Cancel or Delete</span><div class="order-action-grid">${dangerActions}</div></div></div>`;}
 
 const ORDER_EDIT={
   sizes:[
@@ -1671,7 +1923,7 @@ const ORDER_EDIT={
   colours:[
     ['White','#FFFFFF'],['Ivory','#F3ECE0'],['Blush','#F3C9D3'],['Pink','#EFA9BE'],['Rose','#E86A8E'],['Red','#C62828'],['Burgundy','#7A2233'],['Peach','#F0B57A'],['Orange','#E38B4E'],['Yellow','#EDD97A'],['Sage','#B7D6A0'],['Green','#5F7A4E'],['Mint','#CFE9DD'],['Sky','#9CC7D4'],['Navy','#2F4A6E'],['Lilac','#C7B7E0'],['Purple','#8A72C0'],['Brown','#8A6B52'],['Black','#1A1A1A'],['Teal','#2E8B8B']
   ],
-  pigments:[['Black','#111111'],['Navy blue','#1E3A5F'],['Red','#C62828'],['Dark green','#1E5631'],['Neon green','#39FF14'],['Neon yellow','#EAFF00'],['Neon orange','#FF6A00']],
+  pigments:[['Black','#111111'],['Navy blue','#1E3A5F'],['Red','#C62828'],['Burgundy','#7A2233'],['Dark green','#1E5631'],['Neon green','#39FF14'],['Neon yellow','#EAFF00'],['Neon orange','#FF6A00']],
   writing:['Handwritten Cursive Text','Fondant Letters','Cutout Letters'],
   cupcakes:['No cupcakes','6 Cupcakes','12 Cupcakes'],
   decor:['Bows','Edible prints','Custom themed images','Paper butterflies','Maraschino cherries','Maraschino cherries + glitter','Decorative balls','Disco balls','Fresh edible flowers','Fresh fruits','Gold or silver star, sun, moon','Custom'],
@@ -1759,7 +2011,7 @@ function calculatedEditPrice(o,d,pdate){
   if(d.shape==='Heart'||d.shape==='Square')sum+=size.big?8:5;
   if(d.shape==='Rectangle')sum+=size.big?10:8;
   if(ORDER_EDIT.signature.includes(d.flavor))sum+=size.v==='XL'?10:(size.v==='L'?8:6);
-  sum+=Math.max(0,(d.colourHexes||[]).length-2)*5+(d.pigments||[]).length*5;
+  sum+=(d.pigments||[]).length*5;
   if(d.cupcakes==='6 Cupcakes')sum+=15;if(d.cupcakes==='12 Cupcakes')sum+=30;
   if((d.writingMethods||[]).includes('Fondant Letters'))sum+=size.big?6:5;
   if((d.writingMethods||[]).includes('Cutout Letters'))sum+=size.big?10:8;
@@ -1806,7 +2058,7 @@ function renderOrderDetail(o){
   const cakeEditing=isDetailEditing(o,'cake'),pickupEditing=isDetailEditing(o,'pickup'),customerEditing=isDetailEditing(o,'customer');
   const cakeOpen=cakeEditing||detailFocusSection==='cake'||(!detailFocusSection&&!detailEdit),pickupOpen=pickupEditing||detailFocusSection==='pickup',customerOpen=customerEditing||detailFocusSection==='customer';
   return `<div class="finance-table">${financeCell('Paid',money(o.paid),'paid')}${financeCell('Total',money(o.price),'total')}${financeCell('Remaining',money(remaining),'remaining')}${financeCell('Pick-up',escHtml(relDate(o.pdate)),'pickup')}</div>
-    <div class="sec">${progressHTML(o)}${quoteStatusHTML(o)}${doNextHTML(o)}${paymentWorkspaceHTML(o)}</div>
+    <div class="sec">${progressHTML(o)}${quoteStatusHTML(o)}${doNextHTML(o)}${messageShortcutsHTML(o)}${paymentWorkspaceHTML(o)}</div>
     <details class="detail-accordion" data-detail-section="cake" ${cakeOpen?'open':''}>${detailSummary(o,'cake','The Cake')}<div class="accordion-body">${cakeEditing?cakeEditorHTML(o):`<div class="sec"><div class="kv">${infoRow('Type & size',escHtml(o.type+' · '+shortSize(o.size)))}${infoRow('Shape',escHtml(o.shape))}${infoRow('Flavour',escHtml(o.flavor))}${infoRow('Colours',`<span class="cols">${cols}</span>`)}${infoRow('Writing',o.writing?`“${escHtml(o.writing)}” · ${escHtml(o.writingColor)}`:'—')}${infoRow('Add-ons',escHtml(addons))}${(o.pigment&&o.pigment.length)?infoRow('High-pigment',escHtml(o.pigment.join(', '))):''}${infoRow('Candles',escHtml(o.candles||'—'))}${infoRow('Allergies',allergy)}</div></div>${note?`<div class="sec"><div class="lbl">Customer notes</div><div class="notebox">${escHtml(note)}</div></div>`:''}<div class="sec"><div class="lbl">Reference photos</div>${photoGrid(o)}${o.photoNote?`<div class="notebox" style="margin-top:9px">${escHtml(o.photoNote)}</div>`:''}</div><div class="sec final-quote-section" id="finalQuoteSection">${finalQuoteHTML(o)}</div>`}</div></details>
     <details class="detail-accordion" data-detail-section="pickup" ${pickupOpen?'open':''}>${detailSummary(o,'pickup','Pick-up')}<div class="accordion-body">${pickupEditing?pickupEditorHTML(o):`<div class="sec"><div class="kv">${infoRow('Date',escHtml(fmtDate(o.pdate))+' · '+escHtml(relDate(o.pdate)))}${infoRow('Time',escHtml(o.ptime))}${infoRow('Collection',o.courier?'Uber/Bolt courier collection':'Customer collection')}</div></div>`}</div></details>
     <details class="detail-accordion" data-detail-section="customer" ${customerOpen?'open':''}>${detailSummary(o,'customer','Customer')}<div class="accordion-body">${customerEditing?customerEditorHTML(o):`<div class="sec"><div class="kv">${infoRow('Name',escHtml(o.name))}${infoRow('WhatsApp',escHtml(o.wcode+' '+o.wnum))}${infoRow('Instagram',o.instagram?'@'+escHtml(o.instagram):'—')}${infoRow('Email',escHtml(o.email||'—'))}${infoRow('Form language',escHtml(o.lang||'—'))}${infoRow('Found us via',escHtml(o.heard+(o.referredBy?' · '+o.referredBy:'')))}${infoRow('Ordering experience',o.feedback?`${FB_EMOJI[o.feedback.toLowerCase()]||'💬'} ${escHtml(o.feedback)}`:'Not submitted')}</div></div>`}</div></details>
@@ -1825,7 +2077,7 @@ async function permanentDeleteTap(id,btn){const now=Date.now();if(!btn.dataset.o
 function confirmedMessage(o){const pt=orderLanguage(o)==='pt',address=BIZ.address||'Rua Francisco Lyon de Castro nº 14\nEntrecampos, Lisbon 1600-311',remaining=Math.max(0,o.price-o.paid);let payment='';if(o.paid>=o.price&&o.price>0)payment=pt?`Recebemos o pagamento total de ${money(o.price)}.`:`We have received the full payment of ${money(o.price)}.`;else if(o.paid>0)payment=pt?`O valor total da sua encomenda é ${money(o.price)}. Recebemos o sinal de ${money(o.paid)}, ficando ${money(remaining)} por pagar.`:`The full price of your order is ${money(o.price)}. We have received your ${money(o.paid)} deposit, leaving ${money(remaining)} remaining.`;return pt?`A sua encomenda está confirmada ✔️${payment?'\n\n'+payment:''}\n\n📅 Data de levantamento: ${fmtDate(o.pdate)}\n🕒 Hora: ${o.ptime}\n📍 Local de levantamento:\n${address}\n\nQuando chegar, envie-me uma mensagem. Abrirei a porta e encontrá-la-ei no átrio com a sua encomenda.\n\nPor favor, chegue à hora marcada. Atrasos podem afetar o levantamento.\n\nObrigada!${courierReminder(o,'pt')}`:`Your order is confirmed ✔️${payment?'\n\n'+payment:''}\n\n📅 Pick-up date: ${fmtDate(o.pdate)}\n🕒 Time: ${o.ptime}\n📍 Pick-up location:\n${address}\n\nUpon arrival, send me a message. I’ll buzz you in and meet you in the lobby with your order.\n\nPlease arrive at your scheduled time. Late arrivals may affect your collection.\n\nThank you!${courierReminder(o,'en')}`;}
 function messageIcon(kind){if(kind==='copy')return '<svg viewBox="0 0 24 24" fill="none" stroke-width="2" aria-hidden="true"><rect x="8" y="8" width="11" height="11" rx="2"></rect><path d="M16 8V6a2 2 0 0 0-2-2H6a2 2 0 0 0-2 2v8a2 2 0 0 0 2 2h2"></path></svg>';return '<svg viewBox="0 0 24 24" fill="none" stroke-width="2" aria-hidden="true"><path d="M20 11.5a8 8 0 0 1-11.8 7L4 20l1.5-4.1A8 8 0 1 1 20 11.5Z"></path><path d="M9 8.5c.4 2.5 2 4.1 4.5 4.9l1.2-1.1 1.8.9c.2.1.3.4.2.6-.5 1.2-1.5 1.8-2.7 1.6-4.2-.8-6.6-3.2-7.4-7.4-.2-1.2.4-2.2 1.6-2.7.2-.1.5 0 .6.2l.9 1.8L9 8.5Z"></path></svg>';}
 function msgCard(o,key,title,textValue,doneAt){const actions=doneAt?`<button onclick="markMessage(${o.id},'${key}',false)">Marked Complete — Reopen</button>`:`<button class="primary" onclick="copyMessage('${key}')">${messageIcon('copy')}<span>Copy for WhatsApp</span></button><a class="whatsapp-action" href="${whatsappUrl(o)}" target="_blank" onclick="completeMessageAndOpen(event,${o.id},'${key}','${whatsappUrl(o)}')">${messageIcon('whatsapp')}<span>Open WhatsApp chat</span></a><button onclick="markMessage(${o.id},'${key}',true)">Mark Complete</button>`;return `<section class="message-card ${key} ${doneAt?'done':''}"><h3>${doneAt?'✓ ':''}${title}</h3><div class="message-preview">${escHtml(textValue)}</div><div class="message-actions">${actions}</div></section>`;}
-function openMessagePanel(key){const o=ORDERS.find(x=>x.id===openId);if(!o)return;const activePortal=isActivePortal(o),portal=activePortal?`<div class="portal-box"><b>Customer quote page</b><div class="portal-url">${escHtml(o.portalUrl)}</div><div>Expires ${escHtml(new Date(o.portalExpires).toLocaleString())}</div><p><button onclick="copyText('${escAttr(o.portalUrl)}')">Copy link</button> <button class="muted-btn" onclick="generatePortal(${o.id})">Create new 48h link</button></p></div>`:`<div class="portal-box"><b>No active customer link</b><p class="infonote">Create a fresh 48-hour link before sending the quote message.</p><button onclick="generatePortal(${o.id})">Create 48h quote link</button></div>`;window.__messages={quote:quoteMessage(o),confirmed:confirmedMessage(o),feedback:feedbackMessage(o)};const title={quote:'Send Quote via WhatsApp',confirmed:'Send Information via WhatsApp',feedback:'Feedback Request via WhatsApp'}[key]||'WhatsApp Message';const card={quote:msgCard(o,'quote','1. Quote Ready',window.__messages.quote,activePortal?o.quoteSentAt:null),confirmed:msgCard(o,'confirmed','2. Order Confirmed',window.__messages.confirmed,o.confirmedSentAt),feedback:msgCard(o,'feedback','3. Post-order Feedback',window.__messages.feedback,o.feedbackSentAt)}[key]||'';document.getElementById('contactTitle').textContent=title;document.getElementById('contactBody').innerHTML=(key==='quote'?portal:'')+card;document.getElementById('panelOverlay').classList.add('show');document.getElementById('contactPanel').classList.add('show');}
+function openMessagePanel(key){const o=ORDERS.find(x=>x.id===openId);if(!o)return;const activePortal=isActivePortal(o),portal=activePortal?`<div class="portal-box"><b>Confirmation form</b><div class="portal-url">${escHtml(o.portalUrl)}</div><div>Expires ${escHtml(new Date(o.portalExpires).toLocaleString())}</div><p><button onclick="copyText('${escAttr(o.portalUrl)}')">Copy confirmation link</button> <button class="muted-btn" onclick="generatePortal(${o.id})">Create new 48h form</button></p></div>`:`<div class="portal-box"><b>No active confirmation form</b><p class="infonote">Create a fresh 48-hour confirmation form before sending the quote message.</p><button onclick="generatePortal(${o.id})">Create 48h confirmation form</button></div>`;window.__messages={quote:quoteMessage(o),confirmed:confirmedMessage(o),feedback:feedbackMessage(o)};const title={quote:'Send Quote via WhatsApp',confirmed:'Send Information via WhatsApp',feedback:'Feedback Request via WhatsApp'}[key]||'WhatsApp Message';const card={quote:msgCard(o,'quote','1. Quote Ready',window.__messages.quote,activePortal?o.quoteSentAt:null),confirmed:msgCard(o,'confirmed','2. Order Confirmed',window.__messages.confirmed,o.confirmedSentAt),feedback:msgCard(o,'feedback','3. Post-order Feedback',window.__messages.feedback,o.feedbackSentAt)}[key]||'';document.getElementById('contactTitle').textContent=title;document.getElementById('contactBody').innerHTML=(key==='quote'?portal:'')+card;document.getElementById('panelOverlay').classList.add('show');document.getElementById('contactPanel').classList.add('show');}
 function openContactPanel(){const o=ORDERS.find(x=>x.id===openId);if(!o)return;openMessagePanel(messageStepFor(o)||'quote');}
 async function markMessage(id,key,complete){const o=ORDERS.find(x=>x.id===id);if(!o)return;if(complete&&key==='quote'&&!isActivePortal(o)){alert('Create an active 48-hour customer link first.');return;}if(complete&&key==='confirmed'&&o.paid<=0){alert('Record the received payment before completing this step.');return;}const field={quote:'message_quote_sent_at',confirmed:'message_confirmed_sent_at',feedback:'message_feedback_sent_at'}[key],value=complete?new Date().toISOString():null,patch={[field]:value};let next=o.status;if(complete&&key==='quote')next='awaiting_payment';if(complete&&key==='feedback')next='done';if(next!==o.status)patch.status=next;const {error}=await sb.from('orders').update(patch).eq('id',id);if(error){alert('Could not save this step: '+error.message);return;}o[key+'SentAt']=value;o.status=next;activeBucket=bucketOf(o);if(complete)closeContactPanel();refreshView();openSheet(id);if(!complete)openMessagePanel(key);}
 function completeMessageAndOpen(event,id,key,url){event.preventDefault();const o=ORDERS.find(x=>x.id===id);if(!o)return false;if(key==='quote'&&!isActivePortal(o)){alert('Create an active 48-hour customer link first.');return false;}if(key==='confirmed'&&o.paid<=0){alert('Record the received payment before completing this step.');return false;}closeContactPanel();window.open(url,'_blank');markMessage(id,key,true);return false;}
@@ -1880,8 +2132,8 @@ document.getElementById('pw').addEventListener('keydown',e=>{if(e.key==='Enter')
 (async function(){if(!sb)return;try{const {data}=await sb.auth.getSession();if(data&&data.session){await loadAll();document.getElementById('login').style.display='none';document.getElementById('app').style.display='block';setView('orders');startAutoRefresh();}}catch(e){}})();
 
 /* Local-only visual QA. It can never activate on Vercel or byamandasoyer.pt. */
-document.addEventListener('click',event=>{if(customerMenuKey&&!event.target.closest('.customer-menu-wrap')){customerMenuKey='';if(view==='info'&&infoTab==='customers')renderInfo();}});
-(function localPreview(){if(location.protocol!=='file:'||new URLSearchParams(location.search).get('preview')!=='1')return;const base={read:true,status:'new',type:'Custom',size:'L (16–20)',shape:'Round',lang:'EN',flavor:'Vanilla Berry',colors:[['Ivory','#eee7d9'],['Burgundy','#6d2435']],pigment:[],writeMethods:['Piping'],writing:'Happy Birthday Amanda',writingColor:'Burgundy',cupcakes:'No cupcakes',decor:['Pearls'],candles:'Yes',photos:[],photoNote:'',feedback:'',noAllergy:true,allergies:'None',notes:'',wcode:'+351',wnum:'912 345 678',instagram:'customer',email:'customer@example.com',emailOptIn:false,heard:'Instagram',referredBy:'',pdate:'2026-07-26',ptime:'14:15',price:100,range:false,paid:0,quotedItemsDescription:'',courier:false,portalExpires:'',portalToken:'',portalUrl:'',customerDecision:'',cancelledBy:'',quoteSentAt:'',confirmedSentAt:'',feedbackSentAt:''};ORDERS=[Object.assign({},base,{id:9001,name:'Sofia Martins',read:false,created:'8m ago',createdAt:new Date(Date.now()-480000).toISOString()}),Object.assign({},base,{id:9002,name:'Inês Almeida',created:'2h ago',createdAt:new Date(Date.now()-7200000).toISOString(),courier:true,notes:'COURIER: Customer would like to arrange a Bolt/Uber courier.'}),Object.assign({},base,{id:9003,name:'Marta Costa',status:'quoted',created:'Yesterday',createdAt:new Date(Date.now()-86400000).toISOString(),portalToken:'r8e7t98rdemo',portalUrl:'https://byamandasoyer.pt/order/r8e7t98rdemo',portalExpires:new Date(Date.now()+36*3600000).toISOString()})];document.getElementById('login').style.display='none';document.getElementById('app').style.display='block';setView('orders');})();
+document.addEventListener('click',event=>{if(!event.target.closest('.profile-wrap'))closeProfileMenu();if(customerMenuKey&&!event.target.closest('.customer-menu-wrap')){customerMenuKey='';if(view==='info'&&infoTab==='customers')renderInfo();}});
+(function localPreview(){const local=['file:'].includes(location.protocol)||['localhost','127.0.0.1'].includes(location.hostname);if(!local||new URLSearchParams(location.search).get('preview')!=='1')return;const previewDate=days=>{const d=new Date();d.setDate(d.getDate()+days);return `${d.getFullYear()}-${String(d.getMonth()+1).padStart(2,'0')}-${String(d.getDate()).padStart(2,'0')}`;},base={read:true,status:'new',type:'Custom',size:'L (16–20)',shape:'Round',lang:'EN',flavor:'Vanilla Berry',colors:[['Ivory','#eee7d9'],['Burgundy','#6d2435']],pigment:[],writeMethods:['Piping'],writing:'Happy Birthday Amanda',writingColor:'Burgundy',cupcakes:'No cupcakes',decor:['Pearls'],candles:'Yes',photos:[],photoNote:'',feedback:'',noAllergy:true,allergies:'None',notes:'',wcode:'+351',wnum:'912 345 678',instagram:'customer',email:'customer@example.com',emailOptIn:false,heard:'Instagram',referredBy:'',pdate:previewDate(1),ptime:'14:15',price:100,range:false,paid:0,quotedItemsDescription:'',courier:false,portalExpires:'',portalToken:'',portalUrl:'',customerDecision:'',cancelledBy:'',quoteSentAt:'',confirmedSentAt:'',feedbackSentAt:''};ORDERS=[Object.assign({},base,{id:9001,name:'Sofia Martins',read:false,created:'8m ago',createdAt:new Date(Date.now()-480000).toISOString()}),Object.assign({},base,{id:9002,name:'Inês Almeida',created:'2h ago',createdAt:new Date(Date.now()-7200000).toISOString(),pdate:previewDate(3),courier:true,notes:'COURIER: Customer would like to arrange a Bolt/Uber courier.'}),Object.assign({},base,{id:9003,name:'Marta Costa',status:'awaiting_payment',created:'Yesterday',createdAt:new Date(Date.now()-86400000).toISOString(),pdate:previewDate(5),portalToken:'r8e7t98rdemo',portalUrl:'https://byamandasoyer.pt/order/r8e7t98rdemo',portalExpires:new Date(Date.now()+36*3600000).toISOString(),quoteSentAt:new Date().toISOString(),customerDecision:'accepted'}),Object.assign({},base,{id:9004,name:'Mandy Moreira',status:'confirmed',created:'2 days ago',createdAt:new Date(Date.now()-172800000).toISOString(),pdate:previewDate(1),paid:50,confirmedSentAt:new Date().toISOString()}),Object.assign({},base,{id:9005,name:'Jandira Chiota',status:'confirmed',created:'3 days ago',createdAt:new Date(Date.now()-259200000).toISOString(),pdate:previewDate(7),price:45,paid:22.5,confirmedSentAt:new Date().toISOString()})];document.getElementById('login').style.display='none';document.getElementById('app').style.display='block';setView('orders');})();
 </script>
 </body>
 </html>

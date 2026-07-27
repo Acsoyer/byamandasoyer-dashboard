@@ -124,11 +124,14 @@
   .caldow{text-align:center;font-size:11px;font-weight:700;color:var(--ink-faint);text-transform:uppercase;padding:4px 0}
   .calcell{aspect-ratio:1;border:1px solid var(--line);background:var(--card);border-radius:11px;padding:5px;cursor:pointer;position:relative;display:flex;flex-direction:column}
   .calcell.empty{background:transparent;border:none;cursor:default}
-  .calcell.today{border-color:var(--accent2);box-shadow:0 0 0 1px var(--accent2)}
-  .calcell.sel{background:var(--ink);color:#fff}
-  .calcell .d{font-size:12px;font-weight:600}
+  .calcell.today{border-color:var(--line);box-shadow:none}
+  .calcell.sel{border:2px solid var(--accent);background:var(--card);color:var(--ink);padding:4px}
+  .calcell .d{display:inline-flex;width:24px;height:24px;align-items:center;justify-content:center;border-radius:50%;font-size:12px;font-weight:600}
+  .calcell.today .d{background:var(--accent);color:#fff}
+  .calcell.past .d{color:#A9AEAB}
+  .calcell.past.today .d{color:#fff}
   .calcell .dots{display:flex;flex-wrap:wrap;gap:2px;margin-top:auto}
-  .calcell .cdot{width:6px;height:6px;border-radius:50%}
+  .calcell .cdot{width:7px;height:7px;border-radius:50%}
   .calcell .more{font-size:9px;color:var(--ink-faint)}
   .calsel{margin-top:16px}
 
@@ -435,7 +438,7 @@
   .order-grab{display:none!important}
   #sheet>.order-head{padding-top:20px!important;border-bottom:0!important}
   .order-head-name{font-size:26px!important}
-  .progress-wrap{width:100%;overflow-x:auto;padding:8px 0 5px;-webkit-overflow-scrolling:touch;scrollbar-width:none}
+  .progress-wrap{width:100%;overflow-x:auto;padding:4px 0 3px;-webkit-overflow-scrolling:touch;scrollbar-width:none}
   .progress-wrap::-webkit-scrollbar{display:none}
   .progress{--arrow-depth:9px;--arrow-gap:1px;display:flex!important;align-items:center!important;width:max-content!important;min-width:100%!important;gap:0!important;margin:0 auto!important;padding:0!important;overflow:visible!important}
   .progress-step{position:relative!important;display:flex!important;align-items:center!important;justify-content:center!important;flex:1 0 92px!important;min-width:92px!important;height:42px!important;margin-left:calc(var(--arrow-gap) - var(--arrow-depth))!important;padding:0 15px!important;border:0!important;border-radius:0!important;background:var(--card)!important;color:var(--ink-soft)!important;clip-path:polygon(0 0,calc(100% - var(--arrow-depth)) 0,100% 50%,calc(100% - var(--arrow-depth)) 100%,0 100%,var(--arrow-depth) 50%)!important;font:700 12px/1 'Instrument Sans',sans-serif!important;box-shadow:none!important;-webkit-tap-highlight-color:transparent}
@@ -936,6 +939,7 @@
   .archrow .atab.on{color:var(--ink);font-weight:750}
   .archrow .atab.on::after{content:"";position:absolute;left:22%;right:22%;bottom:-1px;height:2px!important;border-radius:2px;background:var(--accent)}
   .archrow .act{font-size:8.5px}
+  .atab .feedback-dot{position:absolute;top:5px;right:8px;width:7px;height:7px;border-radius:50%;background:#A8AEAB;box-shadow:0 0 0 2px rgba(168,174,171,.14)}
 
   .overview-grid{grid-template-columns:1fr!important;gap:10px}
   .overview-card{grid-template-columns:minmax(0,1fr) 128px!important;min-height:112px;border-radius:14px;box-shadow:0 3px 11px rgba(42,48,45,.06)}
@@ -947,10 +951,10 @@
   .overview-pickup{margin-top:5px}.overview-pickup-line strong{font-size:13px!important;font-weight:650!important}.overview-pickup-meta{display:none}
   .overview-card-price{margin-top:9px;color:var(--ink-soft)!important;font-size:11.5px!important;font-weight:600!important}
   .overview-card-price::before{display:none!important}
-  .overview-card-side{display:grid;grid-template-columns:minmax(0,1fr) 18px;align-items:center;gap:5px;padding:12px 10px 12px 4px}
+  .overview-card-side{display:flex;align-items:center;justify-content:flex-end;padding:12px 2px 12px 4px}
   .overview-badge-stack{display:flex;min-width:0;flex-direction:column;gap:5px}
   .overview-card-side .order-badge{width:100%;min-height:30px;padding:6px 8px;font-size:9.5px}
-  .overview-chevron{color:var(--ink-soft);font:400 26px/1 'Instrument Sans',sans-serif}
+  .overview-chevron{display:none!important}
 
   .order-action-group:last-child .order-action{opacity:1!important;border-color:#D8A9B3!important;background:#FFF1F4!important;color:#92273B!important;font-weight:800!important}
   .order-action-group:last-child .order-action:hover{background:#FBE5EA!important;border-color:#C98291!important}
@@ -979,10 +983,10 @@
   .archrow .atab{font-size:11px}.archrow .act{font-size:10px}
   .calendar-link{gap:7px;font-size:12px}.calendar-link svg{width:16px;height:16px;fill:none;stroke:currentColor;stroke-width:1.8;stroke-linecap:round;stroke-linejoin:round}
 
-  .order-badge{width:118px!important;min-width:118px!important;max-width:118px!important;min-height:29px!important;padding:5px 9px!important;border-radius:999px!important;font-size:9.5px!important;line-height:1.1!important}
-  .overview-card-side .order-badge,.oc-side .order-badge{width:118px!important;min-width:118px!important;max-width:118px!important;min-height:29px!important;padding:5px 9px!important;font-size:9.5px!important}
-  .overview-card{grid-template-columns:minmax(0,1fr) 146px!important}
-  .overview-card-side{grid-template-columns:118px 18px!important}
+  .order-badge{width:116px!important;min-width:116px!important;max-width:116px!important;min-height:29px!important;padding:5px 8px!important;border-radius:999px!important;font-size:9.5px!important;line-height:1.1!important}
+  .overview-card-side .order-badge,.oc-side .order-badge{width:116px!important;min-width:116px!important;max-width:116px!important;min-height:29px!important;padding:5px 8px!important;font-size:9.5px!important}
+  .overview-card{grid-template-columns:minmax(0,1fr) 122px!important}
+  .overview-card-side{padding-right:2px!important}
 
   .message-shortcuts{padding:9px 10px}
   .message-shortcuts-label{margin-bottom:7px;font-size:9px;letter-spacing:.07em;text-transform:none}
@@ -997,12 +1001,22 @@
 
   .pickup-complete-btn{display:flex;width:100%;min-height:54px;margin-top:9px;align-items:center;justify-content:center;padding:10px 15px;border:1px solid #2F7657;border-radius:12px;background:linear-gradient(135deg,#438765,#2F6F55);color:#fff;font:800 13px/1.2 'Instrument Sans',sans-serif;cursor:pointer;box-shadow:0 6px 14px rgba(47,111,85,.18)}
   .pickup-complete-btn:active{transform:translateY(2px)}
-  .pickup-confirm{margin-top:9px!important}
+  .pickup-confirm{margin-top:7px!important}
+  .pickup-confirm .do-next-copy{padding:8px 14px!important}
+  .pickup-confirm .do-next-action{min-height:62px!important}
+  .pickup-countdown{display:block;margin-bottom:3px;color:var(--ink-faint);font-size:9.5px;font-weight:700;letter-spacing:.02em}
   .pickup-confirm .do-next-text{font-size:14px!important}
   .pickup-confirm .do-next-action{background:#34745A!important}
   .ftab{box-shadow:0 3px 9px rgba(54,48,45,.075)!important}
   .ftab.on{box-shadow:inset 0 0 0 1px color-mix(in srgb,var(--sc) 28%,#fff),0 5px 13px rgba(54,48,45,.11)!important}
   .overview-card,.ocard{box-shadow:0 4px 13px rgba(54,48,45,.095)!important}
+  .calcell.sel{border:2px solid var(--accent)!important;background:var(--card)!important;color:var(--ink)!important;box-shadow:none!important}
+  #main>.ghead{margin-top:9px!important;margin-bottom:8px!important}
+  #main{padding-top:4px!important}
+  .orders-heading-row{margin-top:5px!important;padding-top:6px!important;border-top:0!important}
+  .finance-table+.sec{margin-top:10px!important}
+  .oc-pickup{display:grid;gap:2px;margin-top:5px}
+  .oc-pickup>div{display:block}.oc-pickup>span{display:block;padding-left:0;color:var(--ink-faint)}
   .payment-quick button.payment-required{border:2px solid #C32E45!important;background:#FFF0F2!important;color:#A51F36!important;box-shadow:0 0 0 4px rgba(195,46,69,.13)!important;animation:paymentPulse .7s ease 2}
   @keyframes paymentPulse{50%{transform:scale(1.035)}}
   .confetti-layer{position:fixed;z-index:200;inset:0;overflow:hidden;pointer-events:none}
@@ -1020,9 +1034,9 @@
     .dashboard-intro h1{font-size:20px!important}.dashboard-intro p{margin-left:28px!important;font-size:13px!important}
     .greeting-icon{width:21px;font-size:17px}.archrow .atab{font-size:10px}.archrow .act{font-size:9px}
     .orders-sort-heading .orders-heading-title{font-size:15px!important}
-    .overview-card{grid-template-columns:minmax(0,1fr) 139px!important}
-    .overview-card-side{grid-template-columns:118px 14px!important;padding-left:0!important;padding-right:4px!important}
-    .order-badge,.overview-card-side .order-badge,.oc-side .order-badge{width:118px!important;min-width:118px!important;max-width:118px!important;min-height:28px!important;padding:5px 8px!important;font-size:9px!important}
+    .overview-card{grid-template-columns:minmax(0,1fr) 120px!important}
+    .overview-card-side{padding-left:0!important;padding-right:2px!important}
+    .order-badge,.overview-card-side .order-badge,.oc-side .order-badge{width:116px!important;min-width:116px!important;max-width:116px!important;min-height:28px!important;padding:5px 7px!important;font-size:9px!important}
     .message-shortcut{min-height:38px;padding:5px 4px;font-size:9.5px}.message-shortcut svg{width:13px;height:13px}
     .order-action-row.final-row{grid-template-columns:repeat(2,minmax(0,1fr))}
   }
@@ -1045,6 +1059,7 @@
   <header>
     <div class="htop">
       <div class="brand"><button class="brand-restart" type="button" onclick="openOrdersOverview()" aria-label="Return to orders" title="Return to orders"><img src="https://ivnybivjjydihltknlmo.supabase.co/storage/v1/object/public/references/images/byAmandaSoyer_Logo_NoBackground.png" alt="by Amanda Soyer"></button></div>
+      <div class="header-date" id="todayLbl" aria-label="Today"></div>
       <div class="header-actions">
         <button class="activity-btn" onclick="toggleActivity()" aria-label="Notifications" title="Notifications">
           <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M18 8a6 6 0 0 0-12 0c0 7-3 7-3 9h18c0-2-3-2-3-9"/><path d="M10 21h4"/></svg>
@@ -1429,14 +1444,15 @@ function renderTop(){
     flow+=`<button class="ftab ${on?'on':''}" style="--sc:${bucketColor(id)};--sc-ink:${bucketInk(id)}" onclick="setBucket('${id}')"><span class="fnum" aria-hidden="true">${index+1}</span><span class="fnm">${b.label}</span>${badge}</button>`;
   });
   const activeOrders=ORDERS.filter(o=>!['done','cancelled','deleted'].includes(o.status)),toDo=activeOrders.filter(orderNeedsAction).length;
+  const feedbackPending=ORDERS.filter(o=>o.status==='done'&&!o.feedbackSentAt).length;
   const filters=[
     {id:'all',label:'All',count:activeOrders.length,action:"setOverviewMode('all')",on:ordersOverview&&overviewMode==='all'},
     {id:'todo',label:'To Do',count:toDo,action:"setOverviewMode('todo')",on:ordersOverview&&overviewMode==='todo'},
-    {id:'done',label:'Completed',count:counts.done||0,action:"setBucket('done')",on:!ordersOverview&&activeBucket==='done'},
+    {id:'done',label:'Done',count:counts.done||0,action:"setBucket('done')",on:!ordersOverview&&activeBucket==='done'},
     {id:'cancelled',label:'Cancelled',count:counts.cancelled||0,action:"setBucket('cancelled')",on:!ordersOverview&&activeBucket==='cancelled'},
     {id:'deleted',label:'Archived',count:counts.deleted||0,action:"setBucket('deleted')",on:!ordersOverview&&activeBucket==='deleted'}
   ];
-  const arch=filters.map(f=>`<a class="atab ${f.on?'on':''}" onclick="${f.action}"><span class="anm">${f.label}</span>${f.id==='deleted'?'':`<span class="act">(${f.count})</span>`}</a>`).join('');
+  const arch=filters.map(f=>`<a class="atab ${f.on?'on':''}" onclick="${f.action}"><span class="anm">${f.label}</span>${f.id==='deleted'?'':`<span class="act">(${f.count})</span>`}${f.id==='done'&&feedbackPending?'<span class="feedback-dot" aria-label="Feedback request pending"></span>':''}</a>`).join('');
   document.getElementById('buckets').innerHTML=
     `<div class="flowcard">${flow}</div><div class="archrow">${arch}</div>`;
   document.getElementById('statusrow').innerHTML='';
@@ -1489,10 +1505,10 @@ function renderCalendar(){
   for(let i=0;i<startDow;i++)cells+=`<div class="calcell empty"></div>`;
   for(let d=1;d<=days;d++){
     const iso=`${y}-${String(m+1).padStart(2,'0')}-${String(d).padStart(2,'0')}`;
-    const os=byDate[iso]||[];const isToday=iso===today.toISOString().split('T')[0];const isSel=iso===calSel;
+    const os=byDate[iso]||[];const isToday=iso===today.toISOString().split('T')[0];const isSel=iso===calSel;const isPast=new Date(iso+'T00:00:00')<today;
     let dots=os.slice(0,4).map(o=>`<span class="cdot" style="background:${stColor(o.status)}"></span>`).join('');
     if(os.length>4)dots+=`<span class="more">+${os.length-4}</span>`;
-    cells+=`<div class="calcell ${isToday?'today':''} ${isSel?'sel':''}" onclick="calPick('${iso}')">
+    cells+=`<div class="calcell ${isToday?'today':''} ${isSel?'sel':''} ${isPast?'past':''}" onclick="calPick('${iso}')">
       <span class="d">${d}</span><div class="dots">${dots}</div></div>`;
   }
   let sel='';
@@ -1877,7 +1893,7 @@ async function addPayment(id){const o=ORDERS.find(x=>x.id===id),input=document.g
 async function setPayment(id,amt){await savePaymentAmount(id,amt);}
 
 /* ---------- compact workspace v2 ---------- */
-const LIST_TITLES={new_orders:'New Orders',waiting_customer:'Deposit Due',deposit_paid:'Deposit Received',cake_delivered:'Ready for Collection',done:'Completed',cancelled:'Cancelled',deleted:'Archived'};
+const LIST_TITLES={new_orders:'New Orders',waiting_customer:'Deposit Due',deposit_paid:'Deposit Received',cake_delivered:'Ready for Collection',done:'Done',cancelled:'Cancelled',deleted:'Archived'};
 function renderList(){
   const q=document.getElementById('search').value.trim();const el=document.getElementById('main');
   if(ordersOverview){renderOrdersOverview(q,el);return;}
@@ -1936,12 +1952,13 @@ function cardDisplayPrice(o){if(['cancelled','deleted'].includes(o.status))retur
 function overviewPickupLine(o){const info=overviewPickupInfo(o),d=o.pdate?new Date(o.pdate+'T00:00:00'):null;if(!d||Number.isNaN(d.getTime()))return 'Pick-up date not set';d.setHours(0,0,0,0);const n=Math.round((d-today)/86400000);if(n===0||n===1)return `Pick-up at ${o.ptime||'time not set'}`;if(n>1)return `Pick-up in ${n} days`;if(n===-1)return 'Pick-up was yesterday';return `Pick-up ${-n} days overdue`;}
 function overviewPaymentMeta(o){if(o.price>0&&o.paid>=o.price)return 'Paid in full';if(o.paid>0)return 'Deposit received';if(o.customerDecision==='accepted')return 'Quote accepted';const stage=workflowStage(o);if(stage===1)return 'Price not set';if(stage===2)return 'Confirmation not sent';return 'Payment pending';}
 function overviewPrimaryBadge(o){const stage=workflowStage(o),bucket=bucketOf(o),delta=pickupDeltaMs(o);if(bucket==='cake_delivered'){if(o.paid<o.price&&delta!==null&&delta<=0)return {label:'Payment Due',kind:'overdue'};return {label:'Ready for Collection',kind:'ready'};}if(stage===1)return {label:'Set Price',kind:'action'};if(stage===2)return {label:'Send Confirmation',kind:'sent'};if(stage===3)return {label:'Deposit Due',kind:'due'};if(bucket==='deposit_paid')return o.paid>=o.price&&o.price>0?{label:'Paid in Full',kind:'paid'}:{label:'Deposit Received',kind:'received'};return {label:'Review',kind:'closed'};}
-function overviewCardHTML(o){const bucket=bucketOf(o),meta=`${(o.range?'~':'')+money(o.price)} • ${overviewPaymentMeta(o)}`;return `<article class="overview-card ${o.read?'':'unread'}" style="--bucket-color:${bucketColor(bucket)}" onclick="openSheet(${o.id})"><div class="overview-card-main">${overviewDateTileHTML(o)}<div class="overview-card-copy"><div class="overview-card-name">${escHtml(o.name)}${isBlacklisted(o)?'<span class="blchip">Blacklisted</span>':''}</div><div class="overview-pickup"><div class="overview-pickup-line"><strong>${escHtml(overviewPickupLine(o))}</strong></div></div><div class="overview-card-price">${escHtml(meta)}</div></div></div><div class="overview-card-side"><div class="overview-badge-stack">${orderBadgesHTML(o)}</div><span class="overview-chevron">›</span></div></article>`;}
+function overviewCardHTML(o){const bucket=bucketOf(o),meta=`${(o.range?'~':'')+money(o.price)} • ${overviewPaymentMeta(o)}`;return `<article class="overview-card ${o.read?'':'unread'}" style="--bucket-color:${bucketColor(bucket)}" onclick="openSheet(${o.id})"><div class="overview-card-main">${overviewDateTileHTML(o)}<div class="overview-card-copy"><div class="overview-card-name">${escHtml(o.name)}${isBlacklisted(o)?'<span class="blchip">Blacklisted</span>':''}</div><div class="overview-pickup"><div class="overview-pickup-line"><strong>${escHtml(overviewPickupLine(o))}</strong></div></div><div class="overview-card-price">${escHtml(meta)}</div></div></div><div class="overview-card-side"><div class="overview-badge-stack">${orderBadgesHTML(o)}</div></div></article>`;}
 function renderOrdersOverview(q,el){let items=ORDERS.filter(o=>!['done','cancelled','deleted'].includes(o.status)&&matchSearch(o,q));if(overviewMode==='todo')items=items.filter(orderNeedsAction);items=sortOverviewOrders(items);if(!items.length){el.innerHTML='<div class="empty">No active orders.</div>';return;}el.innerHTML=`<div class="overview-grid">${items.map(overviewCardHTML).join('')}</div>`;}
-function cardPickupDate(o){if(!o.pdate)return 'Date not set';const d=new Date(o.pdate+'T00:00:00');return `${WD[d.getDay()]} - ${MO[d.getMonth()]} ${d.getDate()} - ${o.ptime||'—'}`;}
+function cardTimeText(value){const match=String(value||'').match(/(\d{1,2}):(\d{2})/);if(!match)return value||'—';const hour=Number(match[1]),minute=match[2];return `${hour%12||12}:${minute} ${hour>=12?'PM':'AM'}`;}
+function cardPickupDate(o){if(!o.pdate)return 'Date not set';const d=new Date(o.pdate+'T00:00:00');return `${WD[d.getDay()]} - ${MO[d.getMonth()]} ${d.getDate()} - ${cardTimeText(o.ptime)}`;}
 function pickupDistance(iso){if(!iso)return '';const d=new Date(iso+'T00:00:00');d.setHours(0,0,0,0);const n=Math.round((d-today)/86400000);if(n===0)return 'today';if(n===1)return 'in 1 day';if(n>1)return `in ${n} days`;if(n===-1)return '1 day ago';return `${-n} days ago`;}
 function cardProgressLabel(o){const first=orderBadgeData(o)[0]||{label:'Review Order',kind:'closed'};return {lines:[first.label],kind:first.kind};}
-function cardHTML(o){const price=cardDisplayPrice(o),cakeLine=[o.type,shortSize(o.size)].filter(Boolean).join(' ')+' - '+(o.shape||'—');return `<div class="ocard ${o.read?'':'unread'}" style="--st:${bucketColor(bucketOf(o))}" onclick="openSheet(${o.id})"><div class="oc-top"><div class="oc-copy"><div class="oc-name">${escHtml(o.name)}${isBlacklisted(o)?'<span class="blchip">Blacklisted</span>':''}</div><div class="oc-cake">${escHtml(cakeLine)}</div><div class="oc-flavour">${escHtml(o.flavor||'—')}</div><div class="oc-ordered">Ordered: ${escHtml(o.created)}</div><div class="oc-pickup">Pick-up: <b>${escHtml(cardPickupDate(o))}</b> <span>(${escHtml(pickupDistance(o.pdate))})</span></div></div><div class="oc-side"><div class="oc-price">${escHtml(price)}</div>${orderBadgesHTML(o)}</div></div></div>`;}
+function cardHTML(o){const price=cardDisplayPrice(o),cakeLine=[o.type,shortSize(o.size)].filter(Boolean).join(' ')+' - '+(o.shape||'—');return `<div class="ocard ${o.read?'':'unread'}" style="--st:${bucketColor(bucketOf(o))}" onclick="openSheet(${o.id})"><div class="oc-top"><div class="oc-copy"><div class="oc-name">${escHtml(o.name)}${isBlacklisted(o)?'<span class="blchip">Blacklisted</span>':''}</div><div class="oc-cake">${escHtml(cakeLine)}</div><div class="oc-flavour">${escHtml(o.flavor||'—')}</div><div class="oc-ordered">Ordered: ${escHtml(o.created)}</div><div class="oc-pickup"><div>Pickup: <b>${escHtml(cardPickupDate(o))}</b></div><span>(${escHtml(pickupDistance(o.pdate))})</span></div></div><div class="oc-side"><div class="oc-price">${escHtml(price)}</div>${orderBadgesHTML(o)}</div></div></div>`;}
 function shortSize(v){return String(v||'').replace(/\s*\([^)]*\)/g,'').trim();}
 const WORKFLOW_STEPS=[['Send','Confirmation'],['Deposit','Due'],['Deposit','Received'],['Ready for','Collection'],['Order','Completed']];
 function progressHTML(o){
@@ -1977,7 +1994,8 @@ function doNextConfig(o){
   if(stage===6)return {text:'Send the customer a feedback request.',html:'Send the customer a <strong>feedback request</strong>.',action:'message3'};
   return {text:'Review this order before taking the next action.',action:'none'};
 }
-function doNextHTML(o){if(isPickupConfirmationStep(o))return `<div class="do-next pickup-confirm"><div class="do-next-copy"><span class="do-next-text">Customer picked up the cake?</span></div><button type="button" class="do-next-action" onclick="markCakePickedUp(${o.id})" aria-label="Confirm customer picked up the cake">YES</button></div>`;const n=doNextConfig(o),conditional=!!n.when,copy=conditional?`<div class="do-next-rule"><span class="do-next-label">WHEN:</span><span class="do-next-text">${escHtml(n.when)}</span></div><div class="do-next-rule"><span class="do-next-label">DO NEXT:</span><span class="do-next-text">${n.nextHtml||escHtml(n.next)}</span></div>`:`<span class="do-next-label">DO NEXT:</span><span class="do-next-text">${n.html||escHtml(n.text)}</span>`;return `<div class="do-next ${conditional?'conditional':''}"><div class="do-next-copy">${copy}</div><button type="button" class="do-next-action" onclick="runDoNext(${o.id},'${n.action}')" aria-label="Go to the next action" title="Go to the next action">GO</button></div>`;}
+function pickupCountdownText(o){const delta=pickupDeltaMs(o);if(delta===null)return 'Pickup time not set';if(delta<=0)return 'Pickup time has arrived';const hours=Math.ceil(delta/3600000);if(hours>=48){const days=Math.ceil(hours/24);return `${days} ${days===1?'day':'days'} until pickup`;}return `${hours} ${hours===1?'hour':'hours'} until pickup`;}
+function doNextHTML(o){if(isPickupConfirmationStep(o))return `<div class="do-next pickup-confirm"><div class="do-next-copy"><span class="pickup-countdown">${escHtml(pickupCountdownText(o))}</span><span class="do-next-text">Customer picked up the cake?</span></div><button type="button" class="do-next-action" onclick="markCakePickedUp(${o.id})" aria-label="Confirm customer picked up the cake">YES</button></div>`;const n=doNextConfig(o),conditional=!!n.when,copy=conditional?`<div class="do-next-rule"><span class="do-next-label">WHEN:</span><span class="do-next-text">${escHtml(n.when)}</span></div><div class="do-next-rule"><span class="do-next-label">DO NEXT:</span><span class="do-next-text">${n.nextHtml||escHtml(n.next)}</span></div>`:`<span class="do-next-label">DO NEXT:</span><span class="do-next-text">${n.html||escHtml(n.text)}</span>`;return `<div class="do-next ${conditional?'conditional':''}"><div class="do-next-copy">${copy}</div><button type="button" class="do-next-action" onclick="runDoNext(${o.id},'${n.action}')" aria-label="Go to the next action" title="Go to the next action">GO</button></div>`;}
 function messageShortcutIcon(key){const paths={quote:'<rect x="3" y="5" width="18" height="14" rx="2"></rect><path d="m4 7 8 6 8-6"></path>',confirmed:'<path d="M12 21s7-5.2 7-12a7 7 0 1 0-14 0c0 6.8 7 12 7 12Z"></path><circle cx="12" cy="9" r="2"></circle>',feedback:'<path d="M4 5h16v11H9l-5 4V5Z"></path><path d="M8 9h8M8 12h5"></path>'};return `<svg viewBox="0 0 24 24" aria-hidden="true">${paths[key]||''}</svg>`;}
 function messageShortcutsHTML(o){const stage=workflowStage(o),items=[{key:'quote',label:'Quote Link',due:stage===2,done:!!o.quoteSentAt},{key:'confirmed',label:'Address Info',due:stage===4,done:!!o.confirmedSentAt},{key:'feedback',label:'Feedback',due:stage===6||o.status==='done',done:!!o.feedbackSentAt}];return `<div class="message-shortcuts"><span class="message-shortcuts-label">Whatsapp Messages (copy and send)</span><div class="message-shortcuts-row">${items.map(item=>`<button type="button" class="message-shortcut ${item.done?'done':item.due?'current':'future'}" onclick="openMessagePanel('${item.key}')">${messageShortcutIcon(item.key)}<span>${escHtml(item.label)}</span></button>`).join('')}</div></div>`;}
 function paymentWorkspaceHTML(o){const deposit=o.price/2,remaining=Math.max(0,o.price-o.paid);return `<details class="payment-accordion" id="paymentDetails"><summary>Payment <span>${money(o.paid)} / ${money(o.price)}</span></summary><div class="payment-workspace" id="paymentWorkspace"><div class="payment-top"><div class="payment-total">${money(o.paid)} <small>of ${money(o.price)}</small></div><div class="payment-left">${remaining===0?'Fully paid ✓':money(remaining)+' left'}</div></div><div class="payment-entry"><input id="payAmt" type="number" min="0" step="0.5" placeholder="Amount received (€)"><button class="add" onclick="addPayment(${o.id})">Add</button><button class="reset" onclick="setPayment(${o.id},0)">Reset</button></div><div class="payment-quick"><button onclick="setPayment(${o.id},${deposit})">Deposit ${money(deposit)}</button><button id="paidInFullQuick" onclick="setPayment(${o.id},${o.price})">Paid in full</button></div></div></details>`;}
@@ -1990,7 +2008,9 @@ function focusFinalQuote(){const el=document.getElementById('finalQuoteSection')
 function focusPayment(){const details=document.getElementById('paymentDetails');if(!details)return;details.open=true;details.scrollIntoView({behavior:'smooth',block:'center'});details.classList.remove('payment-attention');void details.offsetWidth;details.classList.add('payment-attention');setTimeout(()=>{const input=document.getElementById('payAmt');if(input)input.focus();},450);}
 function historyRow(k,v){return `<div class="history-row"><span class="k">${escHtml(k)}</span><span class="v">${v||'—'}</span></div>`;}
 function historySection(title,rows){return `<div class="history-section-title">${escHtml(title)}</div>${rows.join('')}`;}
-function renderHistoryDetail(o){const decor=(o.decor||[]).filter(d=>d!=='No decoration'),note=cleanNotes(o),addonsList=[].concat((o.cupcakes&&!/^(no cupcakes|none|nenhuma|—)?$/i.test(String(o.cupcakes)))?[o.cupcakes]:[]).concat(decor),addons=addonsList.length?addonsList.join(', '):'No add-ons',colourNames=(o.colors||[]).map(c=>c[0]).join(', ')||'—',allergy=o.allergies&&!['none','nenhuma'].includes(String(o.allergies).toLowerCase())?`⚠ ${escHtml(o.allergies)}`:'None';return `<div class="history-order-view"><div class="sec history-progress">${progressHTML(o)}${o.status==='done'?doNextHTML(o):''}${messageShortcutsHTML(o)}</div><div class="history-list">${historySection('Customer',[historyRow('Name',escHtml(o.name)),historyRow('WhatsApp',escHtml(o.wcode+' '+o.wnum)),historyRow('Instagram',o.instagram?'@'+escHtml(o.instagram):'—'),historyRow('Email',escHtml(o.email||'—')),historyRow('Form language',escHtml(o.lang||'—')),historyRow('Found us via',escHtml((o.heard||'—')+(o.referredBy?' · '+o.referredBy:''))),historyRow('Form feedback',o.feedback?escHtml(o.feedback):'Not submitted')])}${historySection('Pickup',[historyRow('Order Date',escHtml(fmtOrderedAt(o.createdAt))),historyRow('Delivery Date',escHtml(fmtPickupAt(o))),historyRow('Total time',escHtml(orderElapsedDays(o))),historyRow('Time',escHtml(o.ptime||'—')),historyRow('Collection',o.courier?'Uber/Bolt courier collection':'Customer collection')])}${historySection('The Cake',[historyRow('Type & size',escHtml(o.type+' · '+shortSize(o.size))),historyRow('Shape',escHtml(o.shape)),historyRow('Flavour',escHtml(o.flavor)),historyRow('Colours',escHtml(colourNames)),historyRow('Writing',o.writing?`“${escHtml(o.writing)}” · ${escHtml(o.writingColor)}`:'—'),historyRow('Add-ons',escHtml(addons)),...(o.pigment&&o.pigment.length?[historyRow('High-pigment',escHtml(o.pigment.join(', ')))]:[]),historyRow('Candles',escHtml(o.candles||'—')),historyRow('Allergies',allergy),historyRow('Customer notes',note?escHtml(note):'—')])}<div class="history-section-title">Reference photos</div><div class="history-reference">${photoGrid(o)}${o.photoNote?`<div class="notebox" style="margin-top:9px">${escHtml(o.photoNote)}</div>`:''}</div></div>${orderActionsHTML(o)}</div>`;}
+function sizeDisplay(value){const size=shortSize(value)||'—';return /\bSize$/i.test(size)?size:`${size} Size`;}
+function shapeDisplay(value){const shape=String(value||'—').trim();return /\bShape$/i.test(shape)?shape:`${shape} Shape`;}
+function renderHistoryDetail(o){const decor=(o.decor||[]).filter(d=>d!=='No decoration'),note=cleanNotes(o),addonsList=[].concat((o.cupcakes&&!/^(no cupcakes|none|nenhuma|—)?$/i.test(String(o.cupcakes)))?[o.cupcakes]:[]).concat(decor),addons=addonsList.length?addonsList.join(', '):'No add-ons',colourNames=(o.colors||[]).map(c=>c[0]).join(', ')||'—',allergy=o.allergies&&!['none','nenhuma'].includes(String(o.allergies).toLowerCase())?`⚠ ${escHtml(o.allergies)}`:'None';return `<div class="history-order-view"><div class="sec history-progress">${progressHTML(o)}${o.status==='done'?doNextHTML(o):''}${messageShortcutsHTML(o)}</div><div class="history-list">${historySection('Customer',[historyRow('Name',escHtml(o.name)),historyRow('WhatsApp',escHtml(o.wcode+' '+o.wnum)),historyRow('Instagram',o.instagram?'@'+escHtml(o.instagram):'—'),historyRow('Email',escHtml(o.email||'—')),historyRow('Form language',escHtml(o.lang||'—')),historyRow('Found us via',escHtml((o.heard||'—')+(o.referredBy?' · '+o.referredBy:''))),historyRow('Form feedback',o.feedback?escHtml(o.feedback):'Not submitted')])}${historySection('Pickup',[historyRow('Order Date',escHtml(fmtOrderedAt(o.createdAt))),historyRow('Delivery Date',escHtml(fmtPickupAt(o))),historyRow('Total time',escHtml(orderElapsedDays(o))),historyRow('Collection',o.courier?'Uber/Bolt courier collection':'Customer collection')])}${historySection('The Cake',[historyRow('Size:',escHtml(sizeDisplay(o.size))),historyRow('Shape:',escHtml(shapeDisplay(o.shape))),historyRow('Flavour',escHtml(o.flavor)),historyRow('Colours',escHtml(colourNames)),historyRow('Writing',o.writing?`“${escHtml(o.writing)}” · ${escHtml(o.writingColor)}`:'—'),historyRow('Add-ons',escHtml(addons)),...(o.pigment&&o.pigment.length?[historyRow('High-pigment',escHtml(o.pigment.join(', ')))]:[]),historyRow('Candles',escHtml(o.candles||'—')),historyRow('Allergies',allergy),historyRow('Customer notes',note?escHtml(note):'—')])}<div class="history-section-title">Reference photos</div><div class="history-reference">${photoGrid(o)}${o.photoNote?`<div class="notebox" style="margin-top:9px">${escHtml(o.photoNote)}</div>`:''}</div></div>${orderActionsHTML(o)}</div>`;}
 function orderActionIcon(kind){const paths={bad:'<circle cx="9" cy="8" r="3"/><path d="M3.5 19c.7-3.2 2.5-5 5.5-5 1.2 0 2.2.3 3.1.8M16 15l5 5m0-5-5 5"/>',archive:'<path d="M4 7h16v13H4zM3 3h18v4H3zm6 9h6"/>',trash:'<path d="M4 7h16M9 7V4h6v3m3 0-1 13H7L6 7m4 4v5m4-5v5"/>',cancel:'<circle cx="12" cy="12" r="9"/><path d="m9 9 6 6m0-6-6 6"/>',customer:'<circle cx="8.5" cy="8" r="3"/><path d="M3 19c.6-3.2 2.5-5 5.5-5 1.4 0 2.6.4 3.5 1.1M16 9l5 5m0-5-5 5"/>',reset:'<path d="M4 8V4h4M4.8 5.2A9 9 0 1 1 3 14"/><path d="M12 8v4l3 2"/>',whatsapp:'<path d="M20 11.5a8 8 0 0 1-11.8 7L4 20l1.5-4.1A8 8 0 1 1 20 11.5Z"/><path d="M9 8.5c.4 2.5 2 4.1 4.5 4.9l1.2-1.1 1.8.9"/>'};return `<svg viewBox="0 0 24 24" aria-hidden="true">${paths[kind]||''}</svg>`;}
 function orderActionsHTML(o){const canCancel=!['done','deleted','cancelled'].includes(o.status),whatsapp=`<a class="order-action whatsapp" href="${whatsappUrl(o)}" target="_blank" rel="noopener">${orderActionIcon('whatsapp')}<span>Open WhatsApp Chat</span></a>`,utilities=`<button class="order-action bad ${isBlacklisted(o)?'on':''}" onclick="toggleBlacklist(${o.id})">${orderActionIcon('bad')}<span>${isBlacklisted(o)?'Remove Bad Customer':'Mark as Bad Customer'}</span></button><button class="order-action reset-progress" onclick="resetAllProgress(${o.id})">${orderActionIcon('reset')}<span>Reset All Progress</span></button>`,finalActions=`${canCancel?`<button class="order-action cancel" onclick="cancelOrder(${o.id},'owner')">${orderActionIcon('cancel')}<span>Cancel the Order</span></button><button class="order-action customer-cancel" onclick="cancelOrder(${o.id},'customer')">${orderActionIcon('customer')}<span>Cancelled by Customer</span></button>`:''}<button class="order-action delete" id="trashBtn" title="Tap twice to permanently delete" onclick="permanentDeleteTap(${o.id},this)">${orderActionIcon('trash')}<span>Delete the Order</span></button><button class="order-action archive" id="archiveAction" onclick="archiveOrder(${o.id})">${orderActionIcon('archive')}<span>${o.status==='deleted'?'Restore to Orders':'Move to Archived'}</span></button>`;return `<div class="bottom-actions"><div class="order-action-row whatsapp-row">${whatsapp}</div><div class="order-action-row utility-row">${utilities}</div><div class="order-action-row final-row">${finalActions}</div></div>`;}
 

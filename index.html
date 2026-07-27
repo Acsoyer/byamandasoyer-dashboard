@@ -948,6 +948,7 @@
   .overview-card-price{margin-top:9px;color:var(--ink-soft)!important;font-size:11.5px!important;font-weight:600!important}
   .overview-card-price::before{display:none!important}
   .overview-card-side{display:grid;grid-template-columns:minmax(0,1fr) 18px;align-items:center;gap:5px;padding:12px 10px 12px 4px}
+  .overview-badge-stack{display:flex;min-width:0;flex-direction:column;gap:5px}
   .overview-card-side .order-badge{width:100%;min-height:30px;padding:6px 8px;font-size:9.5px}
   .overview-chevron{color:var(--ink-soft);font:400 26px/1 'Instrument Sans',sans-serif}
 
@@ -962,6 +963,68 @@
     .overview-card-main{grid-template-columns:66px minmax(0,1fr)}.overview-date-tile{min-height:102px}.overview-date-tile strong{font-size:24px}
     .overview-card-copy{padding:10px}.overview-card-name{font-size:14px}.overview-pickup-line strong{font-size:11.5px!important}.overview-card-price{font-size:10px!important}
     .overview-card-side{grid-template-columns:minmax(0,1fr) 14px;padding:8px 7px 8px 3px}.overview-card-side .order-badge{min-height:27px;padding:5px 5px;font-size:8px}.overview-chevron{font-size:22px}
+  }
+
+  /* V77 — clarity and interaction refinements */
+  body,#app,header,#main{background:#F7F3EF}
+  .dashboard-intro h1{display:flex;align-items:center;gap:7px;font-size:21px!important}
+  .dashboard-intro p{margin-left:31px!important;font-size:13.5px!important}
+  .greeting-icon{display:inline-flex;order:-1;align-items:center;justify-content:center;width:24px;font-size:19px;line-height:1}
+  .orders-sort-heading .orders-heading-title{font-size:16px!important}
+  .overview-card-name{margin-bottom:6px}
+  .activity-btn{border-radius:10px!important}
+  .flowcard{padding:0;border:0;background:transparent;box-shadow:none}
+  .ftab{gap:13px!important}
+  .ftab .fnm{line-height:1.18}.ftab .fct{margin-top:2px}
+  .archrow .atab{font-size:11px}.archrow .act{font-size:10px}
+  .calendar-link{gap:7px;font-size:12px}.calendar-link svg{width:16px;height:16px;fill:none;stroke:currentColor;stroke-width:1.8;stroke-linecap:round;stroke-linejoin:round}
+
+  .order-badge{width:118px!important;min-width:118px!important;max-width:118px!important;min-height:29px!important;padding:5px 9px!important;border-radius:999px!important;font-size:9.5px!important;line-height:1.1!important}
+  .overview-card-side .order-badge,.oc-side .order-badge{width:118px!important;min-width:118px!important;max-width:118px!important;min-height:29px!important;padding:5px 9px!important;font-size:9.5px!important}
+  .overview-card{grid-template-columns:minmax(0,1fr) 146px!important}
+  .overview-card-side{grid-template-columns:118px 18px!important}
+
+  .message-shortcuts{padding:9px 10px}
+  .message-shortcuts-label{margin-bottom:7px;font-size:9px;letter-spacing:.07em;text-transform:none}
+  .message-shortcut{display:flex;align-items:center;justify-content:center;gap:5px;min-height:35px;padding:5px 7px;font-size:10px;line-height:1.15}
+  .message-shortcut svg{flex:0 0 auto;width:14px;height:14px;fill:none;stroke:currentColor;stroke-width:1.8;stroke-linecap:round;stroke-linejoin:round}
+  .message-shortcut.current{border-color:#9EC7D9;background:#EAF5FA;color:#245D76;box-shadow:0 2px 7px rgba(49,94,116,.1)}
+
+  .quote-status-row{min-height:0;margin:6px 0 8px;padding:2px 0;border:0;border-radius:0;background:transparent;font-size:10.5px;text-align:left;justify-content:flex-start}
+  .quote-status-row .quote-form-link{display:inline-flex;align-items:center;gap:4px;padding:2px 0;border:0;border-bottom:1px dashed #8EA99A;border-radius:0;background:transparent;color:#3A6250;font:750 10.5px 'Instrument Sans',sans-serif;cursor:pointer}
+  .quote-status-row .quote-countdown{padding:0;border:0;border-radius:0;background:transparent;color:inherit;font:inherit}
+  .quote-status-row.expired{padding:3px 0;border:0;background:transparent}.quote-status-row.expired strong{font-size:10.5px}
+
+  .pickup-complete-btn{display:flex;width:100%;min-height:54px;margin-top:9px;align-items:center;justify-content:center;padding:10px 15px;border:1px solid #2F7657;border-radius:12px;background:linear-gradient(135deg,#438765,#2F6F55);color:#fff;font:800 13px/1.2 'Instrument Sans',sans-serif;cursor:pointer;box-shadow:0 6px 14px rgba(47,111,85,.18)}
+  .pickup-complete-btn:active{transform:translateY(2px)}
+  .pickup-confirm{margin-top:9px!important}
+  .pickup-confirm .do-next-text{font-size:14px!important}
+  .pickup-confirm .do-next-action{background:#34745A!important}
+  .ftab{box-shadow:0 3px 9px rgba(54,48,45,.075)!important}
+  .ftab.on{box-shadow:inset 0 0 0 1px color-mix(in srgb,var(--sc) 28%,#fff),0 5px 13px rgba(54,48,45,.11)!important}
+  .overview-card,.ocard{box-shadow:0 4px 13px rgba(54,48,45,.095)!important}
+  .payment-quick button.payment-required{border:2px solid #C32E45!important;background:#FFF0F2!important;color:#A51F36!important;box-shadow:0 0 0 4px rgba(195,46,69,.13)!important;animation:paymentPulse .7s ease 2}
+  @keyframes paymentPulse{50%{transform:scale(1.035)}}
+  .confetti-layer{position:fixed;z-index:200;inset:0;overflow:hidden;pointer-events:none}
+  .confetti-piece{position:absolute;top:-18px;width:8px;height:13px;border-radius:2px;background:var(--confetti);animation:confettiFall var(--fall) cubic-bezier(.18,.7,.35,1) forwards;transform:translate3d(0,0,0) rotate(var(--rotation))}
+  @keyframes confettiFall{to{transform:translate3d(var(--drift),105vh,0) rotate(calc(var(--rotation) + 720deg));opacity:.9}}
+
+  .bottom-actions{display:grid;gap:8px;padding:10px}
+  .order-action-row{display:grid;gap:7px}.order-action-row.whatsapp-row{grid-template-columns:1fr}.order-action-row.utility-row{grid-template-columns:repeat(2,minmax(0,1fr))}.order-action-row.final-row{grid-template-columns:repeat(4,minmax(0,1fr))}
+  .order-action-row+.order-action-row{padding-top:8px;border-top:1px solid #E3E7E4}
+  .order-action-row.final-row .order-action{opacity:1!important;border-color:#D8A9B3!important;background:#FFF1F4!important;color:#92273B!important;font-weight:800!important}
+  .order-action-row.final-row .order-action svg{stroke:#92273B!important}
+  .order-action-row.final-row .order-action.archive{border-color:#D8A9B3!important;background:#FFF1F4!important;color:#92273B!important}
+
+  @media(max-width:560px){
+    .dashboard-intro h1{font-size:20px!important}.dashboard-intro p{margin-left:28px!important;font-size:13px!important}
+    .greeting-icon{width:21px;font-size:17px}.archrow .atab{font-size:10px}.archrow .act{font-size:9px}
+    .orders-sort-heading .orders-heading-title{font-size:15px!important}
+    .overview-card{grid-template-columns:minmax(0,1fr) 139px!important}
+    .overview-card-side{grid-template-columns:118px 14px!important;padding-left:0!important;padding-right:4px!important}
+    .order-badge,.overview-card-side .order-badge,.oc-side .order-badge{width:118px!important;min-width:118px!important;max-width:118px!important;min-height:28px!important;padding:5px 8px!important;font-size:9px!important}
+    .message-shortcut{min-height:38px;padding:5px 4px;font-size:9.5px}.message-shortcut svg{width:13px;height:13px}
+    .order-action-row.final-row{grid-template-columns:repeat(2,minmax(0,1fr))}
   }
 </style>
 </head>
@@ -1005,7 +1068,7 @@
     </div>
     <div class="ordersUI" id="ordersUI">
       <div class="dashboard-intro">
-        <h1 id="dashboardGreeting">Good morning, Amanda!</h1>
+        <h1><span class="greeting-icon" id="dashboardGreetingIcon" aria-hidden="true">☀️</span><span id="dashboardGreeting">Good morning, Amanda!</span></h1>
         <p>Here’s what needs your attention today</p>
       </div>
       <div class="buckets" id="buckets"></div>
@@ -1016,7 +1079,7 @@
           <span class="sort-caret">▼</span>
         </button>
         <div class="order-heading-tools">
-          <button class="calendar-link" type="button" onclick="openCalendarFromHeader()">View calendar <span>›</span></button>
+          <button class="calendar-link" type="button" onclick="openCalendarFromHeader()"><svg viewBox="0 0 24 24" aria-hidden="true"><rect x="3" y="5" width="18" height="16" rx="3"></rect><path d="M8 3v4M16 3v4M3 10h18"></path></svg>View Calendar <span>›</span></button>
         </div>
       </div>
       <div class="search-drawer" id="searchDrawer">
@@ -1245,17 +1308,23 @@ function pickupMoment(o){
 }
 function pickupDeltaMs(o){const moment=pickupMoment(o);return moment?moment.getTime()-Date.now():null;}
 async function syncAutoDelivered(){
-  if(!sb||!autoDeliveryEnabled)return;
-  const now=Date.now(),due=ORDERS.filter(o=>o.status==='confirmed'&&pickupMoment(o)&&pickupMoment(o).getTime()<=now);
-  if(!due.length)return;
-  const ids=due.map(o=>o.id),{error}=await sb.from('orders').update({status:'delivered'}).in('id',ids);
-  if(error){console.error('Automatic delivery update failed',error);if(String(error.message||'').toLowerCase().includes('delivered'))autoDeliveryEnabled=false;return;}
-  due.forEach(o=>o.status='delivered');
+  /* Collection completion is confirmed manually with the picked-up button. */
+  return;
+}
+function isReadyForCollection(o){
+  if(!o||['done','cancelled','deleted'].includes(o.status))return false;
+  if(o.status==='delivered')return true;
+  if(o.status!=='confirmed')return false;
+  const delta=pickupDeltaMs(o);
+  return delta!==null&&delta<=3600000;
+}
+function isPickupConfirmationStep(o){
+  if(!o||['done','cancelled','deleted'].includes(o.status))return false;
+  return o.status==='delivered'||workflowStage(o)===5;
 }
 function bucketOf(o){
   if(o.status==='done'||o.status==='cancelled'||o.status==='deleted')return o.status;
-  if(o.status==='delivered')return 'cake_delivered';
-  if(o.status==='confirmed'){const delta=pickupDeltaMs(o);if(delta!==null&&delta<=3600000)return 'cake_delivered';}
+  if(isReadyForCollection(o))return 'cake_delivered';
   const stage=workflowStage(o);
   if(stage===1||stage===2)return 'new_orders';
   if(stage===3)return 'waiting_customer';
@@ -1263,7 +1332,7 @@ function bucketOf(o){
   return 'new_orders';
 }
 const BUCKETS=[
-  {id:"new_orders",label:"New<br>Orders"},{id:"waiting_customer",label:"Waiting<br>Customer"},{id:"deposit_paid",label:"Deposit<br>Due"},{id:"cake_delivered",label:"Ready for<br>Collection"},
+  {id:"new_orders",label:"New<br>Orders"},{id:"waiting_customer",label:"Deposit<br>Due"},{id:"deposit_paid",label:"Deposit<br>Received"},{id:"cake_delivered",label:"Ready for<br>Collection"},
   {id:"done",label:"Done"},{id:"cancelled",label:"Cancelled"},{id:"deleted",label:"Archived"}
 ];
 const BUCKET_COLORS={new_orders:'#B4233A',waiting_customer:'#C6971C',deposit_paid:'#315E74',cake_delivered:'#34745A',done:'#9A8C93',cancelled:'#B26B6B',deleted:'#756B70'};
@@ -1292,8 +1361,9 @@ function moveTopnavInk(){
 function updateHeaderDate(){
   const now=new Date(),label=document.getElementById('todayLbl');
   if(label)label.textContent=`${WD[now.getDay()]} · ${now.getDate()} ${MOS[now.getMonth()]}`;
-  const greeting=document.getElementById('dashboardGreeting'),hour=now.getHours(),period=hour<12?'morning':hour<18?'afternoon':'evening';
+  const greeting=document.getElementById('dashboardGreeting'),icon=document.getElementById('dashboardGreetingIcon'),hour=now.getHours(),period=hour<12?'morning':hour<18?'afternoon':'evening';
   if(greeting)greeting.textContent=`Good ${period}, Amanda!`;
+  if(icon)icon.textContent=period==='morning'?'☀️':period==='afternoon'?'🌸':'🌙';
 }
 function closeProfileMenu(){
   const menu=document.getElementById('profileMenu'),button=document.getElementById('profileButton');
@@ -1366,7 +1436,7 @@ function renderTop(){
     {id:'cancelled',label:'Cancelled',count:counts.cancelled||0,action:"setBucket('cancelled')",on:!ordersOverview&&activeBucket==='cancelled'},
     {id:'deleted',label:'Archived',count:counts.deleted||0,action:"setBucket('deleted')",on:!ordersOverview&&activeBucket==='deleted'}
   ];
-  const arch=filters.map(f=>`<a class="atab ${f.on?'on':''}" onclick="${f.action}"><span class="anm">${f.label}</span><span class="act">(${f.count})</span></a>`).join('');
+  const arch=filters.map(f=>`<a class="atab ${f.on?'on':''}" onclick="${f.action}"><span class="anm">${f.label}</span>${f.id==='deleted'?'':`<span class="act">(${f.count})</span>`}</a>`).join('');
   document.getElementById('buckets').innerHTML=
     `<div class="flowcard">${flow}</div><div class="archrow">${arch}</div>`;
   document.getElementById('statusrow').innerHTML='';
@@ -1807,7 +1877,7 @@ async function addPayment(id){const o=ORDERS.find(x=>x.id===id),input=document.g
 async function setPayment(id,amt){await savePaymentAmount(id,amt);}
 
 /* ---------- compact workspace v2 ---------- */
-const LIST_TITLES={new_orders:'New Orders',waiting_customer:'Waiting Customer',deposit_paid:'Deposit Due',cake_delivered:'Ready for Collection',done:'Completed',cancelled:'Cancelled',deleted:'Archived'};
+const LIST_TITLES={new_orders:'New Orders',waiting_customer:'Deposit Due',deposit_paid:'Deposit Received',cake_delivered:'Ready for Collection',done:'Completed',cancelled:'Cancelled',deleted:'Archived'};
 function renderList(){
   const q=document.getElementById('search').value.trim();const el=document.getElementById('main');
   if(ordersOverview){renderOrdersOverview(q,el);return;}
@@ -1828,20 +1898,35 @@ function overviewDate(value,dateOnly=false){if(!value)return 'Not set';const d=n
 function overviewDayDistance(value,dateOnly=false){if(!value)return '';const d=new Date(dateOnly?value+'T00:00:00':value);if(Number.isNaN(d.getTime()))return '';d.setHours(0,0,0,0);const n=Math.round((d-today)/86400000);if(n===0)return 'today';if(n===1)return 'in 1 day';if(n>1)return `in ${n} days`;if(n===-1)return '1 day ago';return `${-n} days ago`;}
 function overviewPickupInfo(o){if(!o.pdate)return {primary:'Date not set',time:'',meta:'Pick-up date required',tone:'overdue'};const d=new Date(o.pdate+'T00:00:00');if(Number.isNaN(d.getTime()))return {primary:'Date not set',time:'',meta:'Pick-up date required',tone:'overdue'};d.setHours(0,0,0,0);const n=Math.round((d-today)/86400000),dateLabel=`${d.getDate()} ${MO[d.getMonth()]}`;if(n===0)return {primary:'Today',time:o.ptime||'',meta:dateLabel,tone:'today'};if(n===1)return {primary:'Tomorrow',time:o.ptime||'',meta:dateLabel,tone:'tomorrow'};if(n<0)return {primary:dateLabel,time:o.ptime||'',meta:n===-1?'1 day overdue':`${-n} days overdue`,tone:'overdue'};return {primary:dateLabel,time:o.ptime||'',meta:`in ${n} days`,tone:n<=3?'tomorrow':'scheduled'};}
 function sortOverviewOrders(items){const list=[...items];if(overviewSort==='order')return list.sort((a,b)=>new Date(b.createdAt||0)-new Date(a.createdAt||0));if(overviewSort==='pickup')return list.sort((a,b)=>(a.pdate?new Date(a.pdate+'T00:00:00').getTime():Infinity)-(b.pdate?new Date(b.pdate+'T00:00:00').getTime():Infinity));if(overviewSort==='progress')return list.sort((a,b)=>workflowStage(a)-workflowStage(b)||((a.pdate?new Date(a.pdate+'T00:00:00').getTime():Infinity)-(b.pdate?new Date(b.pdate+'T00:00:00').getTime():Infinity)));if(overviewSort==='alpha')return list.sort((a,b)=>String(a.name||'').localeCompare(String(b.name||''),undefined,{sensitivity:'base'}));return list;}
+function pickupDaysLeft(o){if(!o.pdate)return null;const date=new Date(o.pdate+'T00:00:00');if(Number.isNaN(date.getTime()))return null;date.setHours(0,0,0,0);return Math.round((date-today)/86400000);}
 function orderBadgeData(o){
   if(o.status==='cancelled')return [{label:'Cancelled',kind:'closed'}];
   if(o.status==='deleted')return [{label:'Archived',kind:'closed'}];
-  if(o.status==='done')return [{label:'Completed',kind:'closed'}];
-  const stage=workflowStage(o),bucket=bucketOf(o),delta=pickupDeltaMs(o),badges=[];
+  if(o.status==='done')return [
+    {label:'Pick-up Completed',kind:'ready'},
+    {label:o.feedbackSentAt?'Feedback Sent':'Request Feedback',kind:o.feedbackSentAt?'accepted':'sent'}
+  ];
+  const stage=workflowStage(o),ready=isReadyForCollection(o),bucket=bucketOf(o),delta=pickupDeltaMs(o),badges=[];
   if(stage===1)badges.push({label:'Set Price',kind:'action'});
   else if(stage===2)badges.push({label:'Send Confirmation',kind:'sent'});
   else if(stage===3){badges.push({label:'Deposit Due',kind:'due'});if(o.customerDecision==='accepted')badges.push({label:'Quote Accepted',kind:'accepted'});}
-  else if(bucket==='deposit_paid'){badges.push({label:'Deposit Received',kind:'received'});if(delta!==null&&delta>3600000&&delta<=86400000)badges.push({label:'Last 24 Hours',kind:'urgent'});}
-  else if(bucket==='cake_delivered'){
-    const lastHour=delta!==null&&delta>0&&delta<=3600000;if(lastHour)badges.push({label:'Last 1 Hour',kind:'urgent'});
+  else if(bucket==='deposit_paid'){
     if(o.price>0&&o.paid>=o.price)badges.push({label:'Paid in Full',kind:'paid'});
-    else if(delta!==null&&delta<=0)badges.push({label:'Due Full Payment',kind:'overdue'});
-    else if(!lastHour)badges.push({label:'Ready for Collection',kind:'ready'});
+    else badges.push({label:'Deposit Received',kind:'received'});
+    if(!o.confirmedSentAt)badges.push({label:'Send Address',kind:'sent'});
+    else{
+      const days=pickupDaysLeft(o);
+      if(days!==null)badges.push({label:days>1?`${days} days Left`:days===1?'1 day Left':days===0?'Today':'Overdue',kind:days<=1?'overdue':'closed'});
+    }
+  }
+  else if(ready){
+    const fullyPaid=o.price>0&&o.paid>=o.price,lastHour=delta!==null&&delta>0&&delta<=3600000;
+    if(fullyPaid)badges.push({label:'Paid in Full',kind:'paid'});
+    else if(o.paid>0)badges.push({label:'Deposit Received',kind:'received'});
+    else badges.push({label:'Deposit Due',kind:'due'});
+    badges.push({label:'Ready for Collection',kind:'ready'});
+    if(!fullyPaid&&delta!==null&&delta<=0)badges.push({label:'Due Full Payment',kind:'overdue'});
+    else if(lastHour)badges.push({label:'Last 1 Hour',kind:'urgent'});
   }
   return badges.length?badges:[{label:'Review Order',kind:'closed'}];
 }
@@ -1850,8 +1935,8 @@ function overviewDateTileHTML(o){if(!o.pdate)return '<div class="overview-date-t
 function cardDisplayPrice(o){if(['cancelled','deleted'].includes(o.status))return '—';if(bucketOf(o)==='cake_delivered'&&o.paid>0&&o.paid<o.price)return `${money(o.paid)} / ${money(o.price)}`;return (o.range?'~':'')+money(o.price);}
 function overviewPickupLine(o){const info=overviewPickupInfo(o),d=o.pdate?new Date(o.pdate+'T00:00:00'):null;if(!d||Number.isNaN(d.getTime()))return 'Pick-up date not set';d.setHours(0,0,0,0);const n=Math.round((d-today)/86400000);if(n===0||n===1)return `Pick-up at ${o.ptime||'time not set'}`;if(n>1)return `Pick-up in ${n} days`;if(n===-1)return 'Pick-up was yesterday';return `Pick-up ${-n} days overdue`;}
 function overviewPaymentMeta(o){if(o.price>0&&o.paid>=o.price)return 'Paid in full';if(o.paid>0)return 'Deposit received';if(o.customerDecision==='accepted')return 'Quote accepted';const stage=workflowStage(o);if(stage===1)return 'Price not set';if(stage===2)return 'Confirmation not sent';return 'Payment pending';}
-function overviewPrimaryBadge(o){const stage=workflowStage(o),bucket=bucketOf(o),delta=pickupDeltaMs(o);if(bucket==='cake_delivered'){if(o.paid<o.price&&delta!==null&&delta<=0)return {label:'Payment Due',kind:'overdue'};return {label:'Ready',kind:'ready'};}if(stage===1)return {label:'Set Price',kind:'action'};if(stage===2)return {label:'Send Confirmation',kind:'sent'};if(stage===3)return {label:'Deposit Due',kind:'due'};if(bucket==='deposit_paid')return o.paid>=o.price&&o.price>0?{label:'All Set',kind:'paid'}:{label:'Deposit Due',kind:'due'};return {label:'Review',kind:'closed'};}
-function overviewCardHTML(o){const bucket=bucketOf(o),badge=overviewPrimaryBadge(o),meta=`${(o.range?'~':'')+money(o.price)} • ${overviewPaymentMeta(o)}`;return `<article class="overview-card ${o.read?'':'unread'}" style="--bucket-color:${bucketColor(bucket)}" onclick="openSheet(${o.id})"><div class="overview-card-main">${overviewDateTileHTML(o)}<div class="overview-card-copy"><div class="overview-card-name">${escHtml(o.name)}${isBlacklisted(o)?'<span class="blchip">Blacklisted</span>':''}</div><div class="overview-pickup"><div class="overview-pickup-line"><strong>${escHtml(overviewPickupLine(o))}</strong></div></div><div class="overview-card-price">${escHtml(meta)}</div></div></div><div class="overview-card-side"><span class="order-badge ${badge.kind}">${escHtml(badge.label)}</span><span class="overview-chevron">›</span></div></article>`;}
+function overviewPrimaryBadge(o){const stage=workflowStage(o),bucket=bucketOf(o),delta=pickupDeltaMs(o);if(bucket==='cake_delivered'){if(o.paid<o.price&&delta!==null&&delta<=0)return {label:'Payment Due',kind:'overdue'};return {label:'Ready for Collection',kind:'ready'};}if(stage===1)return {label:'Set Price',kind:'action'};if(stage===2)return {label:'Send Confirmation',kind:'sent'};if(stage===3)return {label:'Deposit Due',kind:'due'};if(bucket==='deposit_paid')return o.paid>=o.price&&o.price>0?{label:'Paid in Full',kind:'paid'}:{label:'Deposit Received',kind:'received'};return {label:'Review',kind:'closed'};}
+function overviewCardHTML(o){const bucket=bucketOf(o),meta=`${(o.range?'~':'')+money(o.price)} • ${overviewPaymentMeta(o)}`;return `<article class="overview-card ${o.read?'':'unread'}" style="--bucket-color:${bucketColor(bucket)}" onclick="openSheet(${o.id})"><div class="overview-card-main">${overviewDateTileHTML(o)}<div class="overview-card-copy"><div class="overview-card-name">${escHtml(o.name)}${isBlacklisted(o)?'<span class="blchip">Blacklisted</span>':''}</div><div class="overview-pickup"><div class="overview-pickup-line"><strong>${escHtml(overviewPickupLine(o))}</strong></div></div><div class="overview-card-price">${escHtml(meta)}</div></div></div><div class="overview-card-side"><div class="overview-badge-stack">${orderBadgesHTML(o)}</div><span class="overview-chevron">›</span></div></article>`;}
 function renderOrdersOverview(q,el){let items=ORDERS.filter(o=>!['done','cancelled','deleted'].includes(o.status)&&matchSearch(o,q));if(overviewMode==='todo')items=items.filter(orderNeedsAction);items=sortOverviewOrders(items);if(!items.length){el.innerHTML='<div class="empty">No active orders.</div>';return;}el.innerHTML=`<div class="overview-grid">${items.map(overviewCardHTML).join('')}</div>`;}
 function cardPickupDate(o){if(!o.pdate)return 'Date not set';const d=new Date(o.pdate+'T00:00:00');return `${WD[d.getDay()]} - ${MO[d.getMonth()]} ${d.getDate()} - ${o.ptime||'—'}`;}
 function pickupDistance(iso){if(!iso)return '';const d=new Date(iso+'T00:00:00');d.setHours(0,0,0,0);const n=Math.round((d-today)/86400000);if(n===0)return 'today';if(n===1)return 'in 1 day';if(n>1)return `in ${n} days`;if(n===-1)return '1 day ago';return `${-n} days ago`;}
@@ -1865,10 +1950,10 @@ function progressHTML(o){
   return `<div class="progress-wrap" aria-label="Order progress"><div class="progress">${WORKFLOW_STEPS.map((lines,i)=>`<div class="progress-step ${i<activeIndex?'workflow-complete':''} ${!history&&i===activeIndex?'workflow-active':''} ${accepted&&i===1?'customer-accepted':''}"><span class="step-line">${lines[0]}</span><span class="step-line">${lines[1]}</span></div>`).join('')}</div></div>`;
 }
 function quoteTimeLeft(expires){const seconds=Math.max(0,Math.ceil((new Date(expires).getTime()-Date.now())/1000)),hours=Math.floor(seconds/3600),minutes=Math.floor(seconds%3600/60),secs=seconds%60,pad=n=>String(n).padStart(2,'0');return `${pad(hours)}:${pad(minutes)}:${pad(secs)}`;}
-function quoteAcceptedHTML(o){return o&&o.customerDecision==='accepted'?'<span class="quote-accepted">accepted ✅</span><span>-</span>':'';}
-function expiredQuoteInner(id){const o=ORDERS.find(x=>x.id===id);return `Open <button type="button" onclick="openQuoteMessage(${id})">message</button> <span>-</span> ${quoteAcceptedHTML(o)}<strong>Link Expired</strong>`;}
-function quoteStatusHTML(o){if(!o.quoteSentAt||!o.portalUrl||!o.portalExpires||!['quoted','awaiting_payment'].includes(o.status))return '';const expired=new Date(o.portalExpires).getTime()<=Date.now();return `<div class="quote-status-row ${expired?'expired':''}" data-quote-order="${o.id}">${expired?expiredQuoteInner(o.id):`<span>Customer</span> <button type="button" onclick="openQuoteMessage(${o.id})">message</button> <span>has been sent -</span> ${quoteAcceptedHTML(o)}<button type="button" class="quote-countdown" data-quote-expires="${escAttr(o.portalExpires)}" onclick="openQuotePreview(${o.id})" aria-label="Open confirmation form">Confirmation form › ${quoteTimeLeft(o.portalExpires)}</button>`}</div>`;}
-function updateQuoteCountdowns(){document.querySelectorAll('[data-quote-expires]').forEach(el=>{const remaining=new Date(el.dataset.quoteExpires).getTime()-Date.now();if(remaining>0){el.textContent='Confirmation form › '+quoteTimeLeft(el.dataset.quoteExpires);return;}const row=el.closest('.quote-status-row'),id=Number(row&&row.dataset.quoteOrder);if(row&&id){row.classList.add('expired');row.innerHTML=expiredQuoteInner(id);}});}
+function quoteAcceptedHTML(o){return o&&o.customerDecision==='accepted'?'<span>-</span><span class="quote-accepted">accepted ✅</span>':'';}
+function expiredQuoteInner(id){const o=ORDERS.find(x=>x.id===id);return `<button type="button" class="quote-form-link" onclick="openQuotePreview(${id})">Confirmation form - Time Left: <strong>Link Expired</strong></button>${quoteAcceptedHTML(o)}`;}
+function quoteStatusHTML(o){if(!o.quoteSentAt||!o.portalUrl||!o.portalExpires||!['quoted','awaiting_payment'].includes(o.status))return '';const expired=new Date(o.portalExpires).getTime()<=Date.now();return `<div class="quote-status-row ${expired?'expired':''}" data-quote-order="${o.id}">${expired?expiredQuoteInner(o.id):`<button type="button" class="quote-form-link" onclick="openQuotePreview(${o.id})" aria-label="Open confirmation form">Confirmation form - Time Left: <span class="quote-countdown" data-quote-expires="${escAttr(o.portalExpires)}">${quoteTimeLeft(o.portalExpires)}</span></button>${quoteAcceptedHTML(o)}`}</div>`;}
+function updateQuoteCountdowns(){document.querySelectorAll('[data-quote-expires]').forEach(el=>{const remaining=new Date(el.dataset.quoteExpires).getTime()-Date.now();if(remaining>0){el.textContent=quoteTimeLeft(el.dataset.quoteExpires);return;}const row=el.closest('.quote-status-row'),id=Number(row&&row.dataset.quoteOrder);if(row&&id){row.classList.add('expired');row.innerHTML=expiredQuoteInner(id);}});}
 window.setInterval(updateQuoteCountdowns,1000);
 function openQuotePreview(id){const o=ORDERS.find(x=>x.id===id);if(!o||!o.portalUrl)return;document.getElementById('quotePreviewFrame').src=o.portalUrl;document.getElementById('quotePreviewExternal').href=o.portalUrl;document.getElementById('quotePreview').classList.add('show');}
 function closeQuotePreview(){document.getElementById('quotePreview').classList.remove('show');document.getElementById('quotePreviewFrame').src='about:blank';}
@@ -1881,21 +1966,25 @@ function quotedDescriptionEditor(o){const description=o.quotedItemsDescription||
 function finalQuoteEditorHTML(o){return `<div class="final-quote-editor" id="finalQuoteRow"><div class="final-quote-line"><div class="lbl">Final Quote</div><div class="final-quote-controls">${quoteInputHTML(o.price)}<button class="final-price-btn" onclick="finalizePrice(${o.id})">Set Final Price</button></div></div>${quotedDescriptionEditor(o)}</div>`;}
 function finalQuoteHTML(o){const locked=o.status!=='new'&&o.price>0;if(locked)return `<div class="final-quote-editor locked" id="finalQuoteRow"><div class="final-quote-line"><div class="lbl">Final Quote</div><div class="final-quote-saved"><span class="final-quote-amount">${money(o.price)}</span><button type="button" class="final-quote-edit-btn" onclick="unlockFinalPrice(${o.id})" aria-label="Edit final price" title="Edit final price">✎</button></div></div></div>`;return finalQuoteEditorHTML(o);}
 function doNextConfig(o){
+  if(o.status==='done'&&!o.feedbackSentAt)return {text:'Send the customer a feedback request.',html:'Send the customer a <strong>feedback request</strong>.',action:'message3'};
   if(o.status==='done')return {text:'Cake has been delivered, feedback request message has been sent. You can move this order to Archive',html:'Cake has been delivered, feedback request message has been sent. You can move this order to <strong>Archive</strong>',action:'archive'};
   const stage=workflowStage(o);
   if(stage===1)return {text:'Set the final quote',html:'Set the <strong>final quote</strong>.',action:'quote'};
   if(stage===2)return {text:'Create the link, then send the quote message.',html:'Create the link, then send the <strong>quote message</strong>.',action:'message1'};
   if(stage===3)return {when:'The customer submitted proof of payment',next:'Enter the amount/ deposit to Payment',nextHtml:'Enter the amount/ deposit to <strong>Payment</strong>',action:'payment'};
   if(stage===4)return {text:'Send the customer the necessary information.',html:'Send the customer the necessary <strong>information</strong>.',action:'message2'};
-  if(stage===5)return {when:'The cake delivery date & time',next:'Set the payment as "Paid in Full"',nextHtml:'Set the payment as <strong>"Paid in Full"</strong>',action:'payment'};
+  if(stage===5)return {text:`Confirm that ${o.name||'the customer'} picked up the cake.`,action:'pickup'};
   if(stage===6)return {text:'Send the customer a feedback request.',html:'Send the customer a <strong>feedback request</strong>.',action:'message3'};
   return {text:'Review this order before taking the next action.',action:'none'};
 }
-function doNextHTML(o){const n=doNextConfig(o),conditional=!!n.when,copy=conditional?`<div class="do-next-rule"><span class="do-next-label">WHEN:</span><span class="do-next-text">${escHtml(n.when)}</span></div><div class="do-next-rule"><span class="do-next-label">DO NEXT:</span><span class="do-next-text">${n.nextHtml||escHtml(n.next)}</span></div>`:`<span class="do-next-label">DO NEXT:</span><span class="do-next-text">${n.html||escHtml(n.text)}</span>`;return `<div class="do-next ${conditional?'conditional':''}"><div class="do-next-copy">${copy}</div><button type="button" class="do-next-action" onclick="runDoNext(${o.id},'${n.action}')" aria-label="Go to the next action" title="Go to the next action">GO</button></div>`;}
-function messageShortcutsHTML(o){const stage=workflowStage(o),items=[{key:'quote',label:'Send Link',due:stage===2,done:!!o.quoteSentAt},{key:'confirmed',label:'Info Confirm',due:stage===4,done:!!o.confirmedSentAt},{key:'feedback',label:'Feedback',due:stage===6,done:!!o.feedbackSentAt}];return `<div class="message-shortcuts"><span class="message-shortcuts-label">Messages</span><div class="message-shortcuts-row">${items.map(item=>`<button type="button" class="message-shortcut ${item.done?'done':item.due?'current':'future'}" onclick="openMessagePanel('${item.key}')">${escHtml(item.label)}</button>`).join('')}</div></div>`;}
-function paymentWorkspaceHTML(o){const deposit=o.price/2,remaining=Math.max(0,o.price-o.paid);return `<details class="payment-accordion" id="paymentDetails"><summary>Payment <span>${money(o.paid)} / ${money(o.price)}</span></summary><div class="payment-workspace" id="paymentWorkspace"><div class="payment-top"><div class="payment-total">${money(o.paid)} <small>of ${money(o.price)}</small></div><div class="payment-left">${remaining===0?'Fully paid ✓':money(remaining)+' left'}</div></div><div class="payment-entry"><input id="payAmt" type="number" min="0" step="0.5" placeholder="Amount received (€)"><button class="add" onclick="addPayment(${o.id})">Add</button><button class="reset" onclick="setPayment(${o.id},0)">Reset</button></div><div class="payment-quick"><button onclick="setPayment(${o.id},${deposit})">Deposit ${money(deposit)}</button><button onclick="setPayment(${o.id},${o.price})">Paid in full</button></div></div></details>`;}
+function doNextHTML(o){if(isPickupConfirmationStep(o))return `<div class="do-next pickup-confirm"><div class="do-next-copy"><span class="do-next-text">Customer picked up the cake?</span></div><button type="button" class="do-next-action" onclick="markCakePickedUp(${o.id})" aria-label="Confirm customer picked up the cake">YES</button></div>`;const n=doNextConfig(o),conditional=!!n.when,copy=conditional?`<div class="do-next-rule"><span class="do-next-label">WHEN:</span><span class="do-next-text">${escHtml(n.when)}</span></div><div class="do-next-rule"><span class="do-next-label">DO NEXT:</span><span class="do-next-text">${n.nextHtml||escHtml(n.next)}</span></div>`:`<span class="do-next-label">DO NEXT:</span><span class="do-next-text">${n.html||escHtml(n.text)}</span>`;return `<div class="do-next ${conditional?'conditional':''}"><div class="do-next-copy">${copy}</div><button type="button" class="do-next-action" onclick="runDoNext(${o.id},'${n.action}')" aria-label="Go to the next action" title="Go to the next action">GO</button></div>`;}
+function messageShortcutIcon(key){const paths={quote:'<rect x="3" y="5" width="18" height="14" rx="2"></rect><path d="m4 7 8 6 8-6"></path>',confirmed:'<path d="M12 21s7-5.2 7-12a7 7 0 1 0-14 0c0 6.8 7 12 7 12Z"></path><circle cx="12" cy="9" r="2"></circle>',feedback:'<path d="M4 5h16v11H9l-5 4V5Z"></path><path d="M8 9h8M8 12h5"></path>'};return `<svg viewBox="0 0 24 24" aria-hidden="true">${paths[key]||''}</svg>`;}
+function messageShortcutsHTML(o){const stage=workflowStage(o),items=[{key:'quote',label:'Quote Link',due:stage===2,done:!!o.quoteSentAt},{key:'confirmed',label:'Address Info',due:stage===4,done:!!o.confirmedSentAt},{key:'feedback',label:'Feedback',due:stage===6||o.status==='done',done:!!o.feedbackSentAt}];return `<div class="message-shortcuts"><span class="message-shortcuts-label">Whatsapp Messages (copy and send)</span><div class="message-shortcuts-row">${items.map(item=>`<button type="button" class="message-shortcut ${item.done?'done':item.due?'current':'future'}" onclick="openMessagePanel('${item.key}')">${messageShortcutIcon(item.key)}<span>${escHtml(item.label)}</span></button>`).join('')}</div></div>`;}
+function paymentWorkspaceHTML(o){const deposit=o.price/2,remaining=Math.max(0,o.price-o.paid);return `<details class="payment-accordion" id="paymentDetails"><summary>Payment <span>${money(o.paid)} / ${money(o.price)}</span></summary><div class="payment-workspace" id="paymentWorkspace"><div class="payment-top"><div class="payment-total">${money(o.paid)} <small>of ${money(o.price)}</small></div><div class="payment-left">${remaining===0?'Fully paid ✓':money(remaining)+' left'}</div></div><div class="payment-entry"><input id="payAmt" type="number" min="0" step="0.5" placeholder="Amount received (€)"><button class="add" onclick="addPayment(${o.id})">Add</button><button class="reset" onclick="setPayment(${o.id},0)">Reset</button></div><div class="payment-quick"><button onclick="setPayment(${o.id},${deposit})">Deposit ${money(deposit)}</button><button id="paidInFullQuick" onclick="setPayment(${o.id},${o.price})">Paid in full</button></div></div></details>`;}
 function messageStepFor(o){const stage=workflowStage(o);if(stage===2)return 'quote';if(stage===4)return 'confirmed';if(stage===6)return 'feedback';return '';}
-function runDoNext(id,action){if(action==='quote')focusFinalQuote();else if(action==='payment')focusPayment();else if(action==='message1')openMessagePanel('quote');else if(action==='message2')openMessagePanel('confirmed');else if(action==='message3')openMessagePanel('feedback');else if(action==='archive')focusArchiveAction();}
+function runDoNext(id,action){if(action==='quote')focusFinalQuote();else if(action==='payment')focusPayment();else if(action==='pickup')markCakePickedUp(id);else if(action==='message1')openMessagePanel('quote');else if(action==='message2')openMessagePanel('confirmed');else if(action==='message3')openMessagePanel('feedback');else if(action==='archive')focusArchiveAction();}
+function launchConfetti(){const old=document.querySelector('.confetti-layer');if(old)old.remove();const layer=document.createElement('div');layer.className='confetti-layer';const colors=['#7C2B40','#E7A93B','#4E8FA8','#4F8A68','#E88CA4','#F1D66A'];for(let i=0;i<54;i++){const piece=document.createElement('i');piece.className='confetti-piece';piece.style.left=Math.random()*100+'vw';piece.style.setProperty('--confetti',colors[i%colors.length]);piece.style.setProperty('--fall',(1.5+Math.random()*1.3)+'s');piece.style.setProperty('--drift',(-80+Math.random()*160)+'px');piece.style.setProperty('--rotation',(Math.random()*360)+'deg');piece.style.animationDelay=(Math.random()*.35)+'s';layer.appendChild(piece);}document.body.appendChild(layer);setTimeout(()=>layer.remove(),3200);}
+async function markCakePickedUp(id){const o=ORDERS.find(x=>x.id===id);if(!o)return;if(!(o.price>0&&o.paid>=o.price)){const details=document.getElementById('paymentDetails');if(details){details.open=true;details.scrollIntoView({behavior:'smooth',block:'center'});}requestAnimationFrame(()=>{const paidButton=document.getElementById('paidInFullQuick');if(paidButton){paidButton.classList.remove('payment-required');void paidButton.offsetWidth;paidButton.classList.add('payment-required');}});return;}const {error}=await sb.from('orders').update({status:'done'}).eq('id',id);if(error){alert('Could not complete this collection: '+error.message);return;}o.status='done';launchConfetti();activeBucket='done';refreshView();openSheet(id);}
 function focusArchiveAction(){const el=document.getElementById('archiveAction');if(!el)return;el.scrollIntoView({behavior:'smooth',block:'center'});el.classList.remove('archive-attention');void el.offsetWidth;el.classList.add('archive-attention');}
 function focusFinalQuote(){const el=document.getElementById('finalQuoteSection');if(!el)return;el.scrollIntoView({behavior:'smooth',block:'center'});el.classList.remove('attention');void el.offsetWidth;el.classList.add('attention');setTimeout(()=>{const input=document.getElementById('quotePrice');if(input&&!input.disabled)input.focus();},450);}
 function focusPayment(){const details=document.getElementById('paymentDetails');if(!details)return;details.open=true;details.scrollIntoView({behavior:'smooth',block:'center'});details.classList.remove('payment-attention');void details.offsetWidth;details.classList.add('payment-attention');setTimeout(()=>{const input=document.getElementById('payAmt');if(input)input.focus();},450);}
@@ -1903,7 +1992,7 @@ function historyRow(k,v){return `<div class="history-row"><span class="k">${escH
 function historySection(title,rows){return `<div class="history-section-title">${escHtml(title)}</div>${rows.join('')}`;}
 function renderHistoryDetail(o){const decor=(o.decor||[]).filter(d=>d!=='No decoration'),note=cleanNotes(o),addonsList=[].concat((o.cupcakes&&!/^(no cupcakes|none|nenhuma|—)?$/i.test(String(o.cupcakes)))?[o.cupcakes]:[]).concat(decor),addons=addonsList.length?addonsList.join(', '):'No add-ons',colourNames=(o.colors||[]).map(c=>c[0]).join(', ')||'—',allergy=o.allergies&&!['none','nenhuma'].includes(String(o.allergies).toLowerCase())?`⚠ ${escHtml(o.allergies)}`:'None';return `<div class="history-order-view"><div class="sec history-progress">${progressHTML(o)}${o.status==='done'?doNextHTML(o):''}${messageShortcutsHTML(o)}</div><div class="history-list">${historySection('Customer',[historyRow('Name',escHtml(o.name)),historyRow('WhatsApp',escHtml(o.wcode+' '+o.wnum)),historyRow('Instagram',o.instagram?'@'+escHtml(o.instagram):'—'),historyRow('Email',escHtml(o.email||'—')),historyRow('Form language',escHtml(o.lang||'—')),historyRow('Found us via',escHtml((o.heard||'—')+(o.referredBy?' · '+o.referredBy:''))),historyRow('Form feedback',o.feedback?escHtml(o.feedback):'Not submitted')])}${historySection('Pickup',[historyRow('Order Date',escHtml(fmtOrderedAt(o.createdAt))),historyRow('Delivery Date',escHtml(fmtPickupAt(o))),historyRow('Total time',escHtml(orderElapsedDays(o))),historyRow('Time',escHtml(o.ptime||'—')),historyRow('Collection',o.courier?'Uber/Bolt courier collection':'Customer collection')])}${historySection('The Cake',[historyRow('Type & size',escHtml(o.type+' · '+shortSize(o.size))),historyRow('Shape',escHtml(o.shape)),historyRow('Flavour',escHtml(o.flavor)),historyRow('Colours',escHtml(colourNames)),historyRow('Writing',o.writing?`“${escHtml(o.writing)}” · ${escHtml(o.writingColor)}`:'—'),historyRow('Add-ons',escHtml(addons)),...(o.pigment&&o.pigment.length?[historyRow('High-pigment',escHtml(o.pigment.join(', ')))]:[]),historyRow('Candles',escHtml(o.candles||'—')),historyRow('Allergies',allergy),historyRow('Customer notes',note?escHtml(note):'—')])}<div class="history-section-title">Reference photos</div><div class="history-reference">${photoGrid(o)}${o.photoNote?`<div class="notebox" style="margin-top:9px">${escHtml(o.photoNote)}</div>`:''}</div></div>${orderActionsHTML(o)}</div>`;}
 function orderActionIcon(kind){const paths={bad:'<circle cx="9" cy="8" r="3"/><path d="M3.5 19c.7-3.2 2.5-5 5.5-5 1.2 0 2.2.3 3.1.8M16 15l5 5m0-5-5 5"/>',archive:'<path d="M4 7h16v13H4zM3 3h18v4H3zm6 9h6"/>',trash:'<path d="M4 7h16M9 7V4h6v3m3 0-1 13H7L6 7m4 4v5m4-5v5"/>',cancel:'<circle cx="12" cy="12" r="9"/><path d="m9 9 6 6m0-6-6 6"/>',customer:'<circle cx="8.5" cy="8" r="3"/><path d="M3 19c.6-3.2 2.5-5 5.5-5 1.4 0 2.6.4 3.5 1.1M16 9l5 5m0-5-5 5"/>',reset:'<path d="M4 8V4h4M4.8 5.2A9 9 0 1 1 3 14"/><path d="M12 8v4l3 2"/>',whatsapp:'<path d="M20 11.5a8 8 0 0 1-11.8 7L4 20l1.5-4.1A8 8 0 1 1 20 11.5Z"/><path d="M9 8.5c.4 2.5 2 4.1 4.5 4.9l1.2-1.1 1.8.9"/>'};return `<svg viewBox="0 0 24 24" aria-hidden="true">${paths[kind]||''}</svg>`;}
-function orderActionsHTML(o){const canCancel=!['done','deleted','cancelled'].includes(o.status),customerActions=`<button class="order-action bad ${isBlacklisted(o)?'on':''}" onclick="toggleBlacklist(${o.id})">${orderActionIcon('bad')}<span>${isBlacklisted(o)?'Remove Bad Customer':'Mark as Bad Customer'}</span></button><a class="order-action whatsapp" href="${whatsappUrl(o)}" target="_blank" rel="noopener">${orderActionIcon('whatsapp')}<span>Open WhatsApp Chat</span></a>`,manageActions=`<button class="order-action archive" id="archiveAction" onclick="archiveOrder(${o.id})">${orderActionIcon('archive')}<span>${o.status==='deleted'?'Restore to Orders':'Move to Archived'}</span></button><button class="order-action reset-progress" onclick="resetAllProgress(${o.id})">${orderActionIcon('reset')}<span>Reset All Progress</span></button>`,dangerActions=`${canCancel?`<button class="order-action cancel" onclick="cancelOrder(${o.id},'owner')">${orderActionIcon('cancel')}<span>Cancel the Order</span></button><button class="order-action customer-cancel" onclick="cancelOrder(${o.id},'customer')">${orderActionIcon('customer')}<span>Cancelled by Customer</span></button>`:''}<button class="order-action delete" id="trashBtn" title="Tap twice to permanently delete" onclick="permanentDeleteTap(${o.id},this)">${orderActionIcon('trash')}<span>Delete the Order</span></button>`;return `<div class="bottom-actions"><div class="order-action-group"><span class="order-action-group-label">Customer</span><div class="order-action-grid">${customerActions}</div></div><div class="order-action-group"><span class="order-action-group-label">Order Management</span><div class="order-action-grid">${manageActions}</div></div><div class="order-action-group"><span class="order-action-group-label">Cancel or Delete</span><div class="order-action-grid">${dangerActions}</div></div></div>`;}
+function orderActionsHTML(o){const canCancel=!['done','deleted','cancelled'].includes(o.status),whatsapp=`<a class="order-action whatsapp" href="${whatsappUrl(o)}" target="_blank" rel="noopener">${orderActionIcon('whatsapp')}<span>Open WhatsApp Chat</span></a>`,utilities=`<button class="order-action bad ${isBlacklisted(o)?'on':''}" onclick="toggleBlacklist(${o.id})">${orderActionIcon('bad')}<span>${isBlacklisted(o)?'Remove Bad Customer':'Mark as Bad Customer'}</span></button><button class="order-action reset-progress" onclick="resetAllProgress(${o.id})">${orderActionIcon('reset')}<span>Reset All Progress</span></button>`,finalActions=`${canCancel?`<button class="order-action cancel" onclick="cancelOrder(${o.id},'owner')">${orderActionIcon('cancel')}<span>Cancel the Order</span></button><button class="order-action customer-cancel" onclick="cancelOrder(${o.id},'customer')">${orderActionIcon('customer')}<span>Cancelled by Customer</span></button>`:''}<button class="order-action delete" id="trashBtn" title="Tap twice to permanently delete" onclick="permanentDeleteTap(${o.id},this)">${orderActionIcon('trash')}<span>Delete the Order</span></button><button class="order-action archive" id="archiveAction" onclick="archiveOrder(${o.id})">${orderActionIcon('archive')}<span>${o.status==='deleted'?'Restore to Orders':'Move to Archived'}</span></button>`;return `<div class="bottom-actions"><div class="order-action-row whatsapp-row">${whatsapp}</div><div class="order-action-row utility-row">${utilities}</div><div class="order-action-row final-row">${finalActions}</div></div>`;}
 
 const ORDER_EDIT={
   sizes:[
@@ -2133,7 +2222,9 @@ document.getElementById('pw').addEventListener('keydown',e=>{if(e.key==='Enter')
 
 /* Local-only visual QA. It can never activate on Vercel or byamandasoyer.pt. */
 document.addEventListener('click',event=>{if(!event.target.closest('.profile-wrap'))closeProfileMenu();if(customerMenuKey&&!event.target.closest('.customer-menu-wrap')){customerMenuKey='';if(view==='info'&&infoTab==='customers')renderInfo();}});
-(function localPreview(){const local=['file:'].includes(location.protocol)||['localhost','127.0.0.1'].includes(location.hostname);if(!local||new URLSearchParams(location.search).get('preview')!=='1')return;const previewDate=days=>{const d=new Date();d.setDate(d.getDate()+days);return `${d.getFullYear()}-${String(d.getMonth()+1).padStart(2,'0')}-${String(d.getDate()).padStart(2,'0')}`;},base={read:true,status:'new',type:'Custom',size:'L (16–20)',shape:'Round',lang:'EN',flavor:'Vanilla Berry',colors:[['Ivory','#eee7d9'],['Burgundy','#6d2435']],pigment:[],writeMethods:['Piping'],writing:'Happy Birthday Amanda',writingColor:'Burgundy',cupcakes:'No cupcakes',decor:['Pearls'],candles:'Yes',photos:[],photoNote:'',feedback:'',noAllergy:true,allergies:'None',notes:'',wcode:'+351',wnum:'912 345 678',instagram:'customer',email:'customer@example.com',emailOptIn:false,heard:'Instagram',referredBy:'',pdate:previewDate(1),ptime:'14:15',price:100,range:false,paid:0,quotedItemsDescription:'',courier:false,portalExpires:'',portalToken:'',portalUrl:'',customerDecision:'',cancelledBy:'',quoteSentAt:'',confirmedSentAt:'',feedbackSentAt:''};ORDERS=[Object.assign({},base,{id:9001,name:'Sofia Martins',read:false,created:'8m ago',createdAt:new Date(Date.now()-480000).toISOString()}),Object.assign({},base,{id:9002,name:'Inês Almeida',created:'2h ago',createdAt:new Date(Date.now()-7200000).toISOString(),pdate:previewDate(3),courier:true,notes:'COURIER: Customer would like to arrange a Bolt/Uber courier.'}),Object.assign({},base,{id:9003,name:'Marta Costa',status:'awaiting_payment',created:'Yesterday',createdAt:new Date(Date.now()-86400000).toISOString(),pdate:previewDate(5),portalToken:'r8e7t98rdemo',portalUrl:'https://byamandasoyer.pt/order/r8e7t98rdemo',portalExpires:new Date(Date.now()+36*3600000).toISOString(),quoteSentAt:new Date().toISOString(),customerDecision:'accepted'}),Object.assign({},base,{id:9004,name:'Mandy Moreira',status:'confirmed',created:'2 days ago',createdAt:new Date(Date.now()-172800000).toISOString(),pdate:previewDate(1),paid:50,confirmedSentAt:new Date().toISOString()}),Object.assign({},base,{id:9005,name:'Jandira Chiota',status:'confirmed',created:'3 days ago',createdAt:new Date(Date.now()-259200000).toISOString(),pdate:previewDate(7),price:45,paid:22.5,confirmedSentAt:new Date().toISOString()})];document.getElementById('login').style.display='none';document.getElementById('app').style.display='block';setView('orders');})();
+(function localPreview(){const local=['file:'].includes(location.protocol)||['localhost','127.0.0.1'].includes(location.hostname);if(!local||new URLSearchParams(location.search).get('preview')!=='1')return;const previewDate=days=>{const d=new Date();d.setDate(d.getDate()+days);return `${d.getFullYear()}-${String(d.getMonth()+1).padStart(2,'0')}-${String(d.getDate()).padStart(2,'0')}`;},previewTime=minutes=>{const d=new Date(Date.now()+minutes*60000);return `${String(d.getHours()).padStart(2,'0')}:${String(d.getMinutes()).padStart(2,'0')}`;},base={read:true,status:'new',type:'Custom',size:'L (16–20)',shape:'Round',lang:'EN',flavor:'Vanilla Berry',colors:[['Ivory','#eee7d9'],['Burgundy','#6d2435']],pigment:[],writeMethods:['Piping'],writing:'Happy Birthday Amanda',writingColor:'Burgundy',cupcakes:'No cupcakes',decor:['Pearls'],candles:'Yes',photos:[],photoNote:'',feedback:'',noAllergy:true,allergies:'None',notes:'',wcode:'+351',wnum:'912 345 678',instagram:'customer',email:'customer@example.com',emailOptIn:false,heard:'Instagram',referredBy:'',pdate:previewDate(1),ptime:'14:15',price:100,range:false,paid:0,quotedItemsDescription:'',courier:false,portalExpires:'',portalToken:'',portalUrl:'',customerDecision:'',cancelledBy:'',quoteSentAt:'',confirmedSentAt:'',feedbackSentAt:''};ORDERS=[Object.assign({},base,{id:9001,name:'Sofia Martins',read:false,created:'8m ago',createdAt:new Date(Date.now()-480000).toISOString()}),Object.assign({},base,{id:9002,name:'Inês Almeida',created:'2h ago',createdAt:new Date(Date.now()-7200000).toISOString(),pdate:previewDate(3),courier:true,notes:'COURIER: Customer would like to arrange a Bolt/Uber courier.'}),Object.assign({},base,{id:9003,name:'Marta Costa',status:'awaiting_payment',created:'Yesterday',createdAt:new Date(Date.now()-86400000).toISOString(),pdate:previewDate(5),portalToken:'r8e7t98rdemo',portalUrl:'https://byamandasoyer.pt/order/r8e7t98rdemo',portalExpires:new Date(Date.now()+36*3600000).toISOString(),quoteSentAt:new Date().toISOString(),customerDecision:'accepted'}),Object.assign({},base,{id:9004,name:'Mandy Moreira',status:'confirmed',created:'2 days ago',createdAt:new Date(Date.now()-172800000).toISOString(),pdate:previewDate(0),ptime:previewTime(30),paid:50,confirmedSentAt:new Date().toISOString()}),Object.assign({},base,{id:9005,name:'Jandira Chiota',status:'confirmed',created:'3 days ago',createdAt:new Date(Date.now()-259200000).toISOString(),pdate:previewDate(7),price:45,paid:22.5,confirmedSentAt:new Date().toISOString()})];document.getElementById('login').style.display='none';document.getElementById('app').style.display='block';setView('orders');})();
+/* Optional local-only workflow fixtures used for regression testing. */
+(function workflowStatePreview(){const params=new URLSearchParams(location.search),local=['file:'].includes(location.protocol)||['localhost','127.0.0.1'].includes(location.hostname);if(!local||params.get('preview')!=='1'||params.get('stateTest')!=='1'||!ORDERS.length)return;const base=ORDERS[0],dateAfter=days=>{const d=new Date();d.setDate(d.getDate()+days);return `${d.getFullYear()}-${String(d.getMonth()+1).padStart(2,'0')}-${String(d.getDate()).padStart(2,'0')}`;};ORDERS.push(Object.assign({},base,{id:9010,name:'Address Pending',read:true,status:'confirmed',paid:50,pdate:dateAfter(5),confirmedSentAt:''}),Object.assign({},base,{id:9011,name:'Feedback Pending',read:true,status:'done',paid:100,pdate:dateAfter(0),confirmedSentAt:new Date().toISOString(),feedbackSentAt:''}),Object.assign({},base,{id:9012,name:'Feedback Sent',read:true,status:'done',paid:100,pdate:dateAfter(0),confirmedSentAt:new Date().toISOString(),feedbackSentAt:new Date().toISOString()}));setView('orders');})();
 </script>
 </body>
 </html>

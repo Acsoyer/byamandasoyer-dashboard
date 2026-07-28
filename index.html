@@ -1056,6 +1056,387 @@
   flex-wrap:nowrap;
   white-space:nowrap;
 }
+
+/* V84 — order workspace: identity → pickup → payment → progress → action. */
+#sheet>.order-head{
+  position:absolute!important;
+  inset:0 0 auto 0!important;
+  width:100%!important;
+  height:0!important;
+  min-height:0!important;
+  padding:0!important;
+  border:0!important;
+  background:transparent!important;
+  overflow:visible!important;
+  z-index:12;
+}
+#sheet>.order-head .order-head-main{display:none!important}
+#sheet>.order-head .order-close{
+  top:16px!important;
+  right:16px!important;
+  width:40px!important;
+  height:40px!important;
+  border-color:#D6DBD8!important;
+  background:rgba(255,255,255,.94)!important;
+  box-shadow:0 3px 12px rgba(29,39,34,.08)!important;
+  color:#25302B!important;
+}
+#sheet>.sh-body{padding:28px 18px 28px!important}
+.order-overview{display:grid;gap:14px}
+.order-overview-name{
+  margin:0;
+  padding:5px 54px 0 2px;
+  color:var(--ink);
+  font:800 28px/1.12 'Instrument Sans',sans-serif;
+  letter-spacing:-.035em;
+}
+.order-pickup-card{
+  display:grid;
+  grid-template-columns:40px minmax(0,1fr) auto;
+  align-items:center;
+  gap:12px;
+  min-height:82px;
+  padding:14px 16px;
+  border:1px solid #C8D5CE;
+  border-radius:14px;
+  background:linear-gradient(120deg,#F2F7F4,#F8FAF8);
+  box-shadow:0 2px 7px rgba(37,66,52,.05);
+}
+.order-pickup-icon{display:flex;align-items:center;justify-content:center;color:#13633E}
+.order-pickup-icon svg{width:30px;height:30px;fill:none;stroke:currentColor;stroke-width:1.8;stroke-linecap:round;stroke-linejoin:round}
+.order-pickup-copy{min-width:0}
+.order-pickup-label{display:block;margin-bottom:3px;color:var(--ink-soft);font-size:11px;font-weight:650}
+.order-pickup-date{display:block;color:var(--ink);font-size:18px;font-weight:800;line-height:1.2}
+.order-pickup-distance{color:var(--ink);font-size:13px;font-weight:750;white-space:nowrap}
+.order-finance-card{
+  overflow:hidden;
+  border:1px solid #D7DBD8;
+  border-radius:14px;
+  background:var(--card);
+  box-shadow:0 2px 8px rgba(31,43,37,.04);
+}
+.order-payment-grid{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));padding:16px 6px 13px}
+.order-payment-metric{min-width:0;padding:0 10px;text-align:center}
+.order-payment-metric+.order-payment-metric{border-left:1px solid #D4D9D6}
+.order-payment-metric span{display:block;margin-bottom:6px;color:var(--ink-soft);font-size:11px}
+.order-payment-metric strong{display:block;color:var(--ink);font-size:20px;line-height:1;white-space:nowrap}
+.order-payment-metric.paid strong{color:#167044}
+.order-payment-metric.remaining strong{color:#C65320}
+.order-payment-metric.total strong{color:var(--accent)}
+.order-payment-status{
+  display:grid;
+  grid-template-columns:auto minmax(0,1fr) auto;
+  align-items:center;
+  gap:10px;
+  margin:0 14px;
+  padding:12px 2px 13px;
+  border-top:1px solid #E0E3E1;
+  color:var(--ink-soft);
+  font-size:11.5px;
+}
+.order-payment-status>span:first-child{color:var(--ink);font-weight:700}
+.payment-status-badge{
+  justify-self:start;
+  border-radius:6px;
+  padding:5px 8px;
+  background:#EAF3ED;
+  color:#2C684B;
+  font-size:10.5px;
+  font-weight:750;
+}
+.payment-status-badge.due{background:#FFF4DD;color:#9A671A}
+.payment-status-open{
+  display:inline-flex;
+  align-items:center;
+  gap:5px;
+  border:0;
+  background:transparent;
+  color:var(--ink-soft);
+  padding:5px 0 5px 8px;
+  font:650 11.5px 'Instrument Sans',sans-serif;
+  cursor:pointer;
+}
+.payment-status-open svg{width:14px;height:14px;fill:none;stroke:currentColor;stroke-width:2}
+.workflow-dots-card{
+  overflow:hidden;
+  padding:18px 12px 15px;
+  border:1px solid #D9DDDA;
+  border-radius:14px;
+  background:var(--card);
+}
+.workflow-dots-card .progress-wrap{width:100%!important;overflow:visible!important;padding:0!important}
+.workflow-dots-card .progress{
+  display:flex!important;
+  align-items:flex-start!important;
+  width:100%!important;
+  min-width:0!important;
+  gap:0!important;
+  margin:0!important;
+  padding:0!important;
+  overflow:visible!important;
+}
+.workflow-dots-card .progress-step{
+  position:relative!important;
+  display:flex!important;
+  flex:1 1 20%!important;
+  flex-direction:column!important;
+  align-items:center!important;
+  justify-content:flex-start!important;
+  min-width:0!important;
+  height:auto!important;
+  margin:0!important;
+  padding:0 3px!important;
+  border:0!important;
+  border-radius:0!important;
+  background:transparent!important;
+  color:#8B928E!important;
+  clip-path:none!important;
+  box-shadow:none!important;
+  filter:none!important;
+  font:650 10px/1.17 'Instrument Sans',sans-serif!important;
+  white-space:normal!important;
+  text-align:center!important;
+}
+.workflow-dots-card .progress-step::before{display:none!important}
+.workflow-dots-card .progress-step::after{
+  content:""!important;
+  display:block!important;
+  position:absolute!important;
+  z-index:0!important;
+  top:14px!important;
+  left:calc(50% + 14px)!important;
+  width:calc(100% - 28px)!important;
+  height:2px!important;
+  border:0!important;
+  background:#D8DDDA!important;
+  transform:none!important;
+}
+.workflow-dots-card .progress-step:last-child::after{display:none!important}
+.progress-node{
+  position:relative;
+  z-index:2;
+  display:flex;
+  align-items:center;
+  justify-content:center;
+  width:28px;
+  height:28px;
+  margin-bottom:9px;
+  border:2px solid #D1D7D3;
+  border-radius:50%;
+  background:#F7F8F7;
+  color:#646D68;
+  font-size:12px;
+  font-weight:850;
+  box-shadow:0 0 0 3px var(--card);
+}
+.workflow-dots-card .progress-step.workflow-complete .progress-node{
+  border-color:#167044;
+  background:#167044;
+  color:#fff;
+}
+.workflow-dots-card .progress-step.workflow-active{color:#17623F!important;font-weight:800!important}
+.workflow-dots-card .progress-step.workflow-active .progress-node{
+  border-color:#167044;
+  background:#167044;
+  color:#fff;
+  box-shadow:0 0 0 3px var(--card),0 0 0 5px #B9D3C4;
+}
+.workflow-dots-card .progress-step.workflow-complete::after{background:#167044!important}
+.workflow-dots-card .step-line{display:block!important;width:100%!important;white-space:normal!important;text-align:center}
+.do-next{
+  display:grid!important;
+  grid-template-columns:minmax(0,1fr) minmax(96px,130px)!important;
+  align-items:stretch!important;
+  gap:12px!important;
+  margin-top:0!important;
+  padding:14px!important;
+  border:1px solid #AFC9BA!important;
+  border-radius:14px!important;
+  overflow:hidden!important;
+  background:linear-gradient(120deg,#F2F8F4,#EDF5F0)!important;
+  box-shadow:0 2px 10px rgba(42,92,66,.07)!important;
+}
+.do-next-copy{display:block!important;min-width:0!important;padding:0!important}
+.next-action-kicker{
+  display:block;
+  margin-bottom:8px;
+  color:#17623F;
+  font-size:10px;
+  font-weight:850;
+  letter-spacing:.08em;
+  text-transform:uppercase;
+}
+.next-action-title{display:block;color:var(--ink);font-size:19px;font-weight:800;line-height:1.16}
+.next-action-description{display:block;margin-top:6px;color:var(--ink-soft);font-size:12px;font-weight:500;line-height:1.35}
+.do-next-action{
+  display:flex!important;
+  align-items:center!important;
+  justify-content:center!important;
+  gap:7px!important;
+  width:100%!important;
+  height:100%!important;
+  min-height:70px!important;
+  padding:10px!important;
+  border:1px solid #0C5634!important;
+  border-radius:10px!important;
+  background:#167044!important;
+  color:#fff!important;
+  text-align:center!important;
+  font:800 13px/1.12 'Instrument Sans',sans-serif!important;
+  letter-spacing:0!important;
+  box-shadow:inset 0 0 0 1px rgba(255,255,255,.22),0 4px 9px rgba(22,112,68,.17)!important;
+}
+.do-next-action svg{width:22px;height:22px;flex:0 0 auto;fill:none;stroke:currentColor;stroke-width:1.8;stroke-linecap:round;stroke-linejoin:round}
+.do-next-action::after{display:none!important;content:none!important}
+.message-shortcuts{
+  margin-top:0!important;
+  padding:14px!important;
+  border:1px solid #D9DDDA!important;
+  border-radius:14px!important;
+  background:var(--card)!important;
+}
+.message-shortcuts-label{
+  display:block!important;
+  margin-bottom:10px!important;
+  color:var(--ink)!important;
+  font-size:13px!important;
+  font-weight:800!important;
+  letter-spacing:0!important;
+  text-transform:none!important;
+}
+.message-shortcuts-row{gap:8px!important}
+.message-shortcut{
+  min-height:48px!important;
+  padding:7px 8px!important;
+  border-color:#D7DDDA!important;
+  border-radius:9px!important;
+  background:#F8F9F8!important;
+  color:#59625D!important;
+  font-size:10.5px!important;
+  line-height:1.12!important;
+  box-shadow:0 1px 4px rgba(31,43,37,.04)!important;
+}
+.message-shortcut.current{border-color:#88B49B!important;background:#EFF7F2!important;color:#17623F!important}
+.message-shortcut.done{padding-right:24px!important;border-color:#BBD2C3!important;background:#F4F8F5!important;color:#17623F!important}
+.message-shortcut.future{padding-right:20px!important}
+.message-shortcut span{min-width:0;white-space:normal}
+.message-shortcut.done::after{right:8px!important;color:#17623F!important}
+.message-shortcut.future::after{
+  content:"";
+  position:absolute;
+  right:8px;
+  top:50%;
+  width:6px;
+  height:6px;
+  border-radius:50%;
+  background:#D37A16;
+  transform:translateY(-50%);
+}
+.order-workflow-stack{display:grid;gap:14px}
+.order-workflow-stack .quote-status-row{margin:0!important}
+.order-workflow-stack .payment-accordion{margin:0!important}
+@media(max-width:560px){
+  #sheet>.sh-body{padding:24px 12px 24px!important}
+  #sheet>.order-head .order-close{top:12px!important;right:12px!important}
+  .order-overview{gap:11px}
+  .order-overview-name{padding-right:48px;font-size:24px}
+  .order-pickup-card{grid-template-columns:34px minmax(0,1fr) auto;gap:9px;min-height:76px;padding:12px}
+  .order-pickup-distance{font-size:10.5px}
+  .order-pickup-date{font-size:16px}
+  .order-payment-grid{padding:14px 3px 12px}
+  .order-payment-metric{padding:0 6px}
+  .order-payment-metric span{font-size:9.5px}
+  .order-payment-metric strong{font-size:16px}
+  .order-payment-status{grid-template-columns:auto minmax(0,1fr) auto;margin:0 10px;gap:6px}
+  .workflow-dots-card{padding:15px 5px 13px}
+  .workflow-dots-card .progress-step{font-size:8.7px!important;padding:0 1px!important}
+  .progress-node{width:25px;height:25px;margin-bottom:8px;font-size:10.5px}
+  .workflow-dots-card .progress-step::after{top:12px!important;left:calc(50% + 12px)!important;width:calc(100% - 24px)!important}
+  .do-next{grid-template-columns:minmax(0,1fr) 92px!important;gap:9px!important;padding:12px!important}
+  .next-action-title{font-size:16px}
+  .next-action-description{font-size:11px}
+  .do-next-action{min-height:64px!important;font-size:11.5px!important}
+  .message-shortcuts{padding:12px 9px!important}
+  .message-shortcuts-row{gap:5px!important}
+  .message-shortcut{min-height:46px!important;padding:6px 4px!important;font-size:9.2px!important}
+  .message-shortcut.future{padding-right:15px!important}
+  .message-shortcut.done{padding-right:17px!important}
+  .message-shortcut.done::after,.message-shortcut.future::after{right:5px!important}
+}
+
+/* V85 — fixed order title bar and more proportionate actions. */
+#sheet>.order-head{
+  position:relative!important;
+  inset:auto!important;
+  display:block!important;
+  flex:0 0 auto!important;
+  width:100%!important;
+  height:auto!important;
+  min-height:68px!important;
+  padding:20px 68px 16px 18px!important;
+  border-bottom:1px solid #E1E4E2!important;
+  background:rgba(255,255,255,.97)!important;
+  overflow:visible!important;
+  z-index:12;
+}
+#sheet>.order-head .order-head-main{display:block!important}
+#sheet>.order-head .order-head-copy{display:block!important}
+#sheet>.order-head .order-head-name{
+  display:block!important;
+  margin:0!important;
+  color:var(--ink)!important;
+  font:800 28px/1.12 'Instrument Sans',sans-serif!important;
+  letter-spacing:-.035em!important;
+}
+#sheet>.order-head .order-head-sub,
+#sheet>.order-head .order-head-ordered,
+#sheet>.order-head .order-head-price{display:none!important}
+#sheet>.order-head .order-close{
+  top:14px!important;
+  right:16px!important;
+}
+#sheet>.sh-body{padding-top:16px!important}
+.do-next{
+  grid-template-columns:minmax(0,1fr) auto!important;
+  align-items:center!important;
+}
+.do-next-action{
+  align-self:center!important;
+  justify-self:end!important;
+  width:auto!important;
+  min-width:92px!important;
+  max-width:126px!important;
+  height:auto!important;
+  min-height:50px!important;
+  padding:9px 13px!important;
+}
+.do-next-action svg{width:25px!important;height:25px!important;stroke-width:2!important}
+.message-actions .whatsapp-action svg{width:22px!important;height:22px!important;stroke-width:2!important}
+.order-action.whatsapp svg{width:21px!important;height:21px!important;stroke-width:2!important}
+.order-action-row.final-row .order-action{
+  justify-content:flex-start!important;
+  gap:7px!important;
+  border:1px solid #D39AA7!important;
+  padding:8px 9px!important;
+  font-size:10px!important;
+  line-height:1.18!important;
+  text-align:left!important;
+}
+.order-action-row.final-row .order-action svg{
+  flex:0 0 auto!important;
+  width:15px!important;
+  height:15px!important;
+}
+@media(max-width:560px){
+  #sheet>.order-head{min-height:62px!important;padding:17px 58px 14px 13px!important}
+  #sheet>.order-head .order-head-name{font-size:24px!important}
+  #sheet>.order-head .order-close{top:11px!important;right:12px!important}
+  #sheet>.sh-body{padding-top:13px!important}
+  .do-next{grid-template-columns:minmax(0,1fr) auto!important}
+  .do-next-action{min-width:78px!important;max-width:102px!important;min-height:48px!important;padding:8px 10px!important}
+  .do-next-action svg{width:23px!important;height:23px!important}
+  .order-action-row.final-row .order-action{font-size:10px!important;padding:8px 7px!important}
+}
 </style>
 </head>
 <body>
@@ -1976,11 +2357,11 @@ function pickupDistance(iso){if(!iso)return '';const d=new Date(iso+'T00:00:00')
 function cardProgressLabel(o){const first=orderBadgeData(o)[0]||{label:'Review Order',kind:'closed'};return {lines:[first.label],kind:first.kind};}
 function cardHTML(o){const price=cardDisplayPrice(o),cakeLine=[o.type,shortSize(o.size)].filter(Boolean).join(' ')+' - '+(o.shape||'—');return `<div class="ocard ${o.read?'':'unread'}" style="--st:${bucketColor(bucketOf(o))}" onclick="openSheet(${o.id})"><div class="oc-top"><div class="oc-copy"><div class="oc-name">${escHtml(o.name)}${isBlacklisted(o)?'<span class="blchip">Blacklisted</span>':''}</div><div class="oc-cake">${escHtml(cakeLine)}</div><div class="oc-flavour">${escHtml(o.flavor||'—')}</div><div class="oc-ordered">Ordered: ${escHtml(o.created)}</div><div class="oc-pickup"><div>Pickup: <b>${escHtml(cardPickupDate(o))}</b></div><span>(${escHtml(pickupDistance(o.pdate))})</span></div></div><div class="oc-side"><div class="oc-price">${escHtml(price)}</div>${orderBadgesHTML(o)}</div></div></div>`;}
 function shortSize(v){return String(v||'').replace(/\s*\([^)]*\)/g,'').trim();}
-const WORKFLOW_STEPS=[['Send','Confirmation'],['Deposit','Due'],['Deposit','Received'],['Ready for','Collection'],['Order','Completed']];
+const WORKFLOW_STEPS=[['Send','Confirm.'],['Deposit','Due'],['Deposit','Received'],['Ready for','Collection'],['Order','Completed']];
 function progressHTML(o){
   if(o.status==='cancelled'&&o.cancelledBy==='customer')return '<div class="customer-cancelled-progress">Cancelled by the Customer at the order confirmation process</div>';
   const history=['done','deleted'].includes(o.status),stage=workflowStage(o),activeIndex=history?WORKFLOW_STEPS.length:stage>=2?stage-2:-1,accepted=stage===3&&o.customerDecision==='accepted';
-  return `<div class="progress-wrap" aria-label="Order progress"><div class="progress">${WORKFLOW_STEPS.map((lines,i)=>`<div class="progress-step ${i<activeIndex?'workflow-complete':''} ${!history&&i===activeIndex?'workflow-active':''} ${accepted&&i===1?'customer-accepted':''}"><span class="step-line">${lines[0]}</span><span class="step-line">${lines[1]}</span></div>`).join('')}</div></div>`;
+  return `<div class="workflow-dots-card"><div class="progress-wrap" aria-label="Order progress"><div class="progress">${WORKFLOW_STEPS.map((lines,i)=>{const complete=i<activeIndex,active=!history&&i===activeIndex;return `<div class="progress-step ${complete?'workflow-complete':''} ${active?'workflow-active':''} ${accepted&&i===1?'customer-accepted':''}"><span class="progress-node">${complete?'✓':i+1}</span><span class="step-line">${lines[0]}</span><span class="step-line">${lines[1]}</span></div>`;}).join('')}</div></div></div>`;
 }
 function quoteTimeLeft(expires){const seconds=Math.max(0,Math.ceil((new Date(expires).getTime()-Date.now())/1000)),hours=Math.floor(seconds/3600),minutes=Math.floor(seconds%3600/60),secs=seconds%60,pad=n=>String(n).padStart(2,'0');return `${pad(hours)}:${pad(minutes)}:${pad(secs)}`;}
 function quoteAcceptedHTML(o){return o&&o.customerDecision==='accepted'?'<span>-</span><span class="quote-accepted">accepted ✅</span>':'';}
@@ -1992,6 +2373,10 @@ function openQuotePreview(id){const o=ORDERS.find(x=>x.id===id);if(!o||!o.portal
 function closeQuotePreview(){document.getElementById('quotePreview').classList.remove('show');document.getElementById('quotePreviewFrame').src='about:blank';}
 function openQuoteMessage(id){const o=ORDERS.find(x=>x.id===id);if(!o)return;openId=id;openMessagePanel('quote');}
 function financeCell(label,value,key){return `<div class="finance-cell ${key||''}"><span>${label}</span><b>${value}</b></div>`;}
+function orderPickupDate(o){if(!o.pdate)return 'Pickup date not set';const d=new Date(`${o.pdate}T00:00:00`);if(Number.isNaN(d.getTime()))return o.pdate;const date=new Intl.DateTimeFormat('en-GB',{day:'numeric',month:'short',year:'numeric'}).format(d),weekday=new Intl.DateTimeFormat('en-GB',{weekday:'short'}).format(d);return `${date} (${weekday})`;}
+function orderPickupIcon(){return '<svg viewBox="0 0 24 24" aria-hidden="true"><rect x="3" y="5" width="18" height="16" rx="2"></rect><path d="M8 3v4m8-4v4M3 10h18"></path><path d="m8 15 2 2 5-5"></path></svg>';}
+function paymentStatusData(o){if(o.price>0&&o.paid>=o.price)return {label:'Paid in full',kind:'paid'};if(o.paid>0)return {label:'Deposit received',kind:'paid'};return {label:'Payment due',kind:'due'};}
+function orderOverviewHTML(o){const remaining=Math.max(0,o.price-o.paid),status=paymentStatusData(o),canEdit=!['done','deleted'].includes(o.status),paymentControl=canEdit?`<button type="button" class="payment-status-open" onclick="focusPayment()">Payment <svg viewBox="0 0 24 24" aria-hidden="true"><path d="m9 5 7 7-7 7"></path></svg></button>`:'<span class="payment-status-open">Payment</span>';return `<section class="order-overview"><div class="order-pickup-card"><span class="order-pickup-icon">${orderPickupIcon()}</span><span class="order-pickup-copy"><span class="order-pickup-label">Pickup date</span><strong class="order-pickup-date">${escHtml(orderPickupDate(o))}</strong></span><strong class="order-pickup-distance">${escHtml(pickupDistance(o.pdate))}</strong></div><div class="order-finance-card"><div class="order-payment-grid"><div class="order-payment-metric paid"><span>Deposit paid</span><strong>${money(o.paid)}</strong></div><div class="order-payment-metric remaining"><span>Remaining</span><strong>${money(remaining)}</strong></div><div class="order-payment-metric total"><span>Total</span><strong>${money(o.price)}</strong></div></div><div class="order-payment-status"><span>Payment status</span><span class="payment-status-badge ${status.kind}">${escHtml(status.label)}</span>${paymentControl}</div></div></section>`;}
 function infoRow(k,v){return `<div class="r"><span class="k">${escHtml(k)}</span><span class="v">${v||'—'}</span></div>`;}
 function quoteInputHTML(value){return `<div class="quote-input-wrap"><span class="quote-input-euro">€</span><input id="quotePrice" type="text" inputmode="decimal" enterkeyhint="done" autocomplete="off" pattern="[0-9]+([.,][0-9]{0,2})?" value="${Number(value||0)}" oninput="sanitizeMoneyInput(this)" aria-label="Final price in euros"></div>`;}
 function sanitizeMoneyInput(input){let value=String(input.value||'').replace(',','.').replace(/[^0-9.]/g,''),parts=value.split('.');if(parts.length>1)value=parts.shift()+'.'+parts.join('').slice(0,2);input.value=value;}
@@ -2011,9 +2396,11 @@ function doNextConfig(o){
   return {text:'Review this order before taking the next action.',action:'none'};
 }
 function pickupCountdownText(o){const delta=pickupDeltaMs(o);if(delta===null)return 'Pickup time not set';if(delta<=0)return 'Pickup time has arrived';const hours=Math.ceil(delta/3600000);if(hours>=48){const days=Math.ceil(hours/24);return `${days} ${days===1?'day':'days'} until pickup`;}return `${hours} ${hours===1?'hour':'hours'} until pickup`;}
-function doNextHTML(o){if(isPickupConfirmationStep(o))return `<div class="do-next pickup-confirm"><div class="do-next-copy"><span class="pickup-countdown">${escHtml(pickupCountdownText(o))}</span><span class="do-next-text">Customer picked up the cake?</span></div><button type="button" class="do-next-action" onclick="markCakePickedUp(${o.id})" aria-label="Confirm customer picked up the cake">YES</button></div>`;const n=doNextConfig(o),conditional=!!n.when,copy=conditional?`<div class="do-next-rule"><span class="do-next-label">WHEN:</span><span class="do-next-text">${escHtml(n.when)}</span></div><div class="do-next-rule"><span class="do-next-label">DO NEXT:</span><span class="do-next-text">${n.nextHtml||escHtml(n.next)}</span></div>`:`<span class="do-next-label">DO NEXT:</span><span class="do-next-text">${n.html||escHtml(n.text)}</span>`;return `<div class="do-next ${conditional?'conditional':''}"><div class="do-next-copy">${copy}</div><button type="button" class="do-next-action" onclick="runDoNext(${o.id},'${n.action}')" aria-label="Go to the next action" title="Go to the next action">GO</button></div>`;}
+function nextActionContent(o,n){if(n.action==='quote')return {title:'Set the final quote',description:'Review the order and confirm the customer’s final price.'};if(n.action==='message1')return {title:'Send the quote',description:'Create the confirmation form and send it to the customer.'};if(n.action==='payment')return {title:'Waiting for payment proof',description:'When it arrives, enter the deposit in Payment.'};if(n.action==='message2')return {title:'Send the address',description:'Send the pickup details and address to the customer.'};if(n.action==='message3')return {title:'Ask for feedback',description:'Send the feedback request to the customer.'};if(n.action==='archive')return {title:'Order complete',description:'The feedback request was sent. This order can now be archived.'};return {title:n.text||'Review this order',description:''};}
+function nextActionButton(action){if(action==='message1')return `${orderActionIcon('whatsapp')}<span>Send<br>Quote</span>`;if(action==='message2')return `${orderActionIcon('whatsapp')}<span>Send<br>Address</span>`;if(action==='message3')return `${orderActionIcon('whatsapp')}<span>Ask for<br>Feedback</span>`;return '<span>GO</span>';}
+function doNextHTML(o){if(isPickupConfirmationStep(o))return `<div class="do-next pickup-confirm"><div class="do-next-copy"><span class="next-action-kicker">NEXT ACTION</span><span class="next-action-title">Customer picked up the cake?</span><span class="next-action-description">${escHtml(pickupCountdownText(o))}</span></div><button type="button" class="do-next-action" onclick="markCakePickedUp(${o.id})" aria-label="Confirm customer picked up the cake"><span>YES</span></button></div>`;const n=doNextConfig(o),content=nextActionContent(o,n);return `<div class="do-next"><div class="do-next-copy"><span class="next-action-kicker">NEXT ACTION</span><span class="next-action-title">${escHtml(content.title)}</span>${content.description?`<span class="next-action-description">${escHtml(content.description)}</span>`:''}</div><button type="button" class="do-next-action" onclick="runDoNext(${o.id},'${n.action}')" aria-label="${escAttr(content.title)}">${nextActionButton(n.action)}</button></div>`;}
 function messageShortcutIcon(key){const paths={quote:'<rect x="3" y="5" width="18" height="14" rx="2"></rect><path d="m4 7 8 6 8-6"></path>',confirmed:'<path d="M12 21s7-5.2 7-12a7 7 0 1 0-14 0c0 6.8 7 12 7 12Z"></path><circle cx="12" cy="9" r="2"></circle>',feedback:'<path d="M4 5h16v11H9l-5 4V5Z"></path><path d="M8 9h8M8 12h5"></path>'};return `<svg viewBox="0 0 24 24" aria-hidden="true">${paths[key]||''}</svg>`;}
-function messageShortcutsHTML(o){const stage=workflowStage(o),items=[{key:'quote',label:'Quote Link',due:stage===2,done:!!o.quoteSentAt},{key:'confirmed',label:'Address Info',due:stage===4,done:!!o.confirmedSentAt},{key:'feedback',label:'Feedback',due:stage===6||o.status==='done',done:!!o.feedbackSentAt}];return `<div class="message-shortcuts"><span class="message-shortcuts-label">Whatsapp Messages (copy and send)</span><div class="message-shortcuts-row">${items.map(item=>`<button type="button" class="message-shortcut ${item.done?'done':item.due?'current':'future'}" onclick="openMessagePanel('${item.key}')">${messageShortcutIcon(item.key)}<span>${escHtml(item.label)}</span></button>`).join('')}</div></div>`;}
+function messageShortcutsHTML(o){const stage=workflowStage(o),items=[{key:'quote',label:o.quoteSentAt?'Quote Sent':'Send Quote',due:stage===2,done:!!o.quoteSentAt},{key:'confirmed',label:o.confirmedSentAt?'Address Sent':'Send Address',due:stage===4,done:!!o.confirmedSentAt},{key:'feedback',label:o.feedbackSentAt?'Feedback Asked':'Ask for Feedback',due:stage===6||o.status==='done',done:!!o.feedbackSentAt}];return `<div class="message-shortcuts"><span class="message-shortcuts-label">WhatsApp Messages</span><div class="message-shortcuts-row">${items.map(item=>`<button type="button" class="message-shortcut ${item.done?'done':item.due?'current':'future'}" onclick="openMessagePanel('${item.key}')">${messageShortcutIcon(item.key)}<span>${escHtml(item.label)}</span></button>`).join('')}</div></div>`;}
 function paymentWorkspaceHTML(o){const deposit=o.price/2,remaining=Math.max(0,o.price-o.paid);return `<details class="payment-accordion" id="paymentDetails"><summary>Payment <span>${money(o.paid)} / ${money(o.price)}</span></summary><div class="payment-workspace" id="paymentWorkspace"><div class="payment-top"><div class="payment-total">${money(o.paid)} <small>of ${money(o.price)}</small></div><div class="payment-left">${remaining===0?'Fully paid ✓':money(remaining)+' left'}</div></div><div class="payment-entry"><input id="payAmt" type="number" min="0" step="0.5" placeholder="Amount received (€)"><button class="add" onclick="addPayment(${o.id})">Add</button><button class="reset" onclick="setPayment(${o.id},0)">Reset</button></div><div class="payment-quick"><button onclick="setPayment(${o.id},${deposit})">Deposit ${money(deposit)}</button><button id="paidInFullQuick" onclick="setPayment(${o.id},${o.price})">Paid in full</button></div></div></details>`;}
 function messageStepFor(o){const stage=workflowStage(o);if(stage===2)return 'quote';if(stage===4)return 'confirmed';if(stage===6)return 'feedback';return '';}
 function runDoNext(id,action){if(action==='quote')focusFinalQuote();else if(action==='payment')focusPayment();else if(action==='pickup')markCakePickedUp(id);else if(action==='message1')openMessagePanel('quote');else if(action==='message2')openMessagePanel('confirmed');else if(action==='message3')openMessagePanel('feedback');else if(action==='archive')focusArchiveAction();}
@@ -2026,8 +2413,8 @@ function historyRow(k,v){return `<div class="history-row"><span class="k">${escH
 function historySection(title,rows){return `<div class="history-section-title">${escHtml(title)}</div>${rows.join('')}`;}
 function sizeDisplay(value){const size=shortSize(value)||'—';return /\bSize$/i.test(size)?size:`${size} Size`;}
 function shapeDisplay(value){const shape=String(value||'—').trim();return /\bShape$/i.test(shape)?shape:`${shape} Shape`;}
-function renderHistoryDetail(o){const decor=(o.decor||[]).filter(d=>d!=='No decoration'),note=cleanNotes(o),addonsList=[].concat((o.cupcakes&&!/^(no cupcakes|none|nenhuma|—)?$/i.test(String(o.cupcakes)))?[o.cupcakes]:[]).concat(decor),addons=addonsList.length?addonsList.join(', '):'No add-ons',colourNames=(o.colors||[]).map(c=>c[0]).join(', ')||'—',allergy=o.allergies&&!['none','nenhuma'].includes(String(o.allergies).toLowerCase())?`⚠ ${escHtml(o.allergies)}`:'None';return `<div class="history-order-view"><div class="sec history-progress">${progressHTML(o)}${o.status==='done'?doNextHTML(o):''}${messageShortcutsHTML(o)}</div><div class="history-list">${historySection('Customer',[historyRow('Name',escHtml(o.name)),historyRow('WhatsApp',escHtml(o.wcode+' '+o.wnum)),historyRow('Instagram',o.instagram?'@'+escHtml(o.instagram):'—'),historyRow('Email',escHtml(o.email||'—')),historyRow('Form language',escHtml(o.lang||'—')),historyRow('Found us via',escHtml((o.heard||'—')+(o.referredBy?' · '+o.referredBy:''))),historyRow('Form feedback',o.feedback?escHtml(o.feedback):'Not submitted')])}${historySection('Pickup',[historyRow('Order Date',escHtml(fmtOrderedAt(o.createdAt))),historyRow('Delivery Date',escHtml(fmtPickupAt(o))),historyRow('Total time',escHtml(orderElapsedDays(o))),historyRow('Collection',o.courier?'Uber/Bolt courier collection':'Customer collection')])}${historySection('The Cake',[historyRow('Size:',escHtml(sizeDisplay(o.size))),historyRow('Shape:',escHtml(shapeDisplay(o.shape))),historyRow('Flavour',escHtml(o.flavor)),historyRow('Colours',escHtml(colourNames)),historyRow('Writing',o.writing?`“${escHtml(o.writing)}” · ${escHtml(o.writingColor)}`:'—'),historyRow('Add-ons',escHtml(addons)),...(o.pigment&&o.pigment.length?[historyRow('High-pigment',escHtml(o.pigment.join(', ')))]:[]),historyRow('Candles',escHtml(o.candles||'—')),historyRow('Allergies',allergy),historyRow('Customer notes',note?escHtml(note):'—')])}<div class="history-section-title">Reference photos</div><div class="history-reference">${photoGrid(o)}${o.photoNote?`<div class="notebox" style="margin-top:9px">${escHtml(o.photoNote)}</div>`:''}</div></div>${orderActionsHTML(o)}</div>`;}
-function orderActionIcon(kind){const paths={bad:'<circle cx="9" cy="8" r="3"/><path d="M3.5 19c.7-3.2 2.5-5 5.5-5 1.2 0 2.2.3 3.1.8M16 15l5 5m0-5-5 5"/>',archive:'<path d="M4 7h16v13H4zM3 3h18v4H3zm6 9h6"/>',trash:'<path d="M4 7h16M9 7V4h6v3m3 0-1 13H7L6 7m4 4v5m4-5v5"/>',cancel:'<circle cx="12" cy="12" r="9"/><path d="m9 9 6 6m0-6-6 6"/>',customer:'<circle cx="8.5" cy="8" r="3"/><path d="M3 19c.6-3.2 2.5-5 5.5-5 1.4 0 2.6.4 3.5 1.1M16 9l5 5m0-5-5 5"/>',reset:'<path d="M4 8V4h4M4.8 5.2A9 9 0 1 1 3 14"/><path d="M12 8v4l3 2"/>',whatsapp:'<path d="M20 11.5a8 8 0 0 1-11.8 7L4 20l1.5-4.1A8 8 0 1 1 20 11.5Z"/><path d="M9 8.5c.4 2.5 2 4.1 4.5 4.9l1.2-1.1 1.8.9"/>'};return `<svg viewBox="0 0 24 24" aria-hidden="true">${paths[kind]||''}</svg>`;}
+function renderHistoryDetail(o){const decor=(o.decor||[]).filter(d=>d!=='No decoration'),note=cleanNotes(o),addonsList=[].concat((o.cupcakes&&!/^(no cupcakes|none|nenhuma|—)?$/i.test(String(o.cupcakes)))?[o.cupcakes]:[]).concat(decor),addons=addonsList.length?addonsList.join(', '):'No add-ons',colourNames=(o.colors||[]).map(c=>c[0]).join(', ')||'—',allergy=o.allergies&&!['none','nenhuma'].includes(String(o.allergies).toLowerCase())?`⚠ ${escHtml(o.allergies)}`:'None';return `<div class="history-order-view">${orderOverviewHTML(o)}<div class="sec history-progress order-workflow-stack">${progressHTML(o)}${o.status==='done'?doNextHTML(o):''}${messageShortcutsHTML(o)}</div><div class="history-list">${historySection('Customer',[historyRow('Name',escHtml(o.name)),historyRow('WhatsApp',escHtml(o.wcode+' '+o.wnum)),historyRow('Instagram',o.instagram?'@'+escHtml(o.instagram):'—'),historyRow('Email',escHtml(o.email||'—')),historyRow('Form language',escHtml(o.lang||'—')),historyRow('Found us via',escHtml((o.heard||'—')+(o.referredBy?' · '+o.referredBy:''))),historyRow('Form feedback',o.feedback?escHtml(o.feedback):'Not submitted')])}${historySection('Pickup',[historyRow('Order Date',escHtml(fmtOrderedAt(o.createdAt))),historyRow('Delivery Date',escHtml(fmtPickupAt(o))),historyRow('Total time',escHtml(orderElapsedDays(o))),historyRow('Collection',o.courier?'Uber/Bolt courier collection':'Customer collection')])}${historySection('The Cake',[historyRow('Size:',escHtml(sizeDisplay(o.size))),historyRow('Shape:',escHtml(shapeDisplay(o.shape))),historyRow('Flavour',escHtml(o.flavor)),historyRow('Colours',escHtml(colourNames)),historyRow('Writing',o.writing?`“${escHtml(o.writing)}” · ${escHtml(o.writingColor)}`:'—'),historyRow('Add-ons',escHtml(addons)),...(o.pigment&&o.pigment.length?[historyRow('High-pigment',escHtml(o.pigment.join(', ')))]:[]),historyRow('Candles',escHtml(o.candles||'—')),historyRow('Allergies',allergy),historyRow('Customer notes',note?escHtml(note):'—')])}<div class="history-section-title">Reference photos</div><div class="history-reference">${photoGrid(o)}${o.photoNote?`<div class="notebox" style="margin-top:9px">${escHtml(o.photoNote)}</div>`:''}</div></div>${orderActionsHTML(o)}</div>`;}
+function orderActionIcon(kind){const paths={bad:'<circle cx="9" cy="8" r="3"/><path d="M3.5 19c.7-3.2 2.5-5 5.5-5 1.2 0 2.2.3 3.1.8M16 15l5 5m0-5-5 5"/>',archive:'<path d="M4 7h16v13H4zM3 3h18v4H3zm6 9h6"/>',trash:'<path d="M4 7h16M9 7V4h6v3m3 0-1 13H7L6 7m4 4v5m4-5v5"/>',cancel:'<circle cx="12" cy="12" r="9"/><path d="m9 9 6 6m0-6-6 6"/>',customer:'<circle cx="8.5" cy="8" r="3"/><path d="M3 19c.6-3.2 2.5-5 5.5-5 1.4 0 2.6.4 3.5 1.1M16 9l5 5m0-5-5 5"/>',reset:'<path d="M4 8V4h4M4.8 5.2A9 9 0 1 1 3 14"/><path d="M12 8v4l3 2"/>',whatsapp:'<path d="M20 11.5a8 8 0 0 1-11.8 7L4 20l1.5-4.1A8 8 0 1 1 20 11.5Z"/><path d="M9 8.5c.4 2.5 2 4.1 4.5 4.9l1.2-1.1 1.8.9c.2.1.3.4.2.6-.5 1.2-1.5 1.8-2.7 1.6-4.2-.8-6.6-3.2-7.4-7.4-.2-1.2.4-2.2 1.6-2.7.2-.1.5 0 .6.2l.9 1.8L9 8.5Z"/>'};return `<svg viewBox="0 0 24 24" aria-hidden="true">${paths[kind]||''}</svg>`;}
 function orderActionsHTML(o){const canCancel=!['done','deleted','cancelled'].includes(o.status),whatsapp=`<a class="order-action whatsapp" href="${whatsappUrl(o)}" target="_blank" rel="noopener">${orderActionIcon('whatsapp')}<span>Open WhatsApp Chat</span></a>`,utilities=`<button class="order-action bad ${isBlacklisted(o)?'on':''}" onclick="toggleBlacklist(${o.id})">${orderActionIcon('bad')}<span>${isBlacklisted(o)?'Remove Bad Customer':'Mark as Bad Customer'}</span></button><button class="order-action reset-progress" onclick="resetAllProgress(${o.id})">${orderActionIcon('reset')}<span>Reset All Progress</span></button>`,finalActions=`${canCancel?`<button class="order-action cancel" onclick="cancelOrder(${o.id},'owner')">${orderActionIcon('cancel')}<span>Cancel the Order</span></button><button class="order-action customer-cancel" onclick="cancelOrder(${o.id},'customer')">${orderActionIcon('customer')}<span>Cancelled by Customer</span></button>`:''}<button class="order-action delete" id="trashBtn" title="Tap twice to permanently delete" onclick="permanentDeleteTap(${o.id},this)">${orderActionIcon('trash')}<span>Delete the Order</span></button><button class="order-action archive" id="archiveAction" onclick="archiveOrder(${o.id})">${orderActionIcon('archive')}<span>${o.status==='deleted'?'Restore to Orders':'Move to Archived'}</span></button>`;return `<div class="bottom-actions"><div class="order-action-row whatsapp-row">${whatsapp}</div><div class="order-action-row utility-row">${utilities}</div><div class="order-action-row final-row">${finalActions}</div></div>`;}
 
 const ORDER_EDIT={
@@ -2182,14 +2569,14 @@ function renderOrderDetail(o){
   const addonsList=[].concat((o.cupcakes&&!/^(no cupcakes|none|nenhuma|—)?$/i.test(String(o.cupcakes)))?[o.cupcakes]:[]).concat(decor);const addons=addonsList.length?addonsList.join(', '):'No add-ons';
   const cakeEditing=isDetailEditing(o,'cake'),pickupEditing=isDetailEditing(o,'pickup'),customerEditing=isDetailEditing(o,'customer');
   const cakeOpen=cakeEditing||detailFocusSection==='cake'||(!detailFocusSection&&!detailEdit),pickupOpen=pickupEditing||detailFocusSection==='pickup',customerOpen=customerEditing||detailFocusSection==='customer';
-  return `<div class="finance-table">${financeCell('Paid',money(o.paid),'paid')}${financeCell('Total',money(o.price),'total')}${financeCell('Remaining',money(remaining),'remaining')}${financeCell('Pick-up',escHtml(relDate(o.pdate)),'pickup')}</div>
-    <div class="sec">${progressHTML(o)}${quoteStatusHTML(o)}${doNextHTML(o)}${messageShortcutsHTML(o)}${paymentWorkspaceHTML(o)}</div>
+  return `${orderOverviewHTML(o)}
+    <div class="sec order-workflow-stack">${progressHTML(o)}${quoteStatusHTML(o)}${doNextHTML(o)}${messageShortcutsHTML(o)}${paymentWorkspaceHTML(o)}</div>
     <details class="detail-accordion" data-detail-section="cake" ${cakeOpen?'open':''}>${detailSummary(o,'cake','The Cake')}<div class="accordion-body">${cakeEditing?cakeEditorHTML(o):`<div class="sec"><div class="kv">${infoRow('Type & size',escHtml(o.type+' · '+shortSize(o.size)))}${infoRow('Shape',escHtml(o.shape))}${infoRow('Flavour',escHtml(o.flavor))}${infoRow('Colours',`<span class="cols">${cols}</span>`)}${infoRow('Writing',o.writing?`“${escHtml(o.writing)}” · ${escHtml(o.writingColor)}`:'—')}${infoRow('Add-ons',escHtml(addons))}${(o.pigment&&o.pigment.length)?infoRow('High-pigment',escHtml(o.pigment.join(', '))):''}${infoRow('Candles',escHtml(o.candles||'—'))}${infoRow('Allergies',allergy)}</div></div>${note?`<div class="sec"><div class="lbl">Customer notes</div><div class="notebox">${escHtml(note)}</div></div>`:''}<div class="sec"><div class="lbl">Reference photos</div>${photoGrid(o)}${o.photoNote?`<div class="notebox" style="margin-top:9px">${escHtml(o.photoNote)}</div>`:''}</div><div class="sec final-quote-section" id="finalQuoteSection">${finalQuoteHTML(o)}</div>`}</div></details>
     <details class="detail-accordion" data-detail-section="pickup" ${pickupOpen?'open':''}>${detailSummary(o,'pickup','Pick-up')}<div class="accordion-body">${pickupEditing?pickupEditorHTML(o):`<div class="sec"><div class="kv">${infoRow('Date',escHtml(fmtDate(o.pdate))+' · '+escHtml(relDate(o.pdate)))}${infoRow('Time',escHtml(o.ptime))}${infoRow('Collection',o.courier?'Uber/Bolt courier collection':'Customer collection')}</div></div>`}</div></details>
     <details class="detail-accordion" data-detail-section="customer" ${customerOpen?'open':''}>${detailSummary(o,'customer','Customer')}<div class="accordion-body">${customerEditing?customerEditorHTML(o):`<div class="sec"><div class="kv">${infoRow('Name',escHtml(o.name))}${infoRow('WhatsApp',escHtml(o.wcode+' '+o.wnum))}${infoRow('Instagram',o.instagram?'@'+escHtml(o.instagram):'—')}${infoRow('Email',escHtml(o.email||'—'))}${infoRow('Form language',escHtml(o.lang||'—'))}${infoRow('Found us via',escHtml(o.heard+(o.referredBy?' · '+o.referredBy:'')))}${infoRow('Ordering experience',o.feedback?`${FB_EMOJI[o.feedback.toLowerCase()]||'💬'} ${escHtml(o.feedback)}`:'Not submitted')}</div></div>`}</div></details>
     ${orderActionsHTML(o)}`;
 }
-function openSheet(id,preserveScroll=false){const o=ORDERS.find(x=>x.id===id);if(!o)return;const _sheetEl=document.getElementById('sheet'),previousScroll=preserveScroll&&_sheetEl?_sheetEl.scrollTop:0;openId=id;if(!o.read){o.read=true;if(sb)sb.from('orders').update({is_read:true}).eq('id',id).then(()=>{});}if(view==='orders'){renderTop();renderList();}else if(view==='calendar')renderCalendar();const history=['done','deleted'].includes(o.status),head=document.querySelector('.order-head-main'),price=document.getElementById('shPrice');head.classList.toggle('history-layout',history);price.textContent=history?money(o.price):'';document.getElementById('shName').textContent=o.name;document.getElementById('shSub').textContent=[o.type,shortSize(o.size),o.shape].filter(Boolean).join(' · ');document.getElementById('shOrdered').innerHTML=o.createdAt?`Ordered: <b>${escHtml(fmtOrderedAt(o.createdAt))}</b> · ${escHtml(o.created)}`:'';document.getElementById('shBody').innerHTML=(isBlacklisted(o)?`<div class="warnbox" style="margin-bottom:9px"><b>Blacklisted customer.</b> Review before accepting this order.</div>`:'')+renderOrderDetail(o);document.getElementById('overlay').classList.add('show');document.getElementById('sheet').classList.add('show');if(_sheetEl)_sheetEl.scrollTop=preserveScroll?previousScroll:0;requestAnimationFrame(()=>{if(_sheetEl)_sheetEl.scrollTop=preserveScroll?previousScroll:0;});}
+function openSheet(id,preserveScroll=false){const o=ORDERS.find(x=>x.id===id);if(!o)return;const _sheetEl=document.getElementById('sheet'),_bodyEl=document.getElementById('shBody'),previousScroll=preserveScroll&&_bodyEl?_bodyEl.scrollTop:0;openId=id;if(!o.read){o.read=true;if(sb)sb.from('orders').update({is_read:true}).eq('id',id).then(()=>{});}if(view==='orders'){renderTop();renderList();}else if(view==='calendar')renderCalendar();const history=['done','deleted'].includes(o.status),head=document.querySelector('.order-head-main'),price=document.getElementById('shPrice');head.classList.toggle('history-layout',history);price.textContent=history?money(o.price):'';document.getElementById('shName').textContent=o.name;document.getElementById('shSub').textContent=[o.type,shortSize(o.size),o.shape].filter(Boolean).join(' · ');document.getElementById('shOrdered').innerHTML=o.createdAt?`Ordered: <b>${escHtml(fmtOrderedAt(o.createdAt))}</b> · ${escHtml(o.created)}`:'';_bodyEl.innerHTML=(isBlacklisted(o)?`<div class="warnbox" style="margin-bottom:9px"><b>Blacklisted customer.</b> Review before accepting this order.</div>`:'')+renderOrderDetail(o);document.getElementById('overlay').classList.add('show');_sheetEl.classList.add('show');_sheetEl.scrollTop=0;_bodyEl.scrollTop=preserveScroll?previousScroll:0;requestAnimationFrame(()=>{_sheetEl.scrollTop=0;_bodyEl.scrollTop=preserveScroll?previousScroll:0;});}
 function unlockFinalPrice(id){const o=ORDERS.find(x=>x.id===id),row=document.getElementById('finalQuoteRow');if(!o||!row)return;row.outerHTML=finalQuoteEditorHTML(o);const input=document.getElementById('quotePrice');if(input){input.focus();input.select();}}
 async function finalizePrice(id){const o=ORDERS.find(x=>x.id===id),input=document.getElementById('quotePrice'),v=Number(String(input&&input.value||'').replace(',','.'));if(!Number.isFinite(v)||v<=0){alert('Enter the final price first.');return;}const description=String(document.getElementById('quotedItemsDescription')?.value||'').trim(),nextStatus=o.status==='new'?'quoted':o.status,quotedItemsDescription=description||null;const {error}=await sb.from('orders').update({price:v,price_range:false,status:nextStatus,quoted_items_description:quotedItemsDescription}).eq('id',id);if(error){alert('Could not save final price: '+error.message);return;}o.price=v;o.range=false;o.status=nextStatus;o.quotedItemsDescription=description;activeBucket=bucketOf(o);refreshView();openSheet(id);}
 async function archiveOrder(id){const o=ORDERS.find(x=>x.id===id),next=o.status==='deleted'?'new':'deleted';const {error}=await sb.from('orders').update({status:next}).eq('id',id);if(error){alert('Could not update archive: '+error.message);return;}o.status=next;activeBucket=bucketOf(o);closeSheet();refreshView();}

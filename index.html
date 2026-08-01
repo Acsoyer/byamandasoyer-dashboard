@@ -376,6 +376,8 @@
   .pgal,.pgal.one{grid-template-columns:repeat(3,minmax(0,1fr));gap:8px;overflow:visible}
   .pgi,.pgal.one .pgi{position:relative;display:block;width:100%;aspect-ratio:1;padding:0!important;margin:0;border:1px solid #D5DBD7;border-radius:10px!important;overflow:hidden;background:#EEF0EE;line-height:0}
   .pgi img,.pgal.one .pgi img{position:absolute;inset:0;width:100%;height:100%;aspect-ratio:1;object-fit:cover;border:0;margin:0;display:block}
+  .photo-file-fallback{position:absolute;inset:0;display:none;align-items:center;justify-content:center;background:#EEF1EA;color:#58704E;font-size:11px;font-weight:750;letter-spacing:.08em;line-height:1}
+  .pgi.unsupported-photo .photo-file-fallback{display:flex}
   .pgn{z-index:2;line-height:17px}.photo-slot{width:100%;aspect-ratio:1;border-radius:10px}
   .final-quote-section{margin-top:13px!important}
   .final-quote-line{display:grid;grid-template-columns:auto auto minmax(0,1fr);align-items:center;gap:8px}
@@ -1983,7 +1985,7 @@ async function renderWebsiteInsights(){
   const end=new Date(),start=new Date();start.setDate(end.getDate()-analyticsDays+1);
   const {data,error}=await sb.rpc('get_site_analytics_summary',{p_start:analyticsDateISO(start),p_end:analyticsDateISO(end)});
   if(token!==analyticsToken||!document.getElementById('websiteInsights'))return;
-  if(error){el.innerHTML=`<div class="analytics-setup"><b>Website insights are not connected yet.</b><br>Run <code>008_site_analytics.sql</code> once in Supabase, then reopen Stats.</div>`;return;}
+  if(error){el.innerHTML=`<div class="analytics-setup"><b>Website insights are not connected yet.</b><br>Run <code>01_MASTER_DATABASE.sql</code> once in Supabase, then reopen Stats.</div>`;return;}
   const a=typeof data==='string'?JSON.parse(data):data||{},visits=Number(a.visitors)||0,opens=Number(a.order_opens)||0,starts=Number(a.form_starts)||0,submissions=Number(a.submissions)||0;
   const sources=(Array.isArray(a.sources)?a.sources:[]).slice(0,6).map(x=>Object.assign({},x,{label:analyticsSourceLabel(x.label)})),dropoffs=(Array.isArray(a.dropoffs)?a.dropoffs:[]).slice(0,6);
   const topSource=sources[0],topDrop=dropoffs[0],visitToOrder=analyticsPercent(submissions,visits),startToOrder=analyticsPercent(submissions,starts);
@@ -2276,7 +2278,8 @@ function cardHTML(o){
 
 const FLOW=['new','quoted','awaiting_payment','confirmed','done'];
 function progressHTML(o){if(o.status==='cancelled'&&o.cancelledBy==='customer')return '<div class="customer-cancelled-progress">Cancelled by the Customer at the order confirmation process</div>';const idx=FLOW.indexOf(o.status);return `<div class="progress">${FLOW.map((s,i)=>`<button class="progress-step ${idx>=i?(idx===i?'current':'complete'):''} ${o.status==='awaiting_payment'&&o.customerDecision==='accepted'&&s==='confirmed'?'customer-accepted':''}" onclick="setOrderStatus(${o.id},'${s}')">${stLabel(s)}</button>`).join('')}</div>`;}
-function photoGrid(o){const cells=[];for(let i=0;i<3;i++){const u=o.photos[i];cells.push(u?`<button class="pgi" onclick="openPhoto('${escAttr(u)}')"><img src="${escAttr(u)}" loading="lazy" alt="Reference ${i+1}"><span class="pgn">${i+1}</span></button>`:`<div class="photo-slot">Empty</div>`);}return `<div class="pgal">${cells.join('')}</div>`;}
+function photoFileLabel(url){try{const clean=decodeURIComponent(String(url||'')).split('?')[0],m=clean.match(/\.([a-z0-9]+)$/i);return m?m[1].toUpperCase():'PHOTO';}catch(_){return 'PHOTO';}}
+function photoGrid(o){const cells=[];for(let i=0;i<3;i++){const u=o.photos[i];cells.push(u?`<button class="pgi" onclick="openPhoto('${escAttr(u)}')"><img src="${escAttr(u)}" loading="lazy" alt="Reference ${i+1}" onerror="this.closest('.pgi').classList.add('unsupported-photo')"><span class="photo-file-fallback">${photoFileLabel(u)}</span><span class="pgn">${i+1}</span></button>`:`<div class="photo-slot">Empty</div>`);}return `<div class="pgal">${cells.join('')}</div>`;}
 
 function openSheet(id){
   const o=ORDERS.find(x=>x.id===id);if(!o)return;openId=id;

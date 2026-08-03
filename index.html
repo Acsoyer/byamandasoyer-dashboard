@@ -1140,8 +1140,9 @@
 .order-pickup-icon svg{width:30px;height:30px;fill:none;stroke:currentColor;stroke-width:1.8;stroke-linecap:round;stroke-linejoin:round}
 .order-pickup-copy{min-width:0}
 .order-pickup-label{display:block;margin-bottom:3px;color:var(--ink-soft);font-size:11px;font-weight:650}
+.order-pickup-dt{display:flex;align-items:baseline;flex-wrap:wrap;gap:6px}
 .order-pickup-date{display:block;color:var(--ink);font-size:18px;font-weight:800;line-height:1.2}
-.order-pickup-time{display:block;margin-top:2px;color:#13633E;font-size:12.5px;font-weight:700}
+.order-pickup-time{display:inline-block;color:#13633E;font-size:18px;font-weight:800;white-space:nowrap}
 .order-pickup-distance{color:var(--ink);font-size:13px;font-weight:750;white-space:nowrap}
 .order-finance-card{
   overflow:hidden;
@@ -1377,7 +1378,7 @@
   .order-overview-name{padding-right:48px;font-size:24px}
   .order-pickup-card{grid-template-columns:34px minmax(0,1fr) auto;gap:9px;min-height:76px;padding:12px}
   .order-pickup-distance{font-size:10.5px}
-  .order-pickup-date{font-size:16px}
+  .order-pickup-date,.order-pickup-time{font-size:16px}
   .order-payment-grid{padding:14px 3px 12px}
   .order-payment-metric{padding:0 6px}
   .order-payment-metric span{font-size:9.5px}
@@ -1593,7 +1594,7 @@
 <div class="love-popup" id="lovePopup" role="dialog" aria-modal="true" aria-label="Message">
   <div class="love-popup-card">
     <p>Dikkat: Caner loves you 😘</p>
-    <button type="button" onclick="closeLovePopup()">yea I know</button>
+    <button type="button" onclick="closeLovePopup()">Yeah, I know ☺️</button>
   </div>
 </div>
 
@@ -2508,7 +2509,7 @@ function orderPickupDate(o){if(!o.pdate)return 'Pickup date not set';const d=new
 function orderPickupTimeLine(o){return o.ptime?`at ${o.ptime}`:'Time not set';}
 function orderPickupIcon(){return '<svg viewBox="0 0 24 24" aria-hidden="true"><rect x="3" y="5" width="18" height="16" rx="2"></rect><path d="M8 3v4m8-4v4M3 10h18"></path><path d="m8 15 2 2 5-5"></path></svg>';}
 function paymentStatusData(o){if(o.price>0&&o.paid>=o.price)return {label:'Paid in full',kind:'paid'};if(o.paid>0)return {label:'Deposit received',kind:'paid'};return {label:'Payment due',kind:'due'};}
-function orderOverviewHTML(o){const remaining=Math.max(0,o.price-o.paid),status=paymentStatusData(o),canEdit=!['done','deleted'].includes(o.status),paymentControl=canEdit?`<button type="button" class="payment-status-open" onclick="focusPayment()">Payment <svg viewBox="0 0 24 24" aria-hidden="true"><path d="m9 5 7 7-7 7"></path></svg></button>`:'<span class="payment-status-open">Payment</span>';return `<section class="order-overview"><div class="order-pickup-card"><span class="order-pickup-icon">${orderPickupIcon()}</span><span class="order-pickup-copy"><span class="order-pickup-label">Pickup date</span><strong class="order-pickup-date">${escHtml(orderPickupDate(o))}</strong><span class="order-pickup-time">${escHtml(orderPickupTimeLine(o))}</span></span><strong class="order-pickup-distance">${escHtml(pickupDistance(o.pdate))}</strong></div><div class="order-finance-card"><div class="order-payment-grid"><div class="order-payment-metric paid"><span>Deposit paid</span><strong>${money(o.paid)}</strong></div><div class="order-payment-metric remaining"><span>Remaining</span><strong>${money(remaining)}</strong></div><div class="order-payment-metric total"><span>Total</span><strong>${money(o.price)}</strong></div></div><div class="order-payment-status"><span>Payment status</span><span class="payment-status-badge ${status.kind}">${escHtml(status.label)}</span>${paymentControl}</div></div></section>`;}
+function orderOverviewHTML(o){const remaining=Math.max(0,o.price-o.paid),status=paymentStatusData(o),canEdit=!['done','deleted'].includes(o.status),paymentControl=canEdit?`<button type="button" class="payment-status-open" onclick="focusPayment()">Payment <svg viewBox="0 0 24 24" aria-hidden="true"><path d="m9 5 7 7-7 7"></path></svg></button>`:'<span class="payment-status-open">Payment</span>';return `<section class="order-overview"><div class="order-pickup-card"><span class="order-pickup-icon">${orderPickupIcon()}</span><span class="order-pickup-copy"><span class="order-pickup-label">Pickup date</span><span class="order-pickup-dt"><strong class="order-pickup-date">${escHtml(orderPickupDate(o))}</strong><span class="order-pickup-time">${escHtml(orderPickupTimeLine(o))}</span></span></span><strong class="order-pickup-distance">${escHtml(pickupDistance(o.pdate))}</strong></div><div class="order-finance-card"><div class="order-payment-grid"><div class="order-payment-metric paid"><span>Deposit paid</span><strong>${money(o.paid)}</strong></div><div class="order-payment-metric remaining"><span>Remaining</span><strong>${money(remaining)}</strong></div><div class="order-payment-metric total"><span>Total</span><strong>${money(o.price)}</strong></div></div><div class="order-payment-status"><span>Payment status</span><span class="payment-status-badge ${status.kind}">${escHtml(status.label)}</span>${paymentControl}</div></div></section>`;}
 function infoRow(k,v){return `<div class="r"><span class="k">${escHtml(k)}</span><span class="v">${v||'—'}</span></div>`;}
 function quoteInputHTML(value){return `<div class="quote-input-wrap"><span class="quote-input-euro">€</span><input id="quotePrice" type="text" inputmode="decimal" enterkeyhint="done" autocomplete="off" pattern="[0-9]+([.,][0-9]{0,2})?" value="${Number(value||0)}" oninput="sanitizeMoneyInput(this)" aria-label="Final price in euros"></div>`;}
 function sanitizeMoneyInput(input){let value=String(input.value||'').replace(',','.').replace(/[^0-9.]/g,''),parts=value.split('.');if(parts.length>1)value=parts.shift()+'.'+parts.join('').slice(0,2);input.value=value;}

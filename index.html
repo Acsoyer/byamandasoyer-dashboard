@@ -572,6 +572,13 @@
   .quote-preview-head{display:flex;align-items:center;justify-content:space-between;gap:10px;min-height:56px;padding:9px 10px 9px 16px;border-bottom:1px solid var(--line);background:var(--card)}.quote-preview-head b{font-size:14px}.quote-preview-tools{display:flex;align-items:center;gap:7px}.quote-preview-tools a{color:var(--accent);font-size:11px;font-weight:750;text-decoration:none}.quote-preview-close{display:grid;place-items:center;width:38px;height:38px;padding:0;border:1px solid var(--line);border-radius:50%;background:#F1ECEA;color:var(--ink);font-size:24px;line-height:1;cursor:pointer}.quote-preview iframe{flex:1;width:100%;border:0;background:#F7F4F1}
   .order-action-grid{display:grid;grid-template-columns:1fr 1fr;gap:8px}.order-action{display:flex;align-items:center;justify-content:flex-start;gap:9px;min-width:0;min-height:48px;margin:0;padding:10px 11px;border:1px solid #D6DBD8;border-radius:12px;background:#fff;color:var(--ink);font:750 11.5px/1.2 'Instrument Sans',sans-serif;text-align:left;text-decoration:none;cursor:pointer;box-shadow:0 3px 9px rgba(35,43,39,.045);transition:transform .1s ease,filter .1s ease,background .1s ease}.order-action:active{transform:translateY(2px) scale(.985);filter:brightness(.92)}.order-action svg{flex:0 0 auto;width:18px;height:18px;fill:none;stroke:currentColor;stroke-width:1.8;stroke-linecap:round;stroke-linejoin:round}.order-action.bad{color:var(--accent);background:#FFF9FA;border-color:#E2C7CF}.order-action.bad.on{background:var(--accent);border-color:var(--accent);color:#fff}.order-action.archive{color:#59635E;background:#F4F6F5}.order-action.delete,.order-action.cancel{color:#A62D3E;background:#FFF7F8;border-color:#E6C3C9}.order-action.customer-cancel{color:#8C5260;background:#FBF5F7;border-color:#E0CFD4}.order-action.reset-progress{color:#315E74;background:#F2F7F9;border-color:#C8DCE5}.order-action.whatsapp{color:#176B3B;background:#F2FBF6;border-color:#BFE0CC}.order-action.armed{background:#A62D3E;border-color:#A62D3E;color:#fff}
   @media(max-width:560px){.quote-preview{padding:8px}.quote-preview-card{height:calc(100dvh - 16px);border-radius:14px}.order-action{min-height:50px;padding:9px;font-size:10.5px}.order-action svg{width:17px;height:17px}}
+  /* once-a-day, no-title, blurred-background message — see maybeShowLovePopup() */
+  .love-popup{display:none;position:fixed;inset:0;z-index:200;align-items:center;justify-content:center;padding:24px;background:rgba(20,10,15,.55);backdrop-filter:blur(6px)}
+  .love-popup.show{display:flex}
+  .love-popup-card{width:min(320px,100%);padding:30px 22px 22px;border-radius:20px;background:#fff;text-align:center;box-shadow:0 24px 60px rgba(0,0,0,.32)}
+  .love-popup-card p{margin:0 0 20px;font:750 17px/1.4 'Instrument Sans',sans-serif;color:var(--ink)}
+  .love-popup-card button{width:100%;min-height:52px;border:0;border-radius:14px;background:var(--accent);color:#fff;font:800 15px 'Instrument Sans',sans-serif;cursor:pointer}
+  .love-popup-card button:active{transform:scale(.97)}
   .do-next.conditional .do-next-copy{display:grid;gap:9px}.do-next-rule{display:grid;grid-template-columns:58px minmax(0,1fr);align-items:start;gap:8px}.do-next-rule+.do-next-rule{padding-top:9px;border-top:1px solid rgba(77,111,91,.18)}.do-next-rule .do-next-label{margin:2px 0 0!important}.do-next-rule .do-next-text{line-height:1.35!important}
   @media(max-width:560px){.do-next-rule{grid-template-columns:52px minmax(0,1fr);gap:6px}.do-next.conditional .do-next-copy{padding:12px!important}}
   /* v60 active-order overview */
@@ -914,6 +921,10 @@
   .order-badge.closed{--badge-bg:#EFF1F0;--badge-line:#D5D9D7;--badge-ink:#68716D}
   .overview-badges,.oc-side{gap:5px}.overview-badges .order-badge,.oc-side .order-badge{width:100%;max-width:none;border-radius:999px!important}
   .ocard{overflow:visible}.ocard.unread::after{content:"NEW";position:absolute;z-index:3;top:-6px;right:10px;padding:3px 8px;border-radius:999px;background:#B4233A;color:#fff;font:850 8px/1 'Instrument Sans',sans-serif;letter-spacing:.07em;box-shadow:0 2px 7px rgba(180,35,58,.2)}
+  /* Rush Order badge — same shape/size as the NEW badge but a red-orange, and pinned to the opposite
+     (top-left) corner so it can sit alongside NEW on an order that is both unread and a rush order */
+  .ocard .badge-rush{position:absolute;z-index:3;top:-6px;left:10px;padding:3px 8px;border-radius:999px;background:#D9531E;color:#fff;font:850 8px/1 'Instrument Sans',sans-serif;letter-spacing:.06em;box-shadow:0 2px 7px rgba(217,83,30,.25)}
+  .overview-card .badge-rush{position:absolute;z-index:3;top:-6px;left:9px;padding:2px 6px;border-radius:99px;background:#D9531E;color:#fff;font-size:7.5px;font-weight:850;letter-spacing:.06em}
 
   .overview-card{grid-template-columns:minmax(0,1fr) 112px!important;padding:0!important;overflow:visible!important}.overview-card::before{display:none}
   .overview-card-main{display:grid;grid-template-columns:70px minmax(0,1fr);align-items:stretch}
@@ -1130,6 +1141,7 @@
 .order-pickup-copy{min-width:0}
 .order-pickup-label{display:block;margin-bottom:3px;color:var(--ink-soft);font-size:11px;font-weight:650}
 .order-pickup-date{display:block;color:var(--ink);font-size:18px;font-weight:800;line-height:1.2}
+.order-pickup-time{display:block;margin-top:2px;color:#13633E;font-size:12.5px;font-weight:700}
 .order-pickup-distance{color:var(--ink);font-size:13px;font-weight:750;white-space:nowrap}
 .order-finance-card{
   overflow:hidden;
@@ -1517,7 +1529,7 @@
     <div class="ordersUI" id="ordersUI">
       <div class="dashboard-intro">
         <h1><span class="greeting-icon" id="dashboardGreetingIcon" aria-hidden="true">☀️</span><span id="dashboardGreeting">Good morning, Amanda!</span></h1>
-        <p>Here’s what needs your attention today</p>
+        <p id="dashboardGreetingSub">Here’s what needs your attention today</p>
       </div>
       <div class="buckets" id="buckets"></div>
       <div class="statusrow" id="statusrow"></div>
@@ -1576,6 +1588,13 @@
 <div class="lightbox" id="photoLightbox" onclick="if(event.target===this)closePhoto()">
   <div class="lightbox-actions"><a id="photoDownload" href="#" download target="_blank">Download / Open</a><button onclick="closePhoto()">Close</button></div>
   <img id="photoLarge" alt="Order reference photo">
+</div>
+
+<div class="love-popup" id="lovePopup" role="dialog" aria-modal="true" aria-label="Message">
+  <div class="love-popup-card">
+    <p>Dikkat: Caner loves you 😘</p>
+    <button type="button" onclick="closeLovePopup()">yea I know</button>
+  </div>
 </div>
 
 <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
@@ -1833,9 +1852,11 @@ function moveTopnavInk(){
 function updateHeaderDate(){
   const now=new Date(),label=document.getElementById('todayLbl');
   if(label)label.textContent=`${WD[now.getDay()]} · ${now.getDate()} ${MOS[now.getMonth()]}`;
-  const greeting=document.getElementById('dashboardGreeting'),icon=document.getElementById('dashboardGreetingIcon'),hour=now.getHours(),period=hour<12?'morning':hour<18?'afternoon':'evening';
+  const greeting=document.getElementById('dashboardGreeting'),icon=document.getElementById('dashboardGreetingIcon'),sub=document.getElementById('dashboardGreetingSub'),hour=now.getHours();
+  const period=(hour>=22||hour<6)?'night':hour<12?'morning':hour<18?'afternoon':'evening';
   if(greeting)greeting.textContent=`Good ${period}, Amanda!`;
-  if(icon)icon.textContent=period==='morning'?'☀️':period==='afternoon'?'🌸':'🌙';
+  if(icon)icon.textContent=period==='morning'?'☀️':period==='afternoon'?'🌸':period==='night'?'🌙':'🌆';
+  if(sub)sub.textContent=period==='night'?'Here’s what needs your attention tomorrow':'Here’s what needs your attention today';
 }
 function closeProfileMenu(){
   const menu=document.getElementById('profileMenu'),button=document.getElementById('profileButton');
@@ -2329,6 +2350,7 @@ function cardHTML(o){
   const overdue=relDate(o.pdate).includes('ago');const ps=payStatus(o);
   const price=(o.status==='cancelled'||o.status==='deleted')?'—':((o.range?'~':'')+money(o.price));
   return `<div class="ocard ${o.read?'':'unread'}" onclick="openSheet(${o.id})">
+    ${isRushOrder(o)?'<span class="badge-rush">RUSH ORDER</span>':''}
     <div class="oc-top"><div><div class="oc-name">${escHtml(o.name)}${isBlacklisted(o)?'<span class="blchip">Blacklisted</span>':''}</div>
       <div class="oc-meta">${escHtml([o.type,o.size,o.shape,o.flavor].filter(Boolean).join(' · '))}</div></div><div class="oc-price">${price}</div></div>
     <div class="oc-timegrid"><span>Received <b>${escHtml(o.created)}</b></span><span class="${overdue?'oc-date over':''}">Pick-up <b>${escHtml(fmtDate(o.pdate))} · ${escHtml(o.ptime)}</b> (${escHtml(relDate(o.pdate))})</span></div>
@@ -2354,7 +2376,7 @@ function openSheet(id){
   const dietary=o.allergies&&!['none','nenhuma'].includes(o.allergies.toLowerCase())?`<div class="warnbox">⚠ ${escHtml(o.allergies)}</div>`:`<div class="kv">${row('Allergies','None')}</div>`;
   document.getElementById('shBody').innerHTML=`
     ${isBlacklisted(o)?`<div class="warnbox"><b>Blacklisted customer.</b> Review before accepting this order.</div>`:''}
-    <div class="summary-pills"><span class="summary-pill">Total <b>${money(o.price)}</b></span><span class="summary-pill">Paid <b>${money(o.paid)}</b></span><span class="summary-pill">Remaining <b>${money(remaining)}</b></span><span class="summary-pill">Pick-up <b>${escHtml(relDate(o.pdate))}</b></span></div>
+    <div class="summary-pills"><span class="summary-pill">Total <b>${money(o.price)}</b></span><span class="summary-pill">Paid <b>${money(o.paid)}</b></span><span class="summary-pill">Remaining <b>${money(remaining)}</b></span><span class="summary-pill">Pick-up <b>${escHtml(relDate(o.pdate))}${o.ptime?' · '+escHtml(o.ptime):''}</b></span></div>
     <div class="sec"><div class="lbl">Order progress</div>${progressHTML(o)}</div>
     <div class="sec"><div class="lbl">Final quote</div><div class="quote-edit"><input id="quotePrice" type="number" min="0" step="0.01" value="${Number(o.price||0)}" aria-label="Final quote in euros"><button onclick="saveQuote(${o.id})">Save price</button></div><p class="infonote">Resolve custom colours and add-ons here before moving the order to Quoted.</p></div>
     <div class="sec"><div class="lbl">Pick-up</div><div class="kv">${row('Date',escHtml(fmtDate(o.pdate))+' · '+escHtml(relDate(o.pdate)))}${row('Time',escHtml(o.ptime))}${row('Courier',o.courier?'Uber/Bolt courier collection':'Customer collection')}</div></div>
@@ -2458,13 +2480,13 @@ function cardDisplayPrice(o){if(['cancelled','deleted'].includes(o.status))retur
 function overviewPickupLine(o){const info=overviewPickupInfo(o),d=o.pdate?new Date(o.pdate+'T00:00:00'):null;if(!d||Number.isNaN(d.getTime()))return 'Pick-up date not set';d.setHours(0,0,0,0);const n=Math.round((d-today)/86400000);if(n===0||n===1)return `Pick-up at ${o.ptime||'time not set'}`;if(n>1)return `Pick-up in ${n} days`;if(n===-1)return 'Pick-up was yesterday';return `Pick-up ${-n} days overdue`;}
 function overviewPaymentMeta(o){if(o.price>0&&o.paid>=o.price)return 'Paid in full';if(o.paid>0)return 'Deposit received';if(o.customerDecision==='accepted')return 'Quote accepted';const stage=workflowStage(o);if(stage===1)return 'Price not set';if(stage===2)return 'Confirmation not sent';return 'Payment pending';}
 function overviewPrimaryBadge(o){const stage=workflowStage(o),bucket=bucketOf(o),delta=pickupDeltaMs(o);if(bucket==='cake_delivered'){if(o.paid<o.price&&delta!==null&&delta<=0)return {label:'Payment Due',kind:'overdue'};return {label:'Ready for Collection',kind:'ready'};}if(stage===1)return {label:'Set Price',kind:'action'};if(stage===2)return {label:'Send Confirmation',kind:'sent'};if(stage===3)return {label:'Deposit Due',kind:'due'};if(bucket==='deposit_paid')return o.paid>=o.price&&o.price>0?{label:'Paid in Full',kind:'paid'}:{label:'Deposit Received',kind:'received'};return {label:'Review',kind:'closed'};}
-function overviewCardHTML(o){const bucket=bucketOf(o),meta=`${(o.range?'~':'')+money(o.price)} • ${overviewPaymentMeta(o)}`;return `<article class="overview-card ${o.read?'':'unread'}" style="--bucket-color:${bucketColor(bucket)}" onclick="openSheet(${o.id})"><div class="overview-card-main">${overviewDateTileHTML(o)}<div class="overview-card-copy"><div class="overview-card-name">${escHtml(o.name)}${isBlacklisted(o)?'<span class="blchip">Blacklisted</span>':''}</div><div class="overview-pickup"><div class="overview-pickup-line"><strong>${escHtml(overviewPickupLine(o))}</strong></div></div><div class="overview-card-price">${escHtml(meta)}</div></div></div><div class="overview-card-side"><div class="overview-badge-stack">${orderBadgesHTML(o)}</div></div></article>`;}
+function overviewCardHTML(o){const bucket=bucketOf(o),meta=`${(o.range?'~':'')+money(o.price)} • ${overviewPaymentMeta(o)}`;return `<article class="overview-card ${o.read?'':'unread'}" style="--bucket-color:${bucketColor(bucket)}" onclick="openSheet(${o.id})">${isRushOrder(o)?'<span class="badge-rush">RUSH ORDER</span>':''}<div class="overview-card-main">${overviewDateTileHTML(o)}<div class="overview-card-copy"><div class="overview-card-name">${escHtml(o.name)}${isBlacklisted(o)?'<span class="blchip">Blacklisted</span>':''}</div><div class="overview-pickup"><div class="overview-pickup-line"><strong>${escHtml(overviewPickupLine(o))}</strong></div></div><div class="overview-card-price">${escHtml(meta)}</div></div></div><div class="overview-card-side"><div class="overview-badge-stack">${orderBadgesHTML(o)}</div></div></article>`;}
 function renderOrdersOverview(q,el){let items=ORDERS.filter(o=>!['done','cancelled','deleted'].includes(o.status)&&matchSearch(o,q));if(overviewMode==='todo')items=items.filter(orderNeedsAction);items=sortOverviewOrders(items);if(!items.length){el.innerHTML='<div class="empty">No active orders.</div>';return;}el.innerHTML=`<div class="overview-grid">${items.map(overviewCardHTML).join('')}</div>`;}
 function cardTimeText(value){const match=String(value||'').match(/(\d{1,2}):(\d{2})/);if(!match)return value||'—';const hour=Number(match[1]),minute=match[2];return `${hour%12||12}:${minute} ${hour>=12?'PM':'AM'}`;}
 function cardPickupDate(o){if(!o.pdate)return 'Date not set';const d=new Date(o.pdate+'T00:00:00');return `${WD[d.getDay()]} - ${MO[d.getMonth()]} ${d.getDate()} - ${cardTimeText(o.ptime)}`;}
 function pickupDistance(iso){if(!iso)return '';const d=new Date(iso+'T00:00:00');d.setHours(0,0,0,0);const n=Math.round((d-today)/86400000);if(n===0)return 'today';if(n===1)return 'in 1 day';if(n>1)return `in ${n} days`;if(n===-1)return '1 day ago';return `${-n} days ago`;}
 function cardProgressLabel(o){const first=orderBadgeData(o)[0]||{label:'Review Order',kind:'closed'};return {lines:[first.label],kind:first.kind};}
-function cardHTML(o){const price=cardDisplayPrice(o),cakeLine=[o.type,shortSize(o.size)].filter(Boolean).join(' ')+' - '+(o.shape||'—');return `<div class="ocard ${o.read?'':'unread'}" style="--st:${bucketColor(bucketOf(o))}" onclick="openSheet(${o.id})"><div class="oc-top"><div class="oc-copy"><div class="oc-name">${escHtml(o.name)}${isBlacklisted(o)?'<span class="blchip">Blacklisted</span>':''}</div><div class="oc-cake">${escHtml(cakeLine)}</div><div class="oc-flavour">${escHtml(o.flavor||'—')}</div><div class="oc-ordered">Ordered: ${escHtml(o.created)}</div><div class="oc-pickup"><div>Pickup: <b>${escHtml(cardPickupDate(o))}</b></div><span>(${escHtml(pickupDistance(o.pdate))})</span></div></div><div class="oc-side"><div class="oc-price">${escHtml(price)}</div>${orderBadgesHTML(o)}</div></div></div>`;}
+function cardHTML(o){const price=cardDisplayPrice(o),cakeLine=[o.type,shortSize(o.size)].filter(Boolean).join(' ')+' - '+(o.shape||'—');return `<div class="ocard ${o.read?'':'unread'}" style="--st:${bucketColor(bucketOf(o))}" onclick="openSheet(${o.id})">${isRushOrder(o)?'<span class="badge-rush">RUSH ORDER</span>':''}<div class="oc-top"><div class="oc-copy"><div class="oc-name">${escHtml(o.name)}${isBlacklisted(o)?'<span class="blchip">Blacklisted</span>':''}</div><div class="oc-cake">${escHtml(cakeLine)}</div><div class="oc-flavour">${escHtml(o.flavor||'—')}</div><div class="oc-ordered">Ordered: ${escHtml(o.created)}</div><div class="oc-pickup"><div>Pickup: <b>${escHtml(cardPickupDate(o))}</b></div><span>(${escHtml(pickupDistance(o.pdate))})</span></div></div><div class="oc-side"><div class="oc-price">${escHtml(price)}</div>${orderBadgesHTML(o)}</div></div></div>`;}
 function shortSize(v){return String(v||'').replace(/\s*\([^)]*\)/g,'').trim();}
 const WORKFLOW_STEPS=[['Send','Confirm.'],['Deposit','Due'],['Deposit','Received'],['Ready for','Collection'],['Order','Completed']];
 function progressHTML(o){
@@ -2483,9 +2505,10 @@ function closeQuotePreview(){document.getElementById('quotePreview').classList.r
 function openQuoteMessage(id){const o=ORDERS.find(x=>x.id===id);if(!o)return;openId=id;openMessagePanel('quote');}
 function financeCell(label,value,key){return `<div class="finance-cell ${key||''}"><span>${label}</span><b>${value}</b></div>`;}
 function orderPickupDate(o){if(!o.pdate)return 'Pickup date not set';const d=new Date(`${o.pdate}T00:00:00`);if(Number.isNaN(d.getTime()))return o.pdate;const date=new Intl.DateTimeFormat('en-GB',{day:'numeric',month:'short',year:'numeric'}).format(d),weekday=new Intl.DateTimeFormat('en-GB',{weekday:'short'}).format(d);return `${date} (${weekday})`;}
+function orderPickupTimeLine(o){return o.ptime?`at ${o.ptime}`:'Time not set';}
 function orderPickupIcon(){return '<svg viewBox="0 0 24 24" aria-hidden="true"><rect x="3" y="5" width="18" height="16" rx="2"></rect><path d="M8 3v4m8-4v4M3 10h18"></path><path d="m8 15 2 2 5-5"></path></svg>';}
 function paymentStatusData(o){if(o.price>0&&o.paid>=o.price)return {label:'Paid in full',kind:'paid'};if(o.paid>0)return {label:'Deposit received',kind:'paid'};return {label:'Payment due',kind:'due'};}
-function orderOverviewHTML(o){const remaining=Math.max(0,o.price-o.paid),status=paymentStatusData(o),canEdit=!['done','deleted'].includes(o.status),paymentControl=canEdit?`<button type="button" class="payment-status-open" onclick="focusPayment()">Payment <svg viewBox="0 0 24 24" aria-hidden="true"><path d="m9 5 7 7-7 7"></path></svg></button>`:'<span class="payment-status-open">Payment</span>';return `<section class="order-overview"><div class="order-pickup-card"><span class="order-pickup-icon">${orderPickupIcon()}</span><span class="order-pickup-copy"><span class="order-pickup-label">Pickup date</span><strong class="order-pickup-date">${escHtml(orderPickupDate(o))}</strong></span><strong class="order-pickup-distance">${escHtml(pickupDistance(o.pdate))}</strong></div><div class="order-finance-card"><div class="order-payment-grid"><div class="order-payment-metric paid"><span>Deposit paid</span><strong>${money(o.paid)}</strong></div><div class="order-payment-metric remaining"><span>Remaining</span><strong>${money(remaining)}</strong></div><div class="order-payment-metric total"><span>Total</span><strong>${money(o.price)}</strong></div></div><div class="order-payment-status"><span>Payment status</span><span class="payment-status-badge ${status.kind}">${escHtml(status.label)}</span>${paymentControl}</div></div></section>`;}
+function orderOverviewHTML(o){const remaining=Math.max(0,o.price-o.paid),status=paymentStatusData(o),canEdit=!['done','deleted'].includes(o.status),paymentControl=canEdit?`<button type="button" class="payment-status-open" onclick="focusPayment()">Payment <svg viewBox="0 0 24 24" aria-hidden="true"><path d="m9 5 7 7-7 7"></path></svg></button>`:'<span class="payment-status-open">Payment</span>';return `<section class="order-overview"><div class="order-pickup-card"><span class="order-pickup-icon">${orderPickupIcon()}</span><span class="order-pickup-copy"><span class="order-pickup-label">Pickup date</span><strong class="order-pickup-date">${escHtml(orderPickupDate(o))}</strong><span class="order-pickup-time">${escHtml(orderPickupTimeLine(o))}</span></span><strong class="order-pickup-distance">${escHtml(pickupDistance(o.pdate))}</strong></div><div class="order-finance-card"><div class="order-payment-grid"><div class="order-payment-metric paid"><span>Deposit paid</span><strong>${money(o.paid)}</strong></div><div class="order-payment-metric remaining"><span>Remaining</span><strong>${money(remaining)}</strong></div><div class="order-payment-metric total"><span>Total</span><strong>${money(o.price)}</strong></div></div><div class="order-payment-status"><span>Payment status</span><span class="payment-status-badge ${status.kind}">${escHtml(status.label)}</span>${paymentControl}</div></div></section>`;}
 function infoRow(k,v){return `<div class="r"><span class="k">${escHtml(k)}</span><span class="v">${v||'—'}</span></div>`;}
 function quoteInputHTML(value){return `<div class="quote-input-wrap"><span class="quote-input-euro">€</span><input id="quotePrice" type="text" inputmode="decimal" enterkeyhint="done" autocomplete="off" pattern="[0-9]+([.,][0-9]{0,2})?" value="${Number(value||0)}" oninput="sanitizeMoneyInput(this)" aria-label="Final price in euros"></div>`;}
 function sanitizeMoneyInput(input){let value=String(input.value||'').replace(',','.').replace(/[^0-9.]/g,''),parts=value.split('.');if(parts.length>1)value=parts.shift()+'.'+parts.join('').slice(0,2);input.value=value;}
@@ -2720,6 +2743,26 @@ function startAutoRefresh(){
 }
 document.addEventListener('visibilitychange',()=>{if(!document.hidden)refreshOrders();});
 
+/* a light, client-only "once a day" message — no server/SQL involved. A localStorage flag keyed by
+   today's date caps it to a single showing per calendar day; an hourly recheck (only while the tab is
+   open and visible) means it can still appear even on a session that spans past midnight. */
+let loveTimer=null;
+function closeLovePopup(){document.getElementById('lovePopup').classList.remove('show');}
+function maybeShowLovePopup(){
+  if(document.hidden)return;
+  try{
+    const today=new Date().toDateString();
+    if(localStorage.getItem('caner_love_popup_date')===today)return;
+    localStorage.setItem('caner_love_popup_date',today);
+  }catch(e){return;}
+  document.getElementById('lovePopup').classList.add('show');
+}
+function startLovePopupWatcher(){
+  setTimeout(maybeShowLovePopup,4000);
+  if(loveTimer)clearInterval(loveTimer);
+  loveTimer=setInterval(maybeShowLovePopup,60*60*1000);
+}
+
 async function tryLogin(){
   const pw=document.getElementById('pw').value;
   document.getElementById('pwErr').style.display='none';
@@ -2731,7 +2774,7 @@ async function tryLogin(){
     document.getElementById('login').style.display='none';
     document.getElementById('app').style.display='block';
     setView('orders');
-    startAutoRefresh();
+    startAutoRefresh();startLovePopupWatcher();
   }catch(e){
     document.getElementById('pwErr').textContent='Wrong password — try again.';
     document.getElementById('pwErr').style.display='block';
@@ -2750,7 +2793,7 @@ document.addEventListener('keydown',event=>{const key=String(event.key||'').toLo
 document.getElementById('pw').addEventListener('keydown',e=>{if(e.key==='Enter')tryLogin();});
 
 /* stay signed in across reloads */
-(async function(){if(!sb)return;try{const {data}=await sb.auth.getSession();if(data&&data.session){await loadAll();document.getElementById('login').style.display='none';document.getElementById('app').style.display='block';setView('orders');startAutoRefresh();}}catch(e){}})();
+(async function(){if(!sb)return;try{const {data}=await sb.auth.getSession();if(data&&data.session){await loadAll();document.getElementById('login').style.display='none';document.getElementById('app').style.display='block';setView('orders');startAutoRefresh();startLovePopupWatcher();}}catch(e){}})();
 
 /* Local-only visual QA. It can never activate on Vercel or byamandasoyer.pt. */
 document.addEventListener('click',event=>{if(!event.target.closest('.profile-wrap'))closeProfileMenu();if(customerMenuKey&&!event.target.closest('.customer-menu-wrap')){customerMenuKey='';if(view==='info'&&infoTab==='customers')renderInfo();}});

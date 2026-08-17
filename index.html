@@ -576,10 +576,13 @@
   /* once-a-day, no-title, blurred-background message — see maybeShowLovePopup() */
   .love-popup{display:none;position:fixed;inset:0;z-index:200;align-items:center;justify-content:center;padding:24px;background:rgba(20,10,15,.55);backdrop-filter:blur(6px)}
   .love-popup.show{display:flex}
-  .love-popup-card{width:min(320px,100%);padding:30px 22px 22px;border-radius:20px;background:#fff;text-align:center;box-shadow:0 24px 60px rgba(0,0,0,.32)}
-  .love-popup-card p{margin:0 0 20px;font:750 17px/1.4 'Instrument Sans',sans-serif;color:var(--ink)}
-  .love-popup-card button{width:100%;min-height:52px;border:0;border-radius:14px;background:var(--accent);color:#fff;font:800 15px 'Instrument Sans',sans-serif;cursor:pointer}
+  .love-popup-card{position:relative;overflow:hidden;width:min(320px,100%);padding:30px 22px 22px;border-radius:20px;background:#fff;text-align:center;box-shadow:0 24px 60px rgba(0,0,0,.32)}
+  .love-popup-card p{position:relative;z-index:1;margin:0 0 20px;font:750 17px/1.4 'Instrument Sans',sans-serif;color:var(--ink)}
+  .love-popup-card button{position:relative;z-index:1;width:100%;min-height:52px;border:0;border-radius:14px;background:var(--accent);color:#fff;font:800 15px 'Instrument Sans',sans-serif;cursor:pointer}
   .love-popup-card button:active{transform:scale(.97)}
+  .love-hearts{position:absolute;inset:0;pointer-events:none;overflow:hidden;z-index:0}
+  .love-hearts span{position:absolute;bottom:-34px;font-size:22px;opacity:0;animation:loveFloat 3.4s ease-in forwards}
+  @keyframes loveFloat{0%{transform:translateY(0) scale(.7) rotate(-8deg);opacity:0}12%{opacity:.95}100%{transform:translateY(-340px) scale(1.15) rotate(8deg);opacity:0}}
   .do-next.conditional .do-next-copy{display:grid;gap:9px}.do-next-rule{display:grid;grid-template-columns:58px minmax(0,1fr);align-items:start;gap:8px}.do-next-rule+.do-next-rule{padding-top:9px;border-top:1px solid rgba(77,111,91,.18)}.do-next-rule .do-next-label{margin:2px 0 0!important}.do-next-rule .do-next-text{line-height:1.35!important}
   @media(max-width:560px){.do-next-rule{grid-template-columns:52px minmax(0,1fr);gap:6px}.do-next.conditional .do-next-copy{padding:12px!important}}
   /* v60 active-order overview */
@@ -1594,7 +1597,12 @@
 
 <div class="love-popup" id="lovePopup" role="dialog" aria-modal="true" aria-label="Message">
   <div class="love-popup-card">
-    <p>Dikkat: Caner loves you 😘</p>
+    <div class="love-hearts" aria-hidden="true">
+      <span style="left:6%">💖</span><span style="left:22%;animation-delay:.5s">💕</span>
+      <span style="left:40%;animation-delay:1s">🥰</span><span style="left:58%;animation-delay:.3s">❤️</span>
+      <span style="left:74%;animation-delay:1.2s">✨</span><span style="left:88%;animation-delay:.7s">🌹</span>
+    </div>
+    <p id="loveMessage">DİKKAT: Caner loves you 😘</p>
     <button type="button" onclick="closeLovePopup()">Yeah, I know ☺️</button>
   </div>
 </div>
@@ -2560,7 +2568,7 @@ function openQuotePreviewCustomer(id){const o=ORDERS.find(x=>x.id===id);if(!o||!
 function closeQuotePreview(){document.getElementById('quotePreview').classList.remove('show');document.getElementById('quotePreviewFrame').src='about:blank';}
 async function deleteQuoteVersion(orderId,versionNumber,token){
   if(!confirm(`Delete version ${versionNumber}?\n\nThis only removes the saved dashboard copy from history.`))return;
-  const {error}=await sb.rpc('delete_order_quote_version',{p_order_id:orderId,p_version_number:versionNumber,p_token:token});
+  const {error}=await sb.rpc('delete_order_quote_version',{p_order_id:orderId,p_token:token,p_version_number:versionNumber});
   if(error){alert('Could not delete this version.\n\n'+error.message);return;}
   quoteVersionCache.delete(orderId);
   refreshView();
@@ -2807,24 +2815,66 @@ function startAutoRefresh(){
 }
 document.addEventListener('visibilitychange',()=>{if(!document.hidden)refreshOrders();});
 
-/* a light, client-only "once a day" message — no server/SQL involved. A localStorage flag keyed by
-   today's date caps it to a single showing per calendar day; an hourly recheck (only while the tab is
-   open and visible) means it can still appear even on a session that spans past midnight. */
-let loveTimer=null;
+/* a light, client-only "once a day" message — no server/SQL involved. It appears once per day on a
+   random one of the first openings (2nd-4th) of the app, and only between 08:00 and 21:00. If the app
+   isn't opened enough times (or only outside that window) on a given day, it simply doesn't appear. */
+const LOVE_SPECIAL_DATES={
+  '6-2':{text:'Happy anniversary! I love you more every single day'},
+  '2-14':{text:'Happy Valentine’s Day, my love!'}
+  '3-6':{text:'Happy Birthday my baby, my love!'}
+  '11-14':{text:'Today is Sergo’s birthday!'}
+  '11-14':{text:'Today is Deborah’s birthday!'}
+  '10-8':{text:'İyi ki doğdun Üçüzler!'}
+};
+const LOVE_MESSAGES=[
+  'DİKKAT: Caner loves you 😘',
+  'Just a reminder — you are so loved ❤️',
+  'Caner thinks you’re amazing (and he’s not biased at all) 😄',
+  'You make me smile just by existing 🌹',
+  'Someone here loves you a lot… can you guess who? 😉',
+  'You’re my favorite person in the world ✨',
+  'Pause for a second: you’re wonderful 🥰',
+  'I’d pick you over cake any day. Almost. 😅',
+  'You are the best cake maker 🎂',
+  'Every cake you make turns hearts into smiles 🍰',
+  'You’re doing amazing — keep going! ✨',
+  'Your cakes are real works of art 🎨',
+  'Someone’s about to have a great day because of your cake 😊',
+  'Proud of you, as always 💪',
+  'You turn flour and sugar into joy 🥄',
+  'The world is a little sweeter because of you 🍭',
+  'You’re not just a cake maker — you’re a happiness maker 😍',
+  'Keep baking, keep shining 🌟'
+];
 function closeLovePopup(){document.getElementById('lovePopup').classList.remove('show');}
+function loveMessage(){
+  const n=new Date(),special=LOVE_SPECIAL_DATES[`${n.getMonth()+1}-${n.getDate()}`];
+  if(special)return special.text;
+  return LOVE_MESSAGES[Math.floor(Math.random()*LOVE_MESSAGES.length)];
+}
 function maybeShowLovePopup(){
   if(document.hidden)return;
   try{
     const today=new Date().toDateString();
-    if(localStorage.getItem('caner_love_popup_date')===today)return;
-    localStorage.setItem('caner_love_popup_date',today);
+    if(localStorage.getItem('caner_love_date')!==today){
+      localStorage.setItem('caner_love_date',today);
+      localStorage.setItem('caner_love_count','0');
+      localStorage.setItem('caner_love_target',String(2+Math.floor(Math.random()*3))); /* random 2-4 */
+      localStorage.setItem('caner_love_shown','0');
+    }
+    if(localStorage.getItem('caner_love_shown')==='1')return;
+    const hour=new Date().getHours();
+    if(hour<8||hour>21)return; /* only 08:00-21:59 */
+    const count=parseInt(localStorage.getItem('caner_love_count')||'0',10)+1;
+    localStorage.setItem('caner_love_count',String(count));
+    if(count<parseInt(localStorage.getItem('caner_love_target')||'2',10))return;
+    localStorage.setItem('caner_love_shown','1');
   }catch(e){return;}
+  const msg=document.getElementById('loveMessage');if(msg)msg.textContent=loveMessage();
   document.getElementById('lovePopup').classList.add('show');
 }
 function startLovePopupWatcher(){
-  setTimeout(maybeShowLovePopup,4000);
-  if(loveTimer)clearInterval(loveTimer);
-  loveTimer=setInterval(maybeShowLovePopup,60*60*1000);
+  setTimeout(maybeShowLovePopup,2000); /* a couple seconds after each opening of the app */
 }
 
 async function tryLogin(){

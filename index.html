@@ -135,6 +135,22 @@
   .calcell .more{font-size:9px;color:var(--ink-faint)}
   .calsel{margin-top:16px}
 
+  /* holidays / off-days */
+  .holiday-card{background:var(--card);border:1px solid var(--line);border-radius:16px;padding:18px;margin-bottom:16px}
+  .holiday-card h3{margin:0 0 4px;font-size:16px}
+  .holiday-card>p{margin:0 0 14px;color:var(--ink-soft);font-size:12.5px;line-height:1.45}
+  .holiday-card .calcell.saved{border-color:#C98A2E;background:#FBF3E6}
+  .holiday-card .calcell.saved .d{background:#C98A2E;color:#fff}
+  .holiday-card .calcell.past{opacity:.4}
+  .holiday-tag{font-size:7.5px;font-weight:800;letter-spacing:.05em;color:#C98A2E;margin-top:auto}
+  .holiday-actions{display:flex;gap:8px;margin-top:14px;flex-wrap:wrap}
+  .holiday-actions button{min-height:40px;padding:0 14px;border:1px solid var(--line);border-radius:10px;background:var(--card);color:var(--ink);font:700 12px 'Instrument Sans',sans-serif;cursor:pointer}
+  .holiday-actions button.primary{background:var(--accent);border-color:var(--accent);color:#fff}
+  .holiday-actions button:active{transform:translateY(1px)}
+  .holiday-list{display:flex;flex-direction:column;gap:8px}
+  .holiday-row{display:flex;align-items:center;justify-content:space-between;gap:10px;padding:10px 12px;border:1px solid var(--line);border-radius:10px;background:var(--card);font-size:13px}
+  .holiday-row button{min-height:32px;padding:0 11px;border:1px solid #E7BFC6;border-radius:9px;background:#FFF4F5;color:#A3263C;font:700 11.5px 'Instrument Sans',sans-serif;cursor:pointer}
+
   /* my info */
   .inforow{background:var(--card);border:1px solid var(--line);border-radius:14px;box-shadow:var(--shadow);padding:12px 14px;margin-bottom:10px}
   .inforow .k{font-size:11px;font-weight:700;letter-spacing:.06em;text-transform:uppercase;color:var(--ink-faint);margin-bottom:5px}
@@ -1524,6 +1540,7 @@
             <div class="profile-divider"></div>
             <button type="button" data-destination="blacklist" onclick="openProfileDestination('blacklist')"><svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="9"></circle><path d="m6 18 12-12"></path></svg><span>Blacklist</span></button>
             <button type="button" data-destination="customers" onclick="openProfileDestination('customers')"><svg viewBox="0 0 24 24"><circle cx="9" cy="8" r="3"></circle><circle cx="17" cy="10" r="2"></circle><path d="M3 20c.7-4 2.7-6 6-6s5.3 2 6 6M15 15c3 0 4.7 1.7 5 5"></path></svg><span>Customers</span></button>
+            <button type="button" data-destination="holidays" onclick="openProfileDestination('holidays')"><svg viewBox="0 0 24 24"><path d="M5 21V7a2 2 0 0 1 2-2h10a2 2 0 0 1 2 2v14l-2.5-1.5L16 21l-2-1.5-2 1.5-2-1.5L8 21l-1.5-1.5L5 21Z"/><path d="M9 5V3m6 2V3M8 10h8M8 13.5h5"></path></svg><span>Holidays</span></button>
             <button type="button" data-destination="settings" onclick="openProfileDestination('settings')"><svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="3"></circle><path d="M19 12a7 7 0 0 0-.1-1l2-1.5-2-3.4-2.4 1A7 7 0 0 0 15 6l-.3-2.6h-4L10.4 6A7 7 0 0 0 8.8 7L6.4 6l-2 3.4 2 1.5a7 7 0 0 0 0 2L4.4 14.5l2 3.4 2.4-1A7 7 0 0 0 10.4 18l.3 2.6h4L15 18a7 7 0 0 0 1.6-1.1l2.4 1 2-3.4-2-1.5a7 7 0 0 0 .1-1Z"></path></svg><span>Settings</span></button>
             <div class="profile-divider"></div>
             <button type="button" class="restart" onclick="hardRestartDashboard()"><svg viewBox="0 0 24 24"><path d="M4 8V4h4M4.8 5.2A9 9 0 1 1 3 14"></path></svg><span>Restart</span></button>
@@ -1617,6 +1634,7 @@ const PRIVATE_PHOTO_PREFIX="order-upload://";
 const PRIVATE_PHOTO_BUCKET="order-uploads";
 const signedPhotoCache=new Map();
 const quoteVersionCache=new Map();
+let OFF_DAYS=[]; let holidayMonth=null; const holidaySel=new Set();
 
 const STATUSES=[
   {id:"new",label:"New",color:"var(--new)"},
@@ -1774,7 +1792,19 @@ async function loadAll(){
   await syncAutoDelivered();
   try{const {data:st}=await sb.from('settings').select('data').eq('id',1).single();if(st&&st.data)BIZ=Object.assign({},BIZ,st.data);}catch(e){}
   try{const {data:bl}=await sb.from('blacklist').select('*');BLACKLIST=(bl||[]).map(b=>({id:b.id,name:b.name,phone:b.phone,digits:b.digits,note:b.note}));}catch(e){}
+  await loadOffDays();
   await refreshActivity();
+}
+async function loadOffDays(){
+  try{
+    const {data,error}=await sb.from('off_days').select('id,day');
+    if(error)throw error;
+    const today=new Date();today.setHours(0,0,0,0);
+    const rows=data||[];
+    const past=rows.filter(r=>new Date(r.day+'T00:00:00')<today);
+    if(past.length)await sb.from('off_days').delete().in('id',past.map(p=>p.id));
+    OFF_DAYS=rows.filter(r=>new Date(r.day+'T00:00:00')>=today).sort((a,b)=>a.day.localeCompare(b.day));
+  }catch(e){OFF_DAYS=[];}
 }
 async function refreshOrders(){
   try{
@@ -2148,11 +2178,61 @@ function renderInfo(){
     ${row('hours','Pick-up hours',BIZ.hours,true)}
     <p class="infonote">Changes save to Supabase and are used automatically on new customer quote pages.</p>`;
   const blacklistHtml=`<div class="ghead"><span>🚫 Blacklist</span><span class="ln"></span></div>${bl}`;
-  const title={info:'My Info',blacklist:'Blacklist',customers:'Customers',settings:'Settings'}[infoTab]||'My Info';
-  document.getElementById('main').innerHTML=`<div class="page-heading-row info-page-title"><h1>${title}</h1></div>${infoTab==='info'?infoHtml:infoTab==='blacklist'?blacklistHtml:infoTab==='customers'?renderCustomersPanel():renderSettingsPanel()}`;
+  const title={info:'My Info',blacklist:'Blacklist',customers:'Customers',settings:'Settings',holidays:'Holidays'}[infoTab]||'My Info';
+  document.getElementById('main').innerHTML=`<div class="page-heading-row info-page-title"><h1>${title}</h1></div>${infoTab==='info'?infoHtml:infoTab==='blacklist'?blacklistHtml:infoTab==='customers'?renderCustomersPanel():infoTab==='holidays'?renderHolidaysPanel():renderSettingsPanel()}`;
   if(infoTab==='info')document.querySelectorAll('#main [data-k]').forEach(el=>el.oninput=e=>{BIZ[e.target.dataset.k]=e.target.value;saveBiz();});
 }
 function infoSetTab(tab){infoTab=tab;renderInfo();}
+function renderHolidaysPanel(){
+  const today=new Date();today.setHours(0,0,0,0);
+  if(!holidayMonth){const base=new Date();holidayMonth=new Date(base.getFullYear(),base.getMonth(),1);}
+  const y=holidayMonth.getFullYear(),m=holidayMonth.getMonth();
+  const startDow=new Date(y,m,1).getDay(),days=new Date(y,m+1,0).getDate();
+  const saved=new Set(OFF_DAYS.map(o=>o.day));
+  let cells='';
+  for(let i=0;i<startDow;i++)cells+=`<div class="calcell empty"></div>`;
+  for(let d=1;d<=days;d++){
+    const iso=`${y}-${String(m+1).padStart(2,'0')}-${String(d).padStart(2,'0')}`;
+    const isPast=new Date(iso+'T00:00:00')<today;
+    const isSel=holidaySel.has(iso),isSaved=saved.has(iso);
+    cells+=`<div class="calcell ${isPast?'past':''} ${isSel?'sel':''} ${isSaved?'saved':''}" ${isPast?'':`onclick="holidayPick('${iso}')"`}><span class="d">${d}</span>${isSaved?'<div class="holiday-tag">OFF</div>':''}</div>`;
+  }
+  const list=OFF_DAYS.length
+    ? `<div class="holiday-list">${OFF_DAYS.map(o=>`<div class="holiday-row"><span>${escHtml(fmtDate(o.day))}</span><button onclick="deleteOffDay(${o.id},'${o.day}')">Delete</button></div>`).join('')}</div>`
+    : `<p class="infonote" style="margin-top:0">No off days yet. Select days in the calendar and press “Add selected days”.</p>`;
+  return `<section class="holiday-card">
+    <h3>Add off days</h3>
+    <p>Pick the days the order form should be closed, then press Add. Existing off days are marked “OFF”. Past off days are removed automatically.</p>
+    <div class="calhead">
+      <button class="calnav" onclick="holidayShift(-1)">‹</button>
+      <div class="mo">${MO[m]} ${y}</div>
+      <button class="calnav" onclick="holidayShift(1)">›</button>
+    </div>
+    <div class="calgrid">${WD.map(w=>`<div class="caldow">${w}</div>`).join('')}${cells}</div>
+    <div class="holiday-actions">
+      <button class="primary" onclick="addOffDays()">Add selected days</button>
+      <button onclick="clearHolidaySelection()">Clear selection</button>
+    </div>
+  </section>
+  <section class="holiday-card"><h3>Current off days</h3>${list}</section>`;
+}
+function holidayPick(iso){if(holidaySel.has(iso))holidaySel.delete(iso);else holidaySel.add(iso);renderInfo();}
+function holidayShift(n){holidayMonth=new Date(holidayMonth.getFullYear(),holidayMonth.getMonth()+n,1);renderInfo();}
+function clearHolidaySelection(){holidaySel.clear();renderInfo();}
+async function addOffDays(){
+  const days=[...holidaySel].sort();
+  if(!days.length){alert('Select at least one day in the calendar first.');return;}
+  const {error}=await sb.from('off_days').upsert(days.map(day=>({day})),{onConflict:'day'});
+  if(error){alert('Could not add off days: '+error.message);return;}
+  holidaySel.clear();await loadOffDays();renderInfo();
+  alert(`${days.length} off day${days.length===1?'':'s'} added. The order form is now closed on those dates.`);
+}
+async function deleteOffDay(id,day){
+  if(!confirm(`Remove ${fmtDate(day)} from off days? The order form will be selectable again that day.`))return;
+  const {error}=await sb.from('off_days').delete().eq('id',id);
+  if(error){alert('Could not remove this off day: '+error.message);return;}
+  await loadOffDays();renderInfo();
+}
 function customerGroupKey(o){return odigits(o)||String(o.email||o.name||o.id).trim().toLowerCase();}
 function hiddenCustomerKeys(){return Array.isArray(BIZ.hiddenCustomerKeys)?BIZ.hiddenCustomerKeys:[];}
 function allCustomerGroups(){const groups=new Map();ORDERS.forEach(o=>{const key=customerGroupKey(o);if(!groups.has(key))groups.set(key,{key,name:o.name||'Unknown customer',phone:o.wcode+' '+o.wnum,digits:odigits(o),email:o.email||'',orders:[]});const g=groups.get(key);g.orders.push(o);if(o.email)g.email=o.email;});return [...groups.values()].sort((a,b)=>a.name.localeCompare(b.name));}

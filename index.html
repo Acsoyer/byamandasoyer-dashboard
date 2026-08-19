@@ -139,10 +139,13 @@
   .holiday-card{background:var(--card);border:1px solid var(--line);border-radius:16px;padding:18px;margin-bottom:16px}
   .holiday-card h3{margin:0 0 4px;font-size:16px}
   .holiday-card>p{margin:0 0 14px;color:var(--ink-soft);font-size:12.5px;line-height:1.45}
+  .holiday-card .calcell{aspect-ratio:1;padding:2px;overflow:hidden;align-items:center;justify-content:center}
+  .holiday-card .calcell .d{width:20px;height:20px;font-size:11px}
+  .holiday-card .calcell.sel{padding:1px}
   .holiday-card .calcell.saved{border-color:#C98A2E;background:#FBF3E6}
   .holiday-card .calcell.saved .d{background:#C98A2E;color:#fff}
   .holiday-card .calcell.past{opacity:.4}
-  .holiday-tag{font-size:7.5px;font-weight:800;letter-spacing:.05em;color:#C98A2E;margin-top:auto}
+  .holiday-tag{position:absolute;top:1px;right:1px;font-size:6px;line-height:1;font-weight:800;letter-spacing:.02em;color:#C98A2E;background:rgba(201,138,46,.12);border-radius:4px;padding:1px 2px;white-space:nowrap}
   .holiday-actions{display:flex;gap:8px;margin-top:14px;flex-wrap:wrap}
   .holiday-actions button{min-height:40px;padding:0 14px;border:1px solid var(--line);border-radius:10px;background:var(--card);color:var(--ink);font:700 12px 'Instrument Sans',sans-serif;cursor:pointer}
   .holiday-actions button.primary{background:var(--accent);border-color:var(--accent);color:#fff}

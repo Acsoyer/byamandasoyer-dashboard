@@ -387,6 +387,7 @@
   .edit-textarea{min-height:78px;resize:vertical}
   .edit-input:focus,.edit-textarea:focus{border-color:var(--accent);box-shadow:0 0 0 3px rgba(115,8,44,.08)}
   .edit-inline{display:grid;grid-template-columns:minmax(0,1fr) minmax(0,1fr);gap:8px}
+  .edit-inline.pickup-inline{grid-template-columns:minmax(0,1fr);gap:8px}
   .edit-note{margin:8px 0 0;color:var(--ink-faint);font-size:11px;line-height:1.4}
   .edit-cancel{display:block;margin:11px 0 1px auto;padding:7px 2px;border:0;background:transparent;color:var(--ink-faint);font:650 11px 'Instrument Sans',sans-serif;cursor:pointer}
   .edit-saving{opacity:.62;pointer-events:none}
@@ -2741,7 +2742,7 @@ function editSaveIcon(){return '<svg viewBox="0 0 24 24" aria-hidden="true"><pat
 function isDetailEditing(o,section){return !!detailEdit&&detailEdit.orderId===o.id&&detailEdit.section===section;}
 function detailSummary(o,section,title){
   const editing=isDetailEditing(o,section);
-  return `<summary><span class="detail-summary-title">${escHtml(title)}</span><span class="detail-summary-actions"><button type="button" class="detail-edit-btn ${editing?'save':''}" onclick="${editing?`saveDetailEdit(event,${o.id},'${section}',this)`:`startDetailEdit(event,${o.id},'${section}')`}" aria-label="${editing?'Save':'Edit'} ${escAttr(title)}">${editing?editSaveIcon()+'<span>Save</span>':editPencilIcon()}</button><span class="detail-toggle" aria-hidden="true">+</span></span></summary>`;
+  return `<summary><span class="detail-summary-title">${escHtml(title)}</span><span class="detail-summary-actions"><button type="button" class="detail-edit-btn ${editing?'save':''}" onclick="${editing?`saveDetailEdit(event,${o.id},'${section}',this);return false;`:`startDetailEdit(event,${o.id},'${section}');return false;`}" aria-label="${editing?'Save':'Edit'} ${escAttr(title)}">${editing?editSaveIcon()+'<span>Save</span>':editPencilIcon()}</button><span class="detail-toggle" aria-hidden="true">+</span></span></summary>`;
 }
 function editSizeId(o){
   const s=String(o.size||'').toLowerCase();
@@ -2806,7 +2807,7 @@ function cakeEditorHTML(o){
 }
 function pickupEditorHTML(o){
   const d=detailEdit.draft;
-  return `<div class="detail-editor"><div class="edit-inline">${editInput('Date','pdate',d.pdate,'date')}${editInput('Time','ptime',d.ptime,'time')}</div>${pickerHTML('Collection','courier',d.courier?'courier':'customer',[{v:'customer',label:'Customer collection'},{v:'courier',label:'Uber/Bolt courier collection'}])}${editInput('Courier fee (€)','courierFee',d.courierFee||0,'number','min="0" step="0.5" inputmode="decimal" placeholder="0"') }<button class="edit-cancel" onclick="cancelDetailEdit(event,${o.id},'pickup')">Cancel editing</button></div>`;
+  return `<div class="detail-editor"><div class="edit-inline pickup-inline">${editInput('Date','pdate',d.pdate,'date')}${editInput('Time','ptime',d.ptime,'time')}</div>${pickerHTML('Collection','courier',d.courier?'courier':'customer',[{v:'customer',label:'Customer collection'},{v:'courier',label:'Uber/Bolt courier collection'}])}${editInput('Courier fee (€)','courierFee',d.courierFee||0,'number','min="0" step="0.5" inputmode="decimal" placeholder="0"') }<button class="edit-cancel" onclick="cancelDetailEdit(event,${o.id},'pickup')">Cancel editing</button></div>`;
 }
 function customerEditorHTML(o){
   const d=detailEdit.draft;

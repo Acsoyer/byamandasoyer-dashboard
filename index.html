@@ -1780,7 +1780,7 @@ function fromRow(r){
     noAllergy:!!r.no_allergy,allergies:r.allergies||(r.no_allergy?'None':''),notes:r.notes||'',
     name:r.name||'',wcode,wnum,instagram:r.instagram||'',email:r.email||'',emailOptIn:!!r.email_opt_in,
     heard:r.heard||'',referredBy:r.referred_by||'',pdate:r.pickup_date||'',ptime:r.pickup_time||'',
-    price:Number(r.price)||0,range:!!r.price_range,paid:Number(r.paid)||0,quotedItemsDescription:r.quoted_items_description||'',
+    price:Number(r.price)||0,range:!!r.price_range,paid:Number(r.paid)||0,rushSurcharge:Number(r.rush_surcharge)||0,quotedItemsDescription:r.quoted_items_description||'',
     courier:/COURIER:/i.test(r.notes||''),portalExpires:r.portal_expires_at||'',portalToken:r.portal_token||'',portalTerminatedAt:r.portal_terminated_at||'',
     portalUrl:r.portal_token?`https://byamandasoyer.pt/order/${r.portal_token}?lang=${String(r.language||'EN').toUpperCase()==='PT'?'pt':'en'}`:'',
     dashboardPortalUrl:r.portal_token?`https://byamandasoyer-dashboard.vercel.app/order/${r.portal_token}`:'',
@@ -2756,7 +2756,7 @@ function startDetailEdit(event,id,section){
   const o=ORDERS.find(x=>x.id===id);if(!o)return;
   const notes=editableNoteParts(o.notes);
   let draft;
-  if(section==='cake')draft={sizeId:editSizeId(o),shape:o.shape||'Round',flavor:o.flavor||'',colourHexes:(o.colors||[]).map(c=>c[1]),pigments:[...(o.pigment||[])],writingMethods:[...(o.writeMethods||[])],writing:o.writing||'',writingColor:o.writingColor||'',cupcakes:o.cupcakes||'No cupcakes',decor:(o.decor||[]).filter(x=>x!=='No decoration'),candles:o.candles||'No',noAllergy:!!o.noAllergy,allergies:o.allergies||'',notes:notes.customer,noteSystem:notes.system};
+  if(section==='cake')draft={sizeId:editSizeId(o),shape:o.shape||'Round',flavor:o.flavor||'',colourHexes:(o.colors||[]).map(c=>c[1]),pigments:[...(o.pigment||[])],writingMethods:[...(o.writeMethods||[])],writing:o.writing||'',writingColor:o.writingColor||'',cupcakes:o.cupcakes||'No cupcakes',decor:(o.decor||[]).filter(x=>x!=='No decoration'),candles:o.candles||'No',rushSurcharge:Number(o.rushSurcharge||o.rush_surcharge||0)||0,noAllergy:!!o.noAllergy,allergies:o.allergies||'',notes:notes.customer,noteSystem:notes.system};
   else if(section==='pickup')draft={pdate:o.pdate||'',ptime:o.ptime||'',courier:!!o.courier};
   else draft={name:o.name||'',whatsapp:(o.wcode+' '+o.wnum).trim(),instagram:o.instagram||'',email:o.email||'',lang:o.lang||'EN',heard:o.heard||'',referredBy:o.referredBy||'',feedback:o.feedback?String(o.feedback).charAt(0).toUpperCase()+String(o.feedback).slice(1).toLowerCase():''};
   detailEdit={orderId:id,section,draft,picker:''};detailFocusSection=section;openSheet(id,true);
@@ -2782,14 +2782,14 @@ function editInput(label,key,value,type='text',extra=''){
   return `<div class="edit-field"><label class="edit-label" for="edit_${key}">${escHtml(label)}</label><input class="edit-input" id="edit_${key}" type="${type}" value="${escAttr(value)}" ${extra} oninput="if(detailEdit)detailEdit.draft['${key}']=this.value"></div>`;
 }
 function cakeEditorHTML(o){
-  const d=detailEdit.draft,size=ORDER_EDIT.sizes.find(x=>x.v===d.sizeId)||ORDER_EDIT.sizes[1],isBento=size.type==='Bento';
+  const d=detailEdit.draft,size=ORDER_EDIT.sizes.find(x=>x.v===d.sizeId)||ORDER_EDIT.sizes[1],isBento=size.type==='Bento',rushValue=Math.max(0,Number(d.rushSurcharge)||Number(o.rushSurcharge||o.rush_surcharge||0)||0),showRush=rushValue>0||Number(o.rushSurcharge||o.rush_surcharge||0)>0;
   const sizeOptions=ORDER_EDIT.sizes.map(x=>({v:x.v,label:x.label,sub:x.sub}));
   const shapeOptions=ORDER_EDIT.shapes.filter(x=>!isBento||['Round','Heart'].includes(x)).map(x=>({v:x,label:x}));
   const flavourOptions=(isBento?ORDER_EDIT.bentoFlavours:ORDER_EDIT.flavours).map(x=>({v:x,label:x,sub:ORDER_EDIT.signature.includes(x)?'Signature flavour':''}));
   const colourOptions=ORDER_EDIT.colours.map(x=>({v:x[1],label:x[0],color:x[1]})),pigmentOptions=ORDER_EDIT.pigments.map(x=>({v:x[0],label:x[0],color:x[1]}));
   const writingOptions=ORDER_EDIT.writing.map(x=>({v:x,label:x})),colourNames=ORDER_EDIT.colours.map(x=>({v:x[0],label:x[0]}));
   const cupOptions=ORDER_EDIT.cupcakes.map(x=>({v:x,label:x})),decorOptions=ORDER_EDIT.decor.map(x=>({v:x,label:x,sub:ORDER_EDIT.quoteDecor.includes(x)?'Custom quote':''}));
-  return `<div class="detail-editor">${pickerHTML('Type & size','sizeId',d.sizeId,sizeOptions)}${pickerHTML('Shape','shape',d.shape,shapeOptions)}${pickerHTML('Flavour','flavor',d.flavor,flavourOptions)}${swatchPickerHTML('Colours','colourHexes',d.colourHexes,colourOptions)}${swatchPickerHTML('High-pigment colours · +€5 each','pigments',d.pigments,pigmentOptions)}${pickerHTML('Writing method','writingMethods',d.writingMethods,writingOptions,true)}${editInput('Writing','writing',d.writing)}${pickerHTML('Writing colour','writingColor',d.writingColor,colourNames)}${pickerHTML('Cupcakes','cupcakes',d.cupcakes,cupOptions)}${pickerHTML('Add-ons','decor',d.decor,decorOptions,true)}${pickerHTML('Candles','candles',d.candles,[{v:'Yes',label:'Yes'},{v:'No',label:'No'}])}${pickerHTML('Allergies','noAllergy',d.noAllergy?'yes':'no',[{v:'yes',label:'No known allergies'},{v:'no',label:'Add allergy details'}])}${d.noAllergy?'':editInput('Allergy details','allergies',d.allergies)}<div class="edit-field"><label class="edit-label" for="edit_notes">Customer notes</label><textarea class="edit-textarea" id="edit_notes" maxlength="1200" oninput="if(detailEdit)detailEdit.draft.notes=this.value">${escHtml(d.notes)}</textarea></div>${size.base===null?'<p class="edit-note">This size needs a custom quote, so the current final price will be kept.</p>':''}<button class="edit-cancel" onclick="cancelDetailEdit(event,${o.id},'cake')">Cancel editing</button></div>`;
+  return `<div class="detail-editor">${pickerHTML('Type & size','sizeId',d.sizeId,sizeOptions)}${pickerHTML('Shape','shape',d.shape,shapeOptions)}${pickerHTML('Flavour','flavor',d.flavor,flavourOptions)}${swatchPickerHTML('Colours','colourHexes',d.colourHexes,colourOptions)}${swatchPickerHTML('High-pigment colours · +€5 each','pigments',d.pigments,pigmentOptions)}${showRush?editInput('Rush order fee (€)','rushSurcharge',rushValue,'number','min="0" step="0.5" inputmode="decimal" placeholder="0"') : ''}${pickerHTML('Writing method','writingMethods',d.writingMethods,writingOptions,true)}${editInput('Writing','writing',d.writing)}${pickerHTML('Writing colour','writingColor',d.writingColor,colourNames)}${pickerHTML('Cupcakes','cupcakes',d.cupcakes,cupOptions)}${pickerHTML('Add-ons','decor',d.decor,decorOptions,true)}${pickerHTML('Candles','candles',d.candles,[{v:'Yes',label:'Yes'},{v:'No',label:'No'}])}${pickerHTML('Allergies','noAllergy',d.noAllergy?'yes':'no',[{v:'yes',label:'No known allergies'},{v:'no',label:'Add allergy details'}])}${d.noAllergy?'':editInput('Allergy details','allergies',d.allergies)}<div class="edit-field"><label class="edit-label" for="edit_notes">Customer notes</label><textarea class="edit-textarea" id="edit_notes" maxlength="1200" oninput="if(detailEdit)detailEdit.draft.notes=this.value">${escHtml(d.notes)}</textarea></div>${size.base===null?'<p class="edit-note">This size needs a custom quote, so the current final price will be kept.</p>':''}<button class="edit-cancel" onclick="cancelDetailEdit(event,${o.id},'cake')">Cancel editing</button></div>`;
 }
 function pickupEditorHTML(o){
   const d=detailEdit.draft;
@@ -2798,10 +2798,6 @@ function pickupEditorHTML(o){
 function customerEditorHTML(o){
   const d=detailEdit.draft;
   return `<div class="detail-editor">${editInput('Name','name',d.name)}${editInput('WhatsApp','whatsapp',d.whatsapp,'tel','inputmode="tel"')}${editInput('Instagram','instagram',d.instagram)}${editInput('Email','email',d.email,'email','inputmode="email"')}${pickerHTML('Form language','lang',d.lang,[{v:'EN',label:'English'},{v:'PT',label:'Portuguese'}])}${pickerHTML('Found us via','heard',d.heard,ORDER_EDIT.heard.map(x=>({v:x,label:x})))}${d.heard==='Referred by a friend'?editInput('Referred by','referredBy',d.referredBy):''}${pickerHTML('Ordering experience','feedback',d.feedback,[{v:'',label:'Not submitted'},...ORDER_EDIT.feedback.map(x=>({v:x,label:x}))])}<button class="edit-cancel" onclick="cancelDetailEdit(event,${o.id},'customer')">Cancel editing</button></div>`;
-}
-function editRushAmount(sizeId,pdate){
-  if(!pdate)return 0;const pickup=new Date(pdate+'T00:00:00'),now=new Date();now.setHours(0,0,0,0);
-  return Math.round((pickup-now)/86400000)===3?(sizeId==='XS'?10:20):0;
 }
 function calculatedEditPrice(o,d,pdate){
   const size=ORDER_EDIT.sizes.find(x=>x.v===d.sizeId)||ORDER_EDIT.sizes[1];
@@ -2815,13 +2811,14 @@ function calculatedEditPrice(o,d,pdate){
   if((d.writingMethods||[]).includes('Fondant Letters'))sum+=size.big?6:5;
   if((d.writingMethods||[]).includes('Cutout Letters'))sum+=size.big?10:8;
   (d.decor||[]).forEach(x=>{if(x==='Bows')sum+=size.big?5:3;else if(x==='Edible prints')sum+=size.big?15:10;else if(x==='Paper butterflies')sum+=size.big?8:5;else if(x==='Maraschino cherries')sum+=size.big?8:6;else if(x==='Maraschino cherries + glitter')sum+=size.big?10:8;else if(ORDER_EDIT.quoteDecor.includes(x))range=true;});
-  sum+=editRushAmount(d.sizeId,pdate);
+  const rush=Math.max(0,Number(d.rushSurcharge)||0);
+  sum+=rush;
   return {price:sum,range};
 }
 function rebuiltOrderNotes(customer,courier,rush,pdate){
   const system=[];
   if(courier)system.push('COURIER: Customer would like to arrange a Bolt/Uber courier.');
-  if(rush)system.push(`RUSH ORDER SURCHARGE: +€${rush} for pickup on ${pdate}.`);
+  if(rush)system.push(`RUSH ORDER SURCHARGE: +€${rush} for pickup on ${pdate || 'the requested date'}.`);
   return rebuildNotes(customer,system);
 }
 async function saveDetailEdit(event,id,section,button){
@@ -2833,14 +2830,14 @@ async function saveDetailEdit(event,id,section,button){
     if(size.type==='Bento'&&!['Round','Heart'].includes(d.shape))d.shape='Round';
     if(size.type==='Bento'&&!ORDER_EDIT.bentoFlavours.includes(d.flavor))d.flavor=ORDER_EDIT.bentoFlavours[0];
     if(size.type!=='Bento'&&!ORDER_EDIT.flavours.includes(d.flavor))d.flavor=ORDER_EDIT.flavours[0];
-    const price=calculatedEditPrice(o,d,o.pdate),rush=editRushAmount(d.sizeId,o.pdate);
+    const rush=Math.max(0,Number(d.rushSurcharge)||0),price=calculatedEditPrice(o,d,o.pdate);
     const colors=(d.colourHexes||[]).map(hex=>{const c=ORDER_EDIT.colours.find(x=>x[1]===hex);return c?[c[0],c[1]]:[hex,hex];});
-    patch={cake_type:size.type,size:size.size,shape:d.shape,flavor:d.flavor,colors,pigment:d.pigments||[],write_methods:d.writingMethods||[],writing:String(d.writing||'').trim(),writing_color:d.writingColor||'',cupcakes:d.cupcakes||'No cupcakes',decor:(d.decor||[]).length?d.decor:['No decoration'],candles:d.candles||'No',no_allergy:d.noAllergy===true||d.noAllergy==='yes',allergies:(d.noAllergy===true||d.noAllergy==='yes')?'':String(d.allergies||'').trim(),notes:rebuiltOrderNotes(d.notes,o.courier,rush,o.pdate),price:price.price,price_range:price.range};
+    patch={cake_type:size.type,size:size.size,shape:d.shape,flavor:d.flavor,colors,pigment:d.pigments||[],write_methods:d.writingMethods||[],writing:String(d.writing||'').trim(),writing_color:d.writingColor||'',cupcakes:d.cupcakes||'No cupcakes',decor:(d.decor||[]).length?d.decor:['No decoration'],candles:d.candles||'No',rush_surcharge:rush,no_allergy:d.noAllergy===true||d.noAllergy==='yes',allergies:(d.noAllergy===true||d.noAllergy==='yes')?'':String(d.allergies||'').trim(),notes:rebuiltOrderNotes(d.notes,o.courier,rush,o.pdate),price:price.price,price_range:price.range};
   }else if(section==='pickup'){
     if(!d.pdate||!d.ptime){alert('Choose both the pick-up date and time.');button.disabled=false;button.classList.remove('edit-saving');return;}
     const cakeDraft={sizeId:editSizeId(o),shape:o.shape,flavor:o.flavor,colourHexes:(o.colors||[]).map(c=>c[1]),pigments:o.pigment||[],writingMethods:o.writeMethods||[],cupcakes:o.cupcakes,decor:(o.decor||[]).filter(x=>x!=='No decoration')},price=calculatedEditPrice(o,cakeDraft,d.pdate);
-    const parts=editableNoteParts(o.notes),rush=editRushAmount(cakeDraft.sizeId,d.pdate);
-    patch={pickup_date:d.pdate,pickup_time:d.ptime,notes:rebuiltOrderNotes(parts.customer,d.courier===true||d.courier==='courier',rush,d.pdate),price:price.price,price_range:price.range};
+    const parts=editableNoteParts(o.notes),rush=Math.max(0,Number(detailEdit?.draft?.rushSurcharge)||Number(o.rushSurcharge||o.rush_surcharge||0)||0);
+    patch={pickup_date:d.pdate,pickup_time:d.ptime,notes:rebuiltOrderNotes(parts.customer,d.courier===true||d.courier==='courier',rush,d.pdate),price:price.price,price_range:price.range,rush_surcharge:rush};
   }else{
     if(!String(d.name||'').trim()){alert('Customer name cannot be empty.');button.disabled=false;button.classList.remove('edit-saving');return;}
     patch={name:String(d.name).trim(),whatsapp:String(d.whatsapp||'').trim(),instagram:String(d.instagram||'').replace(/^@/,'').trim(),email:String(d.email||'').trim(),language:d.lang||'EN',heard:d.heard||'',referred_by:d.heard==='Referred by a friend'?String(d.referredBy||'').trim():'',feedback:d.feedback?String(d.feedback).toLowerCase():null};

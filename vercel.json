@@ -5,6 +5,10 @@
     {
       "source": "/order/:token",
       "destination": "/order/index.html?token=:token"
+    },
+    {
+      "source": "/dashboard-copy/:token",
+      "destination": "/dashboard-copy/index.html?token=:token"
     }
   ]
 }

@@ -1,0 +1,45 @@
+/* Interaction safeguards shared by the public site and order pages. */
+html,
+body {
+  touch-action: pan-x pan-y;
+  -webkit-text-size-adjust: 100%;
+}
+
+img,
+picture,
+svg,
+video {
+  -webkit-user-drag: none;
+  user-drag: none;
+  -webkit-touch-callout: none;
+}
+
+@media (pointer: fine) {
+  body {
+    -webkit-user-select: none;
+    user-select: none;
+  }
+
+  input,
+  textarea,
+  select,
+  [contenteditable="true"],
+  [data-allow-copy] {
+    -webkit-user-select: text !important;
+    user-select: text !important;
+  }
+}
+
+@media print {
+  body > * {
+    display: none !important;
+  }
+
+  body::before {
+    content: "Printing is disabled for this page.";
+    display: block;
+    padding: 2rem;
+    color: #333;
+    font: 16px/1.5 system-ui, sans-serif;
+  }
+}

@@ -4,11 +4,11 @@
   "rewrites": [
     {
       "source": "/order/index",
-      "destination": "/order/index.html"
+      "destination": "/order"
     },
     {
       "source": "/order/:token",
-      "destination": "/order/index.html?token=:token"
+      "destination": "/order?token=:token"
     }
   ]
 }

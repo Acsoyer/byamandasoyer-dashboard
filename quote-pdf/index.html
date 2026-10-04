@@ -42,7 +42,8 @@
     .money-card.total-card{background:#fff}
     @media(max-width:480px){.wrap{padding:16px 12px 42px}.card{padding:17px;border-radius:16px}.row{align-items:flex-start}.pay-method{grid-template-columns:1fr}.copy{width:100%}.money-summary{grid-template-columns:1fr}.money-card{min-height:82px}}
   .pdf-toolbar{max-width:680px;margin:15px auto;padding:12px 16px;display:flex;gap:12px;align-items:center;font-size:12px}.pdf-toolbar button{background:var(--brand);color:white;border:0;border-radius:10px;padding:12px;font:600 13px 'DM Sans',sans-serif;cursor:pointer}.pdf-toolbar button:disabled{opacity:.5}.pdf-export{width:100%!important;max-width:none!important;margin:0!important}.pdf-export .card{box-shadow:none}.pdf-export .row,.pdf-export .receipt-row,.pdf-export .pay-method,.pdf-export .notice,.pdf-export .money-summary,.pdf-export .actions{break-inside:avoid}.pdf-export .brand-logo{width:300px;max-width:100%}@media print{.pdf-toolbar{display:none}}
-</style>
+    .receipt-note{white-space:pre-wrap;overflow-wrap:anywhere}
+  </style>
 </head>
 <body>
 <div class="pdf-toolbar" data-html2canvas-ignore="true"><button id="savePdf" onclick="downloadCustomerPdf()" disabled>Download customer copy PDF</button><span id="pdfStatus">Loading saved quote…</span></div>
@@ -87,7 +88,7 @@ function flavourText(value){return localValue(value);}
     function receiptHTML(x){
       const pt=lang==='pt';
       const labels={head:pt?'Detalhes do preço':'Price details',base:pt?'Bolo base':'Base Cake',custom:pt?'Orçamento personalizado':'Custom Cake Quote',extra:pt?'Cor extra do bolo':'Extra cake colour',pigment:pt?'Cor de pigmento intenso':'High-pigment colour',candles:pt?'Velas':'Candles',rush:pt?'Pedido urgente':'Rush order',adjust:pt?'Itens orçamentados':'Quoted Items',included:pt?'Incluído no orçamento':'Included in quote',free:pt?'Grátis':'Free',total:pt?'Total final':'Final total'};
-      const size=String(x.cake_size||x.size||'').trim();
+      const rawSize=String(x.cake_size||x.size||'').trim(),size=/^30\+/i.test(rawSize)?'30+':/^sm(?:\s|\()/i.test(rawSize)?'Double Tier - S+M':/^ml(?:\s|\()/i.test(rawSize)?'Double Tier - M+L':rawSize;
       const sizeWithUnit=size?sizeText(size):'—';
       const big=size==='L'||size==='XL';
       const finalPrice=Number(x.price||0);
@@ -111,14 +112,14 @@ if(shapePrices[rawShape])add(shapeText(rawShape),shapePrices[rawShape]);
       (Array.isArray(x.write_methods)?x.write_methods:[]).forEach(name=>{if(writingPrices[name])add(localValue(name),writingPrices[name]);});
       if(/^6 Cupcakes$/i.test(x.cupcakes||''))add(localValue(x.cupcakes),15);
       if(/^12 Cupcakes$/i.test(x.cupcakes||''))add(localValue(x.cupcakes),30);
-      (Array.isArray(x.addons)?x.addons:[]).forEach(name=>{if(decorPrices[name])add(localValue(name),decorPrices[name]);else if(quotedDecor.has(name))add(localValue(name),labels.included,'quote');});
+      (Array.isArray(x.addons)?x.addons:[]).forEach(name=>{if(decorPrices[name])add(localValue(name),decorPrices[name]);else if(quotedDecor.has(name)&&!(name==='Custom'&&String(x.quoted_items_description||'').trim()))add(localValue(name),labels.included,'quote');});
       if(/^yes$/i.test(x.candles||''))add(labels.candles,labels.free,'free');
       const rush=Number(x.rush_surcharge||0);if(rush)add(labels.rush,rush);
       const courier=Number(x.courier_fee||(x.courier?2:0))||0;if(courier)add(pt?'Taxa de estafeta':'Courier fee',courier);
       const surchargeTotal=known;
       const quotedDescription=String(x.quoted_items_description||'').trim();
-      if(base!=null){rows.unshift({name:`${labels.base} · ${sizeWithUnit}`,amount:base,kind:'base'});known+=base;const adjustment=Math.round((finalPrice-known)*100)/100;if(Math.abs(adjustment)>=.01)add(labels.adjust+(quotedDescription?'*':''),adjustment,'',quotedDescription);}
-      else{const quotedBase=Math.max(0,Math.round((finalPrice-surchargeTotal)*100)/100);rows.unshift({name:`${labels.custom} · ${sizeWithUnit}`,amount:quotedBase,kind:'base'});known+=quotedBase;const adjustment=Math.round((finalPrice-known)*100)/100;if(Math.abs(adjustment)>=.01)add(labels.adjust+(quotedDescription?'*':''),adjustment,'',quotedDescription);}
+      if(base!=null){rows.unshift({name:`${labels.base} · ${sizeWithUnit}`,amount:base,kind:'base'});known+=base;const adjustment=Math.round((finalPrice-known)*100)/100;if(Math.abs(adjustment)>=.01)add(labels.adjust,adjustment,'',quotedDescription);}
+      else{const quotedBase=Math.max(0,Math.round((finalPrice-surchargeTotal)*100)/100);rows.unshift({name:`${labels.custom} · ${sizeWithUnit}`,amount:quotedBase,kind:'base',description:quotedDescription});known+=quotedBase;const adjustment=Math.round((finalPrice-known)*100)/100;if(Math.abs(adjustment)>=.01)add(labels.adjust,adjustment,'',quotedDescription);}
       const amountText=r=>typeof r.amount==='number'?(r.kind==='base'?money(r.amount):`${r.amount<0?'−':'+'}${money(Math.abs(r.amount))}`):r.amount;
       return `<div class="receipt"><div class="receipt-head">${labels.head}</div>${rows.map(r=>`<div class="receipt-row"><span class="receipt-name">${esc(r.name)}</span><span class="receipt-dots"></span><span class="receipt-price ${r.kind||''}">${esc(amountText(r))}</span>${r.description?`<div class="receipt-note">* ${esc(r.description)}</div>`:''}</div>`).join('')}<div class="receipt-row receipt-total"><span class="receipt-name">${labels.total}</span><span class="receipt-dots"></span><span class="receipt-price">${esc(money(finalPrice))}</span></div></div>`;
     }

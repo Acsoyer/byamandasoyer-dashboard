@@ -3130,5 +3130,7 @@ document.addEventListener('click',event=>{if(!event.target.closest('.profile-wra
 /* Optional local-only workflow fixtures used for regression testing. */
 (function workflowStatePreview(){const params=new URLSearchParams(location.search),local=['file:'].includes(location.protocol)||['localhost','127.0.0.1'].includes(location.hostname);if(!local||params.get('preview')!=='1'||params.get('stateTest')!=='1'||!ORDERS.length)return;const base=ORDERS[0],dateAfter=days=>{const d=new Date();d.setDate(d.getDate()+days);return `${d.getFullYear()}-${String(d.getMonth()+1).padStart(2,'0')}-${String(d.getDate()).padStart(2,'0')}`;};ORDERS.push(Object.assign({},base,{id:9010,name:'Address Pending',read:true,status:'confirmed',paid:50,pdate:dateAfter(5),confirmedSentAt:''}),Object.assign({},base,{id:9011,name:'Feedback Pending',read:true,status:'done',paid:100,pdate:dateAfter(0),confirmedSentAt:new Date().toISOString(),feedbackSentAt:''}),Object.assign({},base,{id:9012,name:'Feedback Sent',read:true,status:'done',paid:100,pdate:dateAfter(0),confirmedSentAt:new Date().toISOString(),feedbackSentAt:new Date().toISOString()}));setView('orders');})();
 </script>
+<script src="workshop-dashboard-v147.js"></script>
+<script src="dashboard-v148.js"></script>
 </body>
 </html>

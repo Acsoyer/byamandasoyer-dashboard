@@ -1629,9 +1629,12 @@
   </div>
 </div>
 
-<div class="lightbox" id="photoLightbox" onclick="if(event.target===this)closePhoto()">
-  <div class="lightbox-actions"><a id="photoDownload" href="#" download target="_blank">Download / Open</a><button onclick="closePhoto()">Close</button></div>
-  <img id="photoLarge" alt="Order reference photo">
+<div class="lightbox" id="photoLightbox" role="dialog" aria-modal="true" aria-label="Image viewer" onclick="if(event.target===this)closePhoto()">
+  <div class="dashboard-media-card">
+    <button class="dashboard-media-close" onclick="closePhoto()" aria-label="Close image viewer">&times;</button>
+    <div class="dashboard-media-stage"><img id="photoLarge" alt="Uploaded image"></div>
+    <div class="dashboard-media-footer"><a id="photoDownload" href="#" download target="_blank" rel="noopener">Download / Open</a></div>
+  </div>
 </div>
 
 <div class="love-popup" id="lovePopup" role="dialog" aria-modal="true" aria-label="Message">
@@ -3319,6 +3322,24 @@ const v167DeleteWorkshop=deleteWorkshop;deleteWorkshop=async function(id){const 
 function workshopConfirmationText(b,s){const date=new Date(`${s.session_date}T12:00:00`).toLocaleDateString('en-US',{weekday:'long',month:'long',day:'numeric'}),qty=Number(b.quantity)||1;return `Hi ${workshopFirst(b.full_name)}!\n\nThank you so much for booking! Your spot${qty===1?'':'s'} for the *Creative Cake Decorating Workshop* ${qty===1?'is':'are'} booked 🎉\n\nHere’s everything you need to know:\n\n📅 *${date}*\n⏰ *12:00 PM – 3:00 PM*\n📍 *Rua Francisco Lyon de Castro 14, 7th floor*\n\n📍 Google Maps:\nhttps://maps.app.goo.gl/ZsgeXWRc4tDgnm8H9?g_st=ic\n\nPlease arrive on time so you can enjoy the full experience.\n\nIf you have any questions before the workshop, feel free to message me.\n\nSee you soon!\n\nAmanda 🫶🏾`}
 const v168WorkshopDetailHTML=workshopDetailHTML;workshopDetailHTML=function(b,proofUrl=''){let html=v168WorkshopDetailHTML(b,proofUrl),allergy=b.has_allergies?escHtml(b.allergy_details||'Yes — details not provided'):'No';return html.replace('<div class="ws-detail-row"><span>Reference</span>',`<div class="ws-detail-row"><span>Allergies / dietary restrictions</span><b>${allergy}</b></div><div class="ws-detail-row"><span>Reference</span>`)}
 /* ===== END: workshop allergies, confirmation and reminders — v168 ===== */
+
+/* ===== BEGIN: workshop card and confirmation layout — v169 ===== */
+document.head.insertAdjacentHTML('beforeend',`<style>
+.workshop-overview-card.ws-overview-v156{grid-template-columns:66px minmax(0,1fr)!important;min-height:104px!important;height:104px!important;border-radius:14px!important;box-shadow:0 4px 13px rgba(54,48,45,.095)!important}.ws-overview-date{min-height:102px!important;padding:8px 5px!important}.ws-overview-date strong{color:#fff!important;font-size:24px!important}.ws-overview-date b{margin-top:5px!important;font-size:10px!important}.ws-overview-date small{margin-top:4px!important;font-size:8px!important}.ws-overview-content{display:flex!important;flex-direction:column;justify-content:center;padding:10px 10px!important}.ws-overview-content>em.ws-overview-pill{top:9px!important;right:9px!important;padding:4px 7px!important;font-size:7px!important}.ws-overview-content>b{margin-top:20px!important;font-size:14px!important}.ws-overview-content>span{margin-top:7px!important;font-size:10.5px!important}
+.workshop-person-card.ws-live-card{grid-template-columns:66px minmax(0,1fr)!important;min-height:104px!important;height:104px!important;border-radius:14px!important;box-shadow:0 4px 13px rgba(54,48,45,.095)!important}.ws-live-date{min-height:102px;padding:8px 5px}.ws-live-date strong{color:#fff!important;font-size:24px!important}.ws-live-date b{margin-top:5px!important;color:#fff!important;font-size:10px!important}.ws-live-date small{margin-top:4px!important;color:rgba(255,255,255,.8)!important;font-size:8px!important}.ws-live-content{justify-content:center;padding:10px!important}.ws-live-content>em{top:9px!important;right:9px!important;padding:4px 7px!important;font-size:7px!important}.ws-live-content>b{max-width:68%;margin-top:17px;font-size:14px!important}.ws-live-content>span{margin-top:6px!important;font-size:10.5px!important}.ws-live-content>.accepted{padding:3px 7px!important;font-size:8px!important}
+.ws-message-page textarea{min-height:clamp(360px,52dvh,520px)!important}.ws-message-tools{margin-top:4px!important}
+@media(max-width:380px){.workshop-overview-card.ws-overview-v156,.workshop-person-card.ws-live-card{grid-template-columns:61px minmax(0,1fr)!important}.ws-overview-content>em.ws-overview-pill,.ws-live-content>em{font-size:6.7px!important}}
+</style>`);
+/* ===== END: workshop card and confirmation layout — v169 ===== */
+
+/* ===== BEGIN: unified uploaded-image viewer — v170 ===== */
+document.head.insertAdjacentHTML('beforeend',`<style>
+#photoLightbox{z-index:240!important;padding:16px!important;background:rgba(23,15,18,.9)!important;backdrop-filter:blur(8px)}.dashboard-media-card{position:relative;display:flex;flex-direction:column;width:min(720px,100%);height:min(88dvh,880px);max-height:calc(100dvh - 32px);overflow:visible;border-radius:22px;background:#f9f6f3;box-shadow:0 24px 70px rgba(0,0,0,.38)}.dashboard-media-stage{position:relative;display:flex;flex:1;min-height:0;align-items:center;justify-content:center;overflow:hidden;border-radius:22px 22px 0 0;background:#171415}.dashboard-media-stage #photoLarge{display:block;width:100%;height:100%;max-width:100%;max-height:100%;object-fit:contain}.dashboard-media-close{position:absolute;z-index:8;top:-14px;right:-10px;display:grid;width:52px;height:52px;padding:0;place-items:center;border:2px solid rgba(255,255,255,.72);border-radius:50%;background:var(--accent);color:#fff;font:300 34px/1 Arial,sans-serif;box-shadow:0 8px 24px rgba(0,0,0,.25);cursor:pointer}.dashboard-media-footer{display:flex;flex:0 0 68px;align-items:center;justify-content:center;padding:10px 16px;border-radius:0 0 22px 22px;background:#fff}.dashboard-media-footer a{display:flex;align-items:center;justify-content:center;width:min(320px,100%);min-height:46px;padding:10px 18px;border:1px solid #d8c7cd;border-radius:13px;background:var(--accent);color:#fff;font:800 13px 'Instrument Sans',sans-serif;text-decoration:none}.dashboard-media-stage .photo-nav{z-index:6;top:50%;width:46px;height:54px;margin:0;transform:translateY(-50%);border:1px solid rgba(255,255,255,.55);border-radius:50%;background:rgba(255,255,255,.9);color:var(--accent);box-shadow:0 5px 16px rgba(0,0,0,.18)}.dashboard-media-stage .photo-nav.prev{left:12px}.dashboard-media-stage .photo-nav.next{right:12px}
+@media(max-width:560px){#photoLightbox{padding:18px 12px!important}.dashboard-media-card{height:min(84dvh,760px);border-radius:18px}.dashboard-media-stage{border-radius:18px 18px 0 0}.dashboard-media-footer{flex-basis:64px;border-radius:0 0 18px 18px}.dashboard-media-close{top:-12px;right:-4px;width:48px;height:48px;font-size:31px}.dashboard-media-stage .photo-nav{width:42px;height:50px}.dashboard-media-stage .photo-nav.prev{left:8px}.dashboard-media-stage .photo-nav.next{right:8px}}
+</style>`);
+(()=>{const stage=document.querySelector('#photoLightbox .dashboard-media-stage');document.querySelectorAll('#photoLightbox .photo-nav').forEach(button=>stage?.appendChild(button))})();
+openWorkshopProof=async function(id){const booking=WORKSHOP_BOOKINGS.find(item=>item.id===id);if(!booking)return;const url=await signedWorkshopProof(booking);if(!url){alert('Proof could not be opened. Please try again.');return}if(/\.pdf(?:$|\?)/i.test(String(booking.proof_path||''))){window.open(url,'_blank','noopener');return}openPhoto(url)};
+/* ===== END: unified uploaded-image viewer — v170 ===== */
 
   </script>
 </body>

@@ -1,49 +1,12 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
-<svg
-   id="Layer_1"
-   data-name="Layer 1"
-   viewBox="0 0 112 96"
-   version="1.1"
-   sodipodi:docname="uber-icon.svg"
-   xml:space="preserve"
-   width="112"
-   height="96"
-   xmlns:inkscape="http://www.inkscape.org/namespaces/inkscape"
-   xmlns:sodipodi="http://sodipodi.sourceforge.net/DTD/sodipodi-0.dtd"
-   xmlns="http://www.w3.org/2000/svg"
-   xmlns:svg="http://www.w3.org/2000/svg"><sodipodi:namedview
-     id="namedview2"
-     pagecolor="#ffffff"
-     bordercolor="#000000"
-     borderopacity="0.25"
-     inkscape:showpageshadow="2"
-     inkscape:pageopacity="0.0"
-     inkscape:pagecheckerboard="0"
-     inkscape:deskcolor="#d1d1d1"><inkscape:page
-       x="0"
-       y="0"
-       width="9216"
-       height="9216"
-       id="page2"
-       margin="0"
-       bleed="0" /></sodipodi:namedview><defs
-     id="defs1"><style
-       id="style1">.cls-1{fill-rule:evenodd;}.cls-2{fill:#fff;}</style></defs><title
-     id="title1">icon</title><path
-     class="cls-1"
-     d="M 7.27,0 H 88.73 A 7.28,7.28 0 0 1 96,7.27 V 88.73 A 7.28,7.28 0 0 1 88.73,96 H 7.27 A 7.28,7.28 0 0 1 0,88.73 V 7.27 A 7.28,7.28 0 0 1 7.27,0 Z"
-     id="path1"
-     inkscape:highlight-color="#aa31aa"
-     style="fill:#32bb78;fill-opacity:1" /><style
-     type="text/css"
-     id="style1-4">
-  .st0{fill-rule:evenodd;clip-rule:evenodd;fill:#FFFFFF;}
- </style><g
-     id="g1"
-     transform="matrix(0.59132561,0,0,0.58329836,14.550278,31.632614)">
-  <path
-   class="st0"
-   d="M 30.4,23 C 34.8,15.9 32.6,6.6 25.6,2.2 23.2,0.8 20.5,0 17.7,0 H 0 v 48.9 h 19.9 c 8.3,0 15,-6.8 15,-15.1 0,-4.1 -1.6,-7.9 -4.5,-10.8 z m -19,-11.5 h 6.3 c 2,0 3.6,1.6 3.6,3.6 0,2 -1.6,3.6 -3.6,3.6 h -6.3 z m 8.5,25.9 h -8.5 v -7.2 h 8.5 c 2,0 3.6,1.6 3.6,3.6 0,2 -1.6,3.6 -3.6,3.6 z M 90,0 V 48.9 H 78.6 V 2.4 Z M 56.8,13.9 c -9.7,0 -17.6,7.9 -17.6,17.7 0,9.8 7.9,17.7 17.6,17.7 9.7,0 17.6,-7.9 17.6,-17.7 C 74.3,21.8 66.5,13.9 56.8,13.9 Z m 0,23.5 c -3.2,0 -5.7,-2.6 -5.7,-5.7 0,-3.2 2.5,-5.7 5.7,-5.7 3.2,0 5.7,2.6 5.7,5.7 0,3.1 -2.6,5.7 -5.7,5.7 z m 5.7,21.9 c 0,3.2 -2.6,5.7 -5.7,5.7 -3.1,0 -5.7,-2.6 -5.7,-5.7 0,-3.2 2.6,-5.7 5.7,-5.7 3.1,-0.1 5.7,2.5 5.7,5.7 z M 111.8,14.5 V 26 h -5.7 v 9 c 0,2.7 0.9,4.7 3.2,4.7 0.9,0 1.7,-0.1 2.5,-0.3 v 8.5 c -1.7,0.9 -3.6,1.4 -5.6,1.4 h -0.1 c -0.1,0 -0.1,0 -0.2,0 -0.1,0 -0.1,0 -0.2,0 h -0.1 -0.2 C 99.1,49 94.7,45 94.7,37.9 v 0 0 V 26 8.2 l 11.4,-2.4 v 8.8 h 5.7 z"
-   id="path1-8">
-  </path>
- </g></svg>
+<!DOCTYPE svg PUBLIC "-//W3C//DTD SVG 1.1//EN" "http://www.w3.org/Graphics/SVG/1.1/DTD/svg11.dtd">
+<svg width="100%" height="100%" viewBox="0 0 512 512" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" xml:space="preserve" xmlns:affinity="https://www.affinity.studio/" style="fill-rule:evenodd;clip-rule:evenodd;stroke-linejoin:round;stroke-miterlimit:2;">
+    <g id="path1" transform="matrix(5.333333,0,0,5.333333,0,-0)">
+        <path d="M7.27,0L88.73,0C92.716,0.005 95.995,3.284 96,7.27L96,88.73C95.995,92.716 92.716,95.995 88.73,96L7.27,96C3.284,95.995 0.005,92.716 0,88.73L0,7.27C0.005,3.284 3.284,0.005 7.27,0Z" style="fill:rgb(50,187,120);"/>
+    </g>
+    <g id="path1-8" transform="matrix(3.153737,0,0,3.110925,77.601483,168.707275)">
+        <g id="g1">
+            <path id="path1-81" affinity:id="path1-8" d="M30.4,23C34.8,15.9 32.6,6.6 25.6,2.2C23.2,0.8 20.5,0 17.7,0L0,0L0,48.9L19.9,48.9C28.2,48.9 34.9,42.1 34.9,33.8C34.9,29.7 33.3,25.9 30.4,23ZM11.4,11.5L17.7,11.5C19.7,11.5 21.3,13.1 21.3,15.1C21.3,17.1 19.7,18.7 17.7,18.7L11.4,18.7L11.4,11.5ZM19.9,37.4L11.4,37.4L11.4,30.2L19.9,30.2C21.9,30.2 23.5,31.8 23.5,33.8C23.5,35.8 21.9,37.4 19.9,37.4ZM90,0L90,48.9L78.6,48.9L78.6,2.4L90,0ZM56.8,13.9C47.1,13.9 39.2,21.8 39.2,31.6C39.2,41.4 47.1,49.3 56.8,49.3C66.5,49.3 74.4,41.4 74.4,31.6C74.3,21.8 66.5,13.9 56.8,13.9ZM56.8,37.4C53.6,37.4 51.1,34.8 51.1,31.7C51.1,28.5 53.6,26 56.8,26C60,26 62.5,28.6 62.5,31.7C62.5,34.8 59.9,37.4 56.8,37.4ZM62.5,59.3C62.5,62.5 59.9,65 56.8,65C53.7,65 51.1,62.4 51.1,59.3C51.1,56.1 53.7,53.6 56.8,53.6C59.9,53.5 62.5,56.1 62.5,59.3ZM111.8,14.5L111.8,26L106.1,26L106.1,35C106.1,37.7 107,39.7 109.3,39.7C110.2,39.7 111,39.6 111.8,39.4L111.8,47.9C110.1,48.8 108.2,49.3 106.2,49.3L105.4,49.3C99.1,49 94.7,45 94.7,37.9L94.7,8.2L106.1,5.8L106.1,14.6L111.8,14.6L111.8,14.5Z" style="fill:white;"/>
+        </g>
+    </g>
+</svg>

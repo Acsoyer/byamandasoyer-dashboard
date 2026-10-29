@@ -6,6 +6,9 @@
    version="1.1"
    sodipodi:docname="uber-icon.svg"
    xml:space="preserve"
+   inkscape:export-filename="assets\bolt-icon.svg"
+   inkscape:export-xdpi="2000"
+   inkscape:export-ydpi="2000"
    width="9216"
    height="9216"
    xmlns:inkscape="http://www.inkscape.org/namespaces/inkscape"
@@ -34,7 +37,10 @@
      d="M 7.27,0 H 88.73 A 7.28,7.28 0 0 1 96,7.27 V 88.73 A 7.28,7.28 0 0 1 88.73,96 H 7.27 A 7.28,7.28 0 0 1 0,88.73 V 7.27 A 7.28,7.28 0 0 1 7.27,0 Z"
      id="path1"
      inkscape:highlight-color="#aa31aa"
-     style="fill:#32bb78;fill-opacity:1" /><style
+     style="fill:#32bb78;fill-opacity:1"
+     inkscape:export-filename="assets\bolt-icon.svg"
+     inkscape:export-xdpi="1000"
+     inkscape:export-ydpi="1000" /><style
      type="text/css"
      id="style1-4">
   .st0{fill-rule:evenodd;clip-rule:evenodd;fill:#FFFFFF;}

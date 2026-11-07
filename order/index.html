@@ -17,12 +17,12 @@
 </head>
 <body>
   <main class="wrap">
-    <div class="topbar"><div class="brand"><img src="https://ivnybivjjydihltknlmo.supabase.co/storage/v1/object/public/references/images/byAmandaSoyer_Logo_NoBackground.png" alt="by Amanda Soyer"></div><span class="copy-pill">Dashboard Copy</span></div>
+    <div class="topbar"><div class="brand"><img src="https://enhucwjcanhdqvbyiqlx.supabase.co/storage/v1/object/public/references/images/byAmandaSoyer_Logo_NoBackground.png" alt="by Amanda Soyer"></div><span class="copy-pill">Dashboard Copy</span></div>
     <div id="app"><section class="card state"><div class="spinner"></div><div>Loading the saved quote…</div></section></div>
   </main>
   <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
   <script>
-    const SB_URL='https://ivnybivjjydihltknlmo.supabase.co',SB_KEY='sb_publishable_JgB-ewQdFNoFS25-tOxp4g_G-I0s1E2';
+    const SB_URL='https://enhucwjcanhdqvbyiqlx.supabase.co',SB_KEY='sb_publishable_DYjzc5pVa7_mdD1fZZJiHw_kw72n4io';
     const sb=window.supabase.createClient(SB_URL,SB_KEY),app=document.getElementById('app'),query=new URLSearchParams(location.search);
     const token=(()=>{const q=query.get('token');if(q)return q;const p=location.pathname.split('/').filter(Boolean),last=p[p.length-1]||'';return ['order','index.html'].includes(last)?'':last;})();
     let order=null,lang='en';

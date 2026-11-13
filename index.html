@@ -2374,7 +2374,7 @@ function buildTestOrder(){
   const customFlavors=['Vanilla Berry','Vanilla Chocolate Duo','Red Velvet Classic','Lemon Raspberry','Chocolate Salted Caramel'];
   const bentoFlavors=['Vanilla Chocolate Duo','Chocolate Vanilla Duo','Red Velvet Classic'];
   const palettes=[[['Ivory','#F4E9D8'],['Burgundy','#6D2435']],[['Baby Pink','#F4B8C6'],['Cream','#FFF1D7']],[['Sage Green','#A9B79B'],['White','#FFFFFF']],[['Lilac','#C9B1D6'],['Yellow','#F4D66D']]];
-  const sizeChoice=testChoice([{cakeType:'Bento',size:'XS (4–6)',price:30},{cakeType:'Custom',size:'S (6–8)',price:40},{cakeType:'Custom',size:'M (10–12)',price:55},{cakeType:'Custom',size:'L (16–20)',price:80},{cakeType:'Custom',size:'XL (24–28)',price:110}]);
+  const sizeChoice=testChoice([{cakeType:'Bento',size:'XS (2–4)',price:28},{cakeType:'Custom',size:'S (6–8)',price:40},{cakeType:'Custom',size:'M (10–12)',price:55},{cakeType:'Custom',size:'L (16–20)',price:80},{cakeType:'Custom',size:'XL (24–28)',price:110}]);
   const noAllergy=Math.random()<.75,seed=String(Date.now()).slice(-6),name=testChoice(names),decor=testChoice([['Bows'],['Edible prints'],['Paper butterflies'],['Maraschino cherries'],['Fresh edible flowers'],['Fresh fruits']]);
   const estimatedPrice=sizeChoice.price+(decor[0]==='Bows'?5:decor[0]==='Paper butterflies'?8:10);
   return {status:'new',is_read:false,paid:0,language:testChoice(['EN','PT']),cake_type:sizeChoice.cakeType,size:sizeChoice.size,shape:testChoice(sizeChoice.cakeType==='Bento'?['Round','Heart']:['Round','Heart','Square','Rectangle']),flavor:testChoice(sizeChoice.cakeType==='Bento'?bentoFlavors:customFlavors),colors:testChoice(palettes),pigment:Math.random()<.3?['Dark colour coverage']:[],write_methods:['Piping'],writing:testChoice(['Happy Birthday','Parabéns','Thirty & Thriving','Baby on the way']),writing_color:testChoice(['Burgundy','White','Gold']),cupcakes:testChoice(['No cupcakes','6 Cupcakes','12 Cupcakes']),decor,candles:testChoice(['Yes','No']),photo_url:null,photo_note:'TEST ORDER: Reference image intentionally omitted by the dashboard generator.',no_allergy:noAllergy,allergies:noAllergy?'':'Nuts — test value only',notes:'TEST ORDER — Generated from the dashboard testing tool. Do not contact this fictional customer.\n\nCustomer would like a clean, elegant finish and is flexible about small design adjustments.',name,whatsapp:`+351 999 000 ${seed.slice(-3)}`,instagram:`test_order_${seed}`,pickup_date:testPickupDate(),pickup_time:testChoice(['11:30','13:00','15:30','17:00']),heard:testChoice(['Instagram','Google','Friend recommendation']),referred_by:'Dashboard test generator',email:`dashboard.test.${seed}@example.com`,email_opt_in:false,price:estimatedPrice,price_range:['Fresh edible flowers','Fresh fruits'].includes(decor[0]),agreed:true,submission_token:testUuid()};
@@ -2829,7 +2829,7 @@ function orderActionsHTML(o){const canCancel=!['done','deleted','cancelled'].inc
 
 const ORDER_EDIT={
   sizes:[
-    {v:'XS',label:'XS Bento',sub:'4–6 portions',type:'Bento',size:'XS (4–6)',base:30,big:false},
+    {v:'XS',label:'XS Bento',sub:'2–4 portions',type:'Bento',size:'XS (2–4)',base:28,big:false},
     {v:'S',label:'S',sub:'6–8 portions',type:'Custom',size:'S (6–8)',base:40,big:false},
     {v:'M',label:'M',sub:'10–12 portions',type:'Custom',size:'M (10–12)',base:55,big:false},
     {v:'L',label:'L',sub:'16–20 portions',type:'Custom',size:'L (16–20)',base:80,big:true},

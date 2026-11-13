@@ -95,7 +95,7 @@ function flavourText(value){return localValue(value);}
       const rows=[];
       let known=0;
       const add=(name,amount,kind='',description='')=>{rows.push({name,amount,kind,description});if(typeof amount==='number')known+=amount;};
-      const basePrices={'XS Bento':30,'S':40,'M':55,'L':80,'XL':110};
+      const basePrices={'XS Bento':/4\s*[–-]\s*6/.test(x.portion_size||x.size||'')?30:28,'S':40,'M':55,'L':80,'XL':110};
       const shapePrices={Heart:big?8:5,Square:big?8:5,Rectangle:big?10:8};
       const signature=new Set(['Berry Cheesecake','Pistachio Strawberry','Salted Caramel Peanut','Biscoff','Coconut Passion']);
       const writingPrices={'Fondant Letters':big?6:5,'Cutout Letters':big?10:8};
